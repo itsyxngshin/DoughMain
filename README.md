@@ -7,15 +7,15 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-# Laravel 11 Project - Setup Guide for Collaborators
+# DoughMain: Guide for Project Navigation and Collaboration
 
 ## **1. Cloning the Repository**
 
 To get started, open your terminal and run:
 
 ```sh
-git clone https://github.com/<your-username>/<repo-name>.git
-cd <repo-name>
+git clone https://github.com/itsyxngshin/DoughMain.git
+cd DoughMain
 ```
 
 ## **2. Install Dependencies**
@@ -68,7 +68,7 @@ DB_PASSWORD=
 Create the database in **phpMyAdmin** or via MySQL:
 
 ```sql
-CREATE DATABASE your_database_name;
+CREATE DATABASE doughmain_db;
 ```
 
 Then, migrate the database:
@@ -101,7 +101,8 @@ Before making changes, always pull the latest code:
 git pull origin main
 ```
 
-### **Create a New Branch for Your Work**
+### **Create a New Branch for Your Work** 
+Ensure that you will create a branch for the module you are working on
 
 ```sh
 git checkout -b feature-branch
@@ -113,6 +114,23 @@ git checkout -b feature-branch
 git add .
 git commit -m "Added new feature"
 git push origin feature-branch
+```
+
+### **Conventional Commit Messages***
+Please observe the following when commiting changes to Git
+
+```sh
+feat – a new feature is introduced with the changes
+fix – a bug fix has occurred
+chore – changes that do not relate to a fix or feature and don't modify src or test files (for example updating dependencies)
+refactor – refactored code that neither fixes a bug nor adds a feature
+docs – updates to documentation such as a the README or other markdown files
+style – changes that do not affect the meaning of the code, likely related to code formatting such as white-space, missing semi-colons, and so on.
+test – including new or correcting previous tests
+perf – performance improvements
+ci – continuous integration related
+build – changes that affect the build system or external dependencies
+revert – reverts a previous commit
 ```
 
 ### **Create a Pull Request (PR) on GitHub**
