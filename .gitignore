@@ -1,0 +1,44 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# Laravel Build Files
+/public/build/
+/public/hot/
+/public/storage/
+/public/mix-manifest.json
+/public/js/
+/public/css/
+
+/storage/*
+!/storage/framework
+!/storage/logs
+/storage/*.key
+/storage/pail
+
+# Environment & Configuration
+.env
+.env.backup
+.env.production
+/auth.json
+Homestead.json
+Homestead.yaml
+
+# Logs & Cache
+.phpunit.cache
+.phpunit.result.cache
+npm-debug.log
+yarn-error.log
+*.log
+*.sqlite
+/bootstrap/cache/
+
+# IDE & Editor Settings
+/.fleet/
+/.idea/
+/.nova/
+/.vscode/
+/.zed/
+
+# macOS/System Files
+.DS_Store
