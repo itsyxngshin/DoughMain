@@ -1,4 +1,4 @@
-<p align="center"><img src="Untitled20_20250304132045 1.png" width="400" alt="DoughMain Logo"></p>
+<p align="left"><img src="Untitled20_20250304132045 1.png" width="200" alt="DoughMain Logo"></p>
 
 # DoughMain: Guide for Project Navigation and Collaboration
 
