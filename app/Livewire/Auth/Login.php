@@ -5,6 +5,7 @@ namespace App\Livewire\Auth;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
+
 class Login extends Component
 {
     public $email;
@@ -29,7 +30,7 @@ class Login extends Component
     }
 
     public function render()
-    {
-        return view('livewire.auth.login')->layout('layouts.app'); // Optional layout
-    }
+{
+    return view('livewire.auth.login')->with('extends', 'layouts.auth');
+}
 }
