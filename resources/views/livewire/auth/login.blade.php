@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
 @section('log_screen')
-<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
-    <div class="row w-75 shadow-lg rounded overflow-hidden">
-        <!-- Left Side: Image -->
-        <div class="col-md-6 p-0">
+<div class="container-fluid min-vh-60 pt-4 d-flex align-items-center justify-content-center">
+    <div class="row w-55 shadow-lg rounded overflow-hidden">
+         <!-- Left Side: Image (Hidden on small screens) -->
+         <div class="col-lg-6 d-none d-lg-block p-0">
             <img src="{{ asset('img/image 10.png') }}" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="Ube Cheese Pandesal">
         </div>
 
         <!-- Right Side: Login Form -->
         <div class="col-md-6 p-5 bg-white">
-            <h1 class="fw-bold">Welcome back!</h1>
-            <p class="text-muted">Login to continue</p>
+            <h1 class="fw-bold text-4xl pb-1">Welcome back!</h1>
+            <p class="text-muted pb-4">Login to continue</p>
 
             <form method="POST" action="{{ route('login') }}">
                 @csrf
