@@ -7,8 +7,17 @@ use App\Http\Livewire\Posts;
 use App\Http\Controllers\DashboardController;
 use App\Livewire\Auth\Login;
 
+Route::get('/login', function () {
+    return view('livewire.auth.login');
+})->name('login');
 
-Route::get('/login', Login::class)->name('login');
+Route::get('/register', function () {
+    return view('user_register');
+})->name('register');
+
+Route::get('/forgot', function () {
+    return view('password.request');
+})->name('forgot');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

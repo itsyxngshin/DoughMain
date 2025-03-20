@@ -1,0 +1,10 @@
+:root {
+    --black: rgba(52, 52, 52, 1);
+    --white: rgba(255, 255, 255, 1);
+    --title-3-font-family: "Poppins", Helvetica;
+    --title-3-font-weight: 400;
+    --title-3-font-size: 13px;
+    --title-3-letter-spacing: 0px;
+    --title-3-line-height: normal;
+    --title-3-font-style: normal;
+  }
