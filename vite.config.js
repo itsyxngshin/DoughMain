@@ -9,6 +9,7 @@ export default defineConfig({
                 'resources/css/styleguide.css',
                 'resources/css/globals.css',
                 'resources/js/app.js'],
+          
             refresh: true,
         }),
     ],
