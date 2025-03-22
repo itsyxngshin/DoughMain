@@ -4,9 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DoughMain Bakery</title>
-    <link rel="stylesheet" href="globals.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
-    @vite(['resources/css/app.css', 'resources/css/style.css', 'resources/js/app.js'])
+    @vite(['resources/css/style.css'])
+    @vite('resources/js/app.js')
   </head>
   <body>
     <div class="landing-page-cont">
@@ -21,19 +23,13 @@
               <a href="#" class="text-wrapper-8">SERVICES</a>
               <a href="#" class="text-wrapper-6">CONTACT US</a>
             </nav>
-            <div class="rectangle"></div>
-            <div class="rectangle-2"></div>
             <nav class="navigation group second-nav">
-            <a href="#" class="text-wrapper-7">Log in</a>
+            <a href="login" class="text-wrapper-7">Log in</a>
               <img class="img" src="{{ asset('storage/profile.png') }}" alt="Social media icon 1" />
               <img class="group-2" src="{{ asset('storage/bag.png') }}" alt="Social media icon 2" />
             </nav>
             <div class="group-3">
-              <img
-                class="brown-white-circle"
-                src="{{ asset('storage/logo.png') }}"
-                alt="DoughMain Bakery Logo"
-              />
+            <img id="logo" class="brown-white-circle" src="{{ asset('storage/logo.png') }}" alt="DoughMain Bakery Logo">
               <p class="text-wrapper-9">ORDER ONLINE</p>
               <img class="line" src="img/line-1.svg" alt="Decorative line" />
             </div>
@@ -62,7 +58,7 @@
 
         <div class="products">
           <div class="product">
-            <img src="{{ asset('storage/ube_pandesal.jpg') }}" alt="Ube Pandesal">
+            <img src="{{ asset('storage/ube.jpg') }}" alt="Ube Pandesal">
             <p>Ube Pandesal</p>
           </div>
           <div class="product">
@@ -70,11 +66,11 @@
             <p>Pandesal</p>
           </div>
           <div class="product">
-            <img src="{{ asset('storage/ensaymada.jpg') }}" alt="Ensaymada">
+            <img src="{{ asset('storage/ensay.jpg') }}" alt="Ensaymada">
             <p>Ensaymada</p>
           </div>
           <div class="product">
-            <img src="{{ asset('storage/cassava_cake.jpg') }}" alt="Cassava Cake">
+            <img src="{{ asset('storage/cass.jpg') }}" alt="Cassava Cake">
             <p>Cassava Cake</p>
           </div>
         </div>
@@ -84,49 +80,79 @@
         </div>
       </section>
 
-        <section class="about-bakery">
-          <div class="overlap-group">
-            <h2 class="text-wrapper-2">about the bakery</h2>
-            <p class="this-is-your-about">
-              This is your About section. It's a great space to tell your story and to describe who you are and what you
-              do. If you're a business, talk about how you started and tell the story of your professional journey.
-              People want to know the real you, so don't be afraid to share personal anecdotes. Explain your core values
-              and how you, your organization, or your business stand out from the crowd.
-            </p>
-            <div class="div-wrapper">
-              <button class="text-wrapper-3">read more</button>
+              <<section class="about-bakery">
+            <div class="about-container">
+                            <!-- Centered Text -->
+                            <div class="about-text">
+                <h2 class="title">the making</h2>
+                <p class="description">
+                  “I popped my balloon because I’m an English-era, halata. A lot of people that I tried dating find me strong — as in nosebleed. 
+                  Like, I get it a lot, and it doesn’t offend me. Pero yun lang, baka ma-overwhelm ka sakin, and baka ma-overwhelm din ako sayo 
+                  pag straight Tagalog.”
+                </p>
+              </div>
+              
+              <!-- Left Image -->
+              <div class="about-image left">
+              <img src="{{ asset('storage/image2.jpg') }}" alt="Bakery Product 1">
+              </div>
+
+              <!-- Right Image -->
+              <div class="about-image right">
+              <img src="{{ asset('storage/image1.jpg') }}" alt="Bakery Product 1">
+              </div>
             </div>
-          </div>
-        </section>
-        <section class="the-making">
-          <div class="overlap-5">
-            <h2 class="text-wrapper-17">the making</h2>
-            <p class="text-wrapper-18">
-              "I popped my balloon because I'm an Englishera, halata. A lot of people that I tried dating find me
-              strong—as in nosebleed. Like, I get it a lot, and it doesn't offend me. Pero yun lang, baka ma-overwhelm
-              ka sakin, and baka ma-overwhelm din ako sayo pag straight Tagalog."
-            </p>
-          </div>
-          <img class="image-2" src="img/image-12.png" alt="Bakery making process 1" />
-          <img class="image-3" src="img/image.png" alt="Bakery making process 2" />
-          <img class="image-4" src="img/image-2.png" alt="Bakery making process 3" />
-          <img class="image-5" src="img/image-3.png" alt="Bakery making process 4" />
+          </section>
+
+          <section class="section-about">
+        <div class="container-about">
+
+            <!-- Left Image -->
+            <div class="image-wrapper">
+            <img src="{{ asset('storage/image3.jpg') }}" alt="Bakery Products">
+            </div>
+
+            <!-- Center Text Box -->
+            <div class="text-box">
+                <h2>about the bakery</h2>
+                <p>
+                    This is your About section. It’s a great space to tell your story and to describe who you are and what you do. If you're a business, 
+                    talk about how you started and tell the story of your professional journey. People want to know the real you, 
+                    so don't be afraid to share personal anecdotes.
+                </p>
+                <a href="#" class="btn-read">read more</a>
+            </div>
+
+            <!-- Right Image -->
+            <div class="image-wrapper">
+            <img src="{{ asset('storage/image4.jpg') }}" alt="Freshly baked bread">
+            </div>
+
+        </div>
         </section>
         <footer class="footer">
-          <div class="overlap-6">
-            <p class="text-wrapper-19">Follow us:</p>
-            <a href="mailto:doughmain@gmail.com" class="text-wrapper-20">doughmain@gmail.com</a>
-            <p class="text-wrapper-21">© Created by Team 6</p>
-            <p class="text-wrapper-22">© DoughMain 2025</p>
-            <a href="#" aria-label="Instagram">
-              <img class="ri-instagram-line" src="img/ri-instagram-line.svg" alt="Instagram icon" />
-            </a>
-            <a href="#" aria-label="Google">
-              <img class="ri-google-fill" src="img/ri-google-fill.svg" alt="Google icon" />
-            </a>
+          <div class="footer-content">
+            <p class="team-credit">© Created by Team 6</p>
+            <a href="mailto:doughmain@gmail.com" class="email-link">doughmain@gmail.com</a>
+            <p class="follow-text">Follow us:</p>
+            <div class="social-icons">
+              <a href="#" aria-label="Facebook">
+              <img src="{{ asset('storage/fb.png') }}" alt="Facebook icon">
+              </a>
+              <a href="#" aria-label="Instagram">
+              <img src="{{ asset('storage/ig.png') }}" alt="Instagram icon">
+              </a>
+              <a href="#" aria-label="Google">
+              <img src="{{ asset('storage/google.png') }}" alt="Google icon">
+              </a>
+            </div>
+            <div class="footer-line"></div>
+            <div class="footer-line"></div>
+            <p class="copyright">© DoughMain 2025</p>
           </div>
         </footer>
       </main>
     </div>
+    <script src="{{ asset('js/script.js') }}"></script>
   </body>
 </html>
