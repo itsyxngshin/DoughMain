@@ -1,19 +1,20 @@
 # Dependencies
 /vendor/
-/node_modules/
+ /node_modules/
 
 # Laravel Build Files
 /public/build/
-/public/hot/
-/public/storage/
-/public/mix-manifest.json
+ /public/hot/
+!/public/storage/
+ /public/mix-manifest.json
 /public/js/
 /public/css/
 
-/storage/*
-!/storage/framework
-!/storage/logs
-/storage/*.key
+# Storage 
+ /storage/
+!/storage
+!/storage/**
+ /storage/*.key
 /storage/pail
 
 # Environment & Configuration
