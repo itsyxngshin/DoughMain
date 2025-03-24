@@ -71,7 +71,7 @@ body {
 }
 
 .navigation a:hover {
-  color: #51331B; /* Change text color to #51331B when hovered */
+  color: #51331B; 
 }
 
 .navigation img {
