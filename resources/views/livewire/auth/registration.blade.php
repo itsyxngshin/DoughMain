@@ -43,7 +43,7 @@
                 <span>Continue with Google</span>
             </button>
             <p class="text-gray-600 text-sm text-center mt-4">
-                Already have an account? <a href="#" class="text-blue-500">Log in here.</a>
+                Already have an account? <a href="{{route('login')}}" class="text-blue-500">Log in here.</a>
             </p>
         </div>
         <div class="w-1/2">
