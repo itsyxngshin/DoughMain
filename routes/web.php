@@ -12,7 +12,7 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::get('/register', function () {
-    return view('user_register');
+    return view('livewire.auth.registration');
 })->name('register');
 
 Route::get('/forgot', function () {
@@ -31,3 +31,4 @@ Route::get('/dashboard', function () {
 Route::get('/', function () {
     return view('welcome');
 });
+
