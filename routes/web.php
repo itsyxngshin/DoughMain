@@ -7,6 +7,17 @@ use App\Http\Livewire\Posts;
 use App\Http\Controllers\DashboardController;
 use App\Livewire\Auth\Login;
 
+//seller
+use App\Http\Livewire\ProductManagement;
+use App\Http\Controllers\ProductController;
+
+//admin
+use App\Livewire\Admin\AdminDashboard;
+use App\Livewire\Admin\AdminProductManagement;
+
+
+
+
 Route::get('/login', function () {
     return view('livewire.auth.login');
 })->name('login');
@@ -30,4 +41,29 @@ Route::get('/dashboard', function () {
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+//SELLERS 
+Route::get('/seller/products', function () {
+    return view('livewire.seller.product-management'); 
+})->name('productmanagement');
+
+
+Route::post('/seller/products/store', [ProductController::class, 'store'])->name('products.store');
+
+
+
+
+
+
+//ADMIN
+
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+
+    // Product Management Page for Admin (Livewire)
+    Route::get('/products', AdminProductManagement::class)->name('admin.products');
 });
