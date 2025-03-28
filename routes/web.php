@@ -8,13 +8,13 @@ use App\Http\Controllers\DashboardController;
 use App\Livewire\Auth\Login;
 
 //seller
-use App\Http\Livewire\ProductManagement;
+use App\Livewire\Seller\ProductManagement;
 use App\Http\Controllers\ProductController;
 
 //admin
 use App\Livewire\Admin\AdminDashboard;
 use App\Livewire\Admin\AdminProductManagement;
-
+use App\Livewire\Seller\Dashboard;
 
 
 
@@ -45,12 +45,16 @@ Route::get('/', function () {
 
 
 //SELLERS 
-Route::get('/seller/products', function () {
-    return view('livewire.seller.product-management'); 
-})->name('productmanagement');
+Route::prefix('seller')->group(function() {
+    Route::get('/products', function () {
+        return view('livewire.seller.product-management'); 
+    })->name('productmanagement');
 
+    Route::get('/dashboard', function () {
+        return view('livewire.seller.dashboard'); 
+    })->name('sellerdashboard');
+});
 
-Route::post('/seller/products/store', [ProductController::class, 'store'])->name('products.store');
 
 
 
