@@ -43,6 +43,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/homepage', function () {
+    return view('homepage'); 
+});
+
+Route::get('/products', function () {
+    return view('products'); 
+});
+
 
 //SELLERS 
 Route::prefix('seller')->group(function() {
