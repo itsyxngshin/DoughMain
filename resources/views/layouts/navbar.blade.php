@@ -16,7 +16,7 @@
 <body class="bg-gray-50">
 
     <!-- Navbar -->
-    <nav class="bg-white shadow-md py-1 px-2 flex justify-between items-center">
+    <nav class="bg-white shadow-md py-1 px-2 flex justify-between items-center fixed top-0 left-0 w-full z-50">
         <div class="flex items-center gap-0">
             <!-- Burger Button -->
             <button id="burger" class="p-2 focus:outline-none">
@@ -27,6 +27,14 @@
 
             <img src="{{ asset('storage/logof.png') }}" alt="Logo" class="w-16 h-16 scale-110">
             <span class="text-xl text-[#51331B] font-bold">DoughMain</span>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="relative w-96">
+            <input type="text" placeholder="Search by product, categories..." class="w-full p-2 pl-10 pr-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#51331B]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-3 top-2.5 w-5 h-5 text-gray-500" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M10 2a8 8 0 1 1-5.3 14.1l-4.2 4.2a1 1 0 0 1-1.4-1.4l4.2-4.2A8 8 0 0 1 10 2zm0 2a6 6 0 1 0 4.2 10.2a6 6 0 0 0-4.2-10.2z"/>
+            </svg>
         </div>
 
         <div class="flex gap-4 -translate-x-8">
@@ -66,7 +74,7 @@
 
     <div class="flex">
         <!-- Sidebar -->
-        <div id="sidebar" class="w-64 bg-white h-screen p-4 shadow-md transition-all duration-300">
+        <div id="sidebar" class="w-64 bg-white h-screen p-10 mt-12 shadow-md fixed left-0 top-0 h-full transition-all duration-300">
             <ul class="text-[#51331B] space-y-3">
             <li><a href="{{ route('admin.dashboard') }}" class="block p-2 text-[#51331B] font-semibold hover:bg-[#F8E3B6] rounded flex gap-1"><svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" viewBox="0 0 24 24"><path stroke-width="0.8" stroke="currentColor" fill="currentColor" d="M13.5 8.183V4.817q0-.357.234-.587t.58-.23h4.88q.347 0 .576.23t.23.587v3.366q0 .358-.234.587q-.234.23-.58.23h-4.88q-.346 0-.576-.23t-.23-.587M4 11.2V4.8q0-.34.234-.57t.58-.23h4.88q.347 0 .576.23t.23.57v6.4q0 .34-.234.57t-.58.23h-4.88q-.346 0-.576-.23T4 11.2m9.5 8v-6.4q0-.34.234-.57t.58-.23h4.88q.347 0 .576.23t.23.57v6.4q0 .34-.234.57t-.58.23h-4.88q-.346 0-.576-.23t-.23-.57M4 19.183v-3.366q0-.357.234-.587t.58-.23h4.88q.347 0 .576.23t.23.587v3.366q0 .358-.234.587q-.234.23-.58.23h-4.88q-.346 0-.576-.23T4 19.183M5 11h4.5V5H5zm9.5 8H19v-6h-4.5zm0-11H19V5h-4.5zM5 19h4.5v-3H5zm4.5-3"/></svg> Homepage</a></li>
                 <li><a href="#" class="block p-2 text-[#51331B] font-semibold hover:bg-[#F8E3B6] rounded flex gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" stroke-width="0.8" stroke="currentColor" d="M5 19V8.1L3.242 4.234l.916-.426L6.084 8.05h11.832l1.926-4.242l.916.427L19 8.1V19zm5-6.5h4q.213 0 .356-.144t.144-.357t-.144-.356T14 11.5h-4q-.213 0-.356.144t-.144.357t.144.356t.356.143M6 18h12V9.05H6zm0 0V9.05z"/></svg> Orders</a></li>
@@ -76,7 +84,7 @@
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1 p-6">
+        <div class="flex-1 p-6 pt-20 ml-64">
             @yield('content')
         </div>
     </div>
@@ -85,19 +93,19 @@
          window.onload = function () {
             document.getElementById('navbar').classList.remove('hidden');
         };
-    document.getElementById('burger').addEventListener('click', function () {
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.querySelector('.flex-1');
 
-        sidebar.classList.toggle('w-64');
-        sidebar.classList.toggle('w-0');
-        sidebar.classList.toggle('p-4');
-        sidebar.classList.toggle('p-0');
-        sidebar.classList.toggle('overflow-hidden');
+        document.getElementById('burger').addEventListener('click', function () {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.querySelector('.flex-1');
 
-        mainContent.classList.toggle('w-full');
-        mainContent.classList.toggle('ml-0');
-    });
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                mainContent.classList.add('ml-64');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                mainContent.classList.remove('ml-64');
+            }
+        });
 </script>
 
 </body>

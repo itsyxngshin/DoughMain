@@ -28,7 +28,7 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="w-3/4 p-6">
+    <main class="w-3/4 p-8 ml-8">
         <h2 class="text-2xl font-bold">Top Products</h2>
         <div class="grid grid-cols-4 gap-4 mt-4">
             @foreach (['pandesal' => 'Pandesal', 'ube' => 'Ube Pandesal', 'ensay' => 'Ensaymada', 'cass' => 'Cassava Cake'] as $img => $name)
@@ -56,7 +56,7 @@
 
         <h2 class="text-2xl font-bold mt-8">All Bakeries</h2>
         <div class="grid grid-cols-3 gap-4 mt-4">
-            @foreach (['bakery1' => "BJ's Bakery", 'bakery2' => "Kodie's Bakery", 'bakery3' => 'Bakery'] as $img => $name)
+            @foreach (['image1' => "BJ's Bakery", 'image2' => "Kodie's Bakery", 'image3' => 'Bakery'] as $img => $name)
             <div class="relative">
                 <img src="{{ asset('storage/' . $img . '.jpg') }}" class="rounded-lg w-full h-auto">
                 <div class="absolute inset-0 bg-gradient-to-t from-[#51331B]/70 to-transparent rounded-lg"></div> 
