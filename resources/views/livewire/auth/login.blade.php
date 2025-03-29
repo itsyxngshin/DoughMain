@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('log_screen')
-<div class="container-fluid min-vh-60 pt-4 d-flex align-items-center justify-content-center">
-    <div class="row w-55 shadow-lg rounded overflow-hidden">
-         <!-- Left Side: Image (Hidden on small screens) -->
-         <div class="col-lg-6 d-none d-lg-block p-0">
+<div class="container-fluid min-vh-80 pt-4 d-flex align-items-center justify-content-center">
+    <div class="row w-55 shadow-lg rounded overflow-hidden mt-4">
+        <!-- Left Side: Image (Hidden on small screens) -->
+        <div class="col-lg-6 d-none d-lg-block p-0">
             <img src="{{ asset('img/image 10.png') }}" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="Ube Cheese Pandesal">
         </div>
 

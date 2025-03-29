@@ -6,9 +6,7 @@
     <title>DoughMain Bakery</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css" />
-    @vite(['resources/css/style.css'])
-    @vite('resources/js/app.js')
+    @vite(['resources/css/style.css', 'resources/js/app.js'])
   </head>
   <body>
     <div class="landing-page-cont">
@@ -153,6 +151,6 @@
         </footer>
       </main>
     </div>
-    <script src="{{ asset('js/script.js') }}"></script>
+    @vite(['resources/js/app.js'])
   </body>
 </html>
