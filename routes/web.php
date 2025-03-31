@@ -9,6 +9,7 @@ use App\Livewire\Auth\Login;
 
 //seller
 use App\Livewire\Seller\ProductManagement;
+use App\Livewire\Seller\AddProduct;
 use App\Http\Controllers\ProductController;
 
 //admin
@@ -53,6 +54,20 @@ Route::prefix('seller')->group(function() {
     Route::get('/dashboard', function () {
         return view('livewire.seller.dashboard'); 
     })->name('sellerdashboard');
+
+    Route::get('/orders', function () {
+        return view('livewire.seller.order-management'); 
+    })->name('ordermanagement');
+
+    Route::get('/products/add', function () {
+        return view('livewire.seller.add-product'); 
+    })->name('addproduct');
+    Route::get('/products/update', function () {
+        return view('livewire.seller.update-product'); 
+    })->name('updateproduct');
+
+    //adding product Post
+    //Route::post('products/add', [AddProduct::class, 'store'])->name('addproduct');
 });
 
 
