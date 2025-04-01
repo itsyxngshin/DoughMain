@@ -1007,3 +1007,14 @@ h3 p {
       display: none;
     }
   }
+
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.features-container, .best-sellers-title, .products, .about-bakery, .section-about, .footer {
+  opacity: 0;
+  transform: translateY(50px);
+}
