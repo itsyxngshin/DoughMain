@@ -51,6 +51,10 @@ Route::get('/products', function () {
     return view('products'); 
 });
 
+Route::get('/faq', function () {
+    return view('faq'); 
+});
+
 // Profile Routes
 Route::get('/userprofile', [ProfileController::class, 'show'])->name('profile.show');
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
