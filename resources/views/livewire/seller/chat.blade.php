@@ -13,14 +13,14 @@
             <div class="grid grid-cols-[30%_auto] gap-5">
                 
                 <!-- Column 1 -->
-                <div class="relative py-0 gap-4">
+                <div class=" py-0 gap-4">
             
                     <h1 class=" font-bold text-[#51331b] text-3xl">Chats</h1>
-                    <div class="relative flex gap-3 pt-6 hidden md:flex">
+                    <div class=" flex gap-3 pt-6 hidden md:flex">
                         <!--Search box-->
                         <input type="text" placeholder="Search" class="pl-3 w-[50%] pr-3 py-1 text-sm border border-[#51331b] rounded-md">
                             <!-- Dropdown for Categories -->
-                                <div class="relative items-center ">
+                                <div class=" items-center ">
                                     <select name="category" class="border border-[#51331b] w-[50%] px-2 py-1 rounded-md flex">
                                         <option value="0" selected>All</option>
                                         <option value="1">Today</option>
