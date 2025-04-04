@@ -6,17 +6,16 @@ use App\Http\Livewire\Counter;
 use App\Http\Livewire\Posts;
 use App\Http\Controllers\DashboardController;
 use App\Livewire\Auth\Login;
+use App\Http\Controllers\ProfileController;
 
-//seller
+// Seller
 use App\Livewire\Seller\ProductManagement;
 use App\Http\Controllers\ProductController;
 
-//admin
+// Admin
 use App\Livewire\Admin\AdminDashboard;
 use App\Livewire\Admin\AdminProductManagement;
 use App\Livewire\Seller\Dashboard;
-
-
 
 Route::get('/login', function () {
     return view('livewire.auth.login');
@@ -37,6 +36,7 @@ Route::get('/dashboard', function () {
 Route::get('/dashboard', function () {
     return view('admin/dashboard'); // This renders the Blade template
 });
+
 /*Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');*/
 
 Route::get('/', function () {
@@ -51,8 +51,12 @@ Route::get('/products', function () {
     return view('products'); 
 });
 
+// Profile Routes
+Route::get('/userprofile', [ProfileController::class, 'show'])->name('profile.show');
+Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
-//SELLERS 
+// Sellers
 Route::prefix('seller')->group(function() {
     Route::get('/products', function () {
         return view('livewire.seller.product-management'); 
@@ -63,14 +67,7 @@ Route::prefix('seller')->group(function() {
     })->name('sellerdashboard');
 });
 
-
-
-
-
-
-
-//ADMIN
-
+// Admin
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
@@ -79,3 +76,7 @@ Route::prefix('admin')->group(function () {
     // Product Management Page for Admin (Livewire)
     Route::get('/products', AdminProductManagement::class)->name('admin.products');
 });
+
+Route::get('/cart', function () {
+    return view('cart');
+})->name('cart');
