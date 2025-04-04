@@ -11,11 +11,11 @@
 !/public/css/
 
 # Storage 
- /storage/
+!/storage/
 !/storage
 !/storage/**
- /storage/*.key
-/storage/pail
+!/storage/*.key
+!/storage/pail
 
 # Environment & Configuration
 .env

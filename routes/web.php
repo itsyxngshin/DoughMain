@@ -6,6 +6,7 @@ use App\Http\Livewire\Counter;
 use App\Http\Livewire\Posts;
 use App\Http\Controllers\DashboardController;
 use App\Livewire\Auth\Login;
+use App\Http\Controllers\ProfileController;
 
 // SELLER
 use App\Livewire\Seller\ProductManagement;
@@ -46,6 +47,7 @@ Route::get('/dashboard', function () {
 Route::get('/dashboard', function () {
     return view('admin/dashboard'); // This renders the Blade template
 });
+
 /*Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');*/
 
 Route::get('/', function () {
@@ -60,8 +62,12 @@ Route::get('/products', function () {
     return view('products'); 
 });
 
+// Profile Routes
+Route::get('/userprofile', [ProfileController::class, 'show'])->name('profile.show');
+Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
-//SELLERS 
+// Sellers
 Route::prefix('seller')->group(function() {
     //product management
     Route::get('/products', function () {
