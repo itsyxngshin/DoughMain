@@ -1,13 +1,11 @@
-@extends('layouts.seller')
+@extends('layouts.admin')
 
-@section('Product Management')
+@section('Bakery Management')
 
 @section('content')
     <div class="top-0 left-0 w-full h-auto bg-white shadow-lg bg-cover bg-center bg-no-repeat items-center px-0 " >
-        <div class="top-0 left-0 w-full h-[60px] bg-white border-b border-gray-200 bg-cover bg-center bg-no-repeat flex items-center px-6 rounded-t-xl">
-            <h1 class="text-[#51331b] font-bold text-2xl px-3">BJ Bakery</h1>
-        </div>    
-        <h1 class="px-12 pt-6 font-bold text-[#51331b] text-3xl">Products</h1>
+        
+        <h1 class="px-12 pt-6 font-bold text-[#51331b] text-3xl">Bakeries</h1>
         <div class="flex items-center h-[50px] px-12 space-between gap-10 mt-2">
             
         <!-- Dropdown for Items per Page -->
@@ -38,13 +36,13 @@
                 </select>
             </div>
 
-                <!-- Add Product Button -->
+                <!-- Add Bakery Button -->
                 <div class="ml-auto">
                     <button 
                         x-data 
                         @click="window.location.href='{{ route('addproduct') }}'" 
                         class="border border-[#51331b] text-[351331b] px-3 py-1 rounded-md text-sm flex items-center mr-3 hover:bg-[#51331b] hover:text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M5 13v-1h6V6h1v6h6v1h-6v6h-1v-6z"/></svg> Add Product
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M5 13v-1h6V6h1v6h6v1h-6v6h-1v-6z"/></svg> Add Bakery
                     </button>
                 </div>
             
@@ -60,13 +58,13 @@
                     <table class="w-full border-collapse">
                         <thead>
                             <tr class="border-b ">
-                                <th class="p-2 font-semibold">Product ID</th>
+                                <th class="p-2 font-semibold">Bakery ID</th>
                                 <th class="p-2 font-semibold">Picture</th>
                                 <th class="p-2 font-semibold">Name</th>
-                                <th class="p-2 font-semibold">Price</th>
-                                <th class="p-2 font-semibold">Category</th>
+                                <th class="p-2 font-semibold">Date Created</th>
                                 <th class="p-2 font-semibold">Available Stocks</th>
                                 <th class="p-2 font-semibold">Products Sold</th>
+                                <th class="p-2 font-semibold">Status</th>
                                 <th class="p-2 font-semibold"> </th>
                                 <th class="p-2 font-semibold"> </th>
                             </tr>
@@ -80,11 +78,13 @@
                                 <td class="p-2">T-Shirt</td>
                                 <td class="p-2">20</td>
                                 <td class="p-2">2</td>
+
+                            <!-- INSERT BUTTON FOR MODALS AND CONNECT THE PAGES-->
                                 <td class="p-2"><button class="mt-2" 
                                     x-data 
-                                    @click="window.location.href='{{ route('updateproduct') }}'"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32"><path fill="currentColor" d="M2 26h28v2H2zM25.4 9c.8-.8.8-2 0-2.8l-3.6-3.6c-.8-.8-2-.8-2.8 0l-15 15V24h6.4zm-5-5L24 7.6l-3 3L17.4 7zM6 22v-3.6l10-10l3.6 3.6l-10 10z"/></svg></button></td>
-                                <td class="p-2">@livewire('seller.modal.delete-product')</td>
-                                <td class="p-2"> @livewire('seller.modal.view-product-modal')</td>
+                                    @click="window.location.href='{{ route('admin.updatebakery') }}'"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32"><path fill="currentColor" d="M2 26h28v2H2zM25.4 9c.8-.8.8-2 0-2.8l-3.6-3.6c-.8-.8-2-.8-2.8 0l-15 15V24h6.4zm-5-5L24 7.6l-3 3L17.4 7zM6 22v-3.6l10-10l3.6 3.6l-10 10z"/></svg></button></td>
+                                <td class="p-2"></td>
+                                <td class="p-2"></td>
 
                             </tr>
                         </tbody>

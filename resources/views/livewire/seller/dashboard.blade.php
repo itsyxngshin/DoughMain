@@ -3,53 +3,75 @@
 @section('Product Management')
 
 @section('content')
-<main class="col-md-10 ms-sm-auto px-md-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Dashboard</h1>
+<div class="top-0 left-0 w-auto h-auto bg-white shadow-lg bg-cover bg-center bg-no-repeat items-center" >
+          
+    <h1 class="px-12 pt-6 font-bold text-[#51331b] text-3xl">Dashboard</h1>
+    
+    <div class="px-12 py-6">
+        <div class="flex gap-3">
+            <div class="border shadow-md rounded-xl shadow-gray-[10%] w-[30%] h-auto p-6 py-3 items-center gap-8">
+                <p class="font-semibold text-[#51331b] text-xl">Report 1</p>
+                <span class="text-4xl  font-bold">1</span>
             </div>
-
-            <!-- Statistics Cards -->
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card text-white bg-primary mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Total Users</h5>
-                            <p class="card-text">1,245</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card text-white bg-success mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Orders</h5>
-                            <p class="card-text">345</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card text-white bg-warning mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Revenue</h5>
-                            <p class="card-text">$15,730</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card text-white bg-danger mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Pending Orders</h5>
-                            <p class="card-text">12</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="border shadow-md rounded-xl shadow-gray-[10%] w-[30%] h-auto p-6 py-3 items-center gap-8">
+                <p class="font-semibold text-[#51331b] text-xl">Report 2</p>
+                <span class="text-4xl font-bold">P 200</span>
             </div>
+            <div class="border shadow-md rounded-xl shadow-gray-[10%] w-[30%] h-auto p-6 py-3 items-center gap-8">
+                <p class="font-semibold text-[#51331b] text-xl">Report 3</p>
+                <span class="text-4xl font-bold">P 170</span>
+            </div>
+            <div class="border shadow-md rounded-xl shadow-gray-[10%] w-[30%] h-auto p-6 py-3 items-center gap-8">
+                <p class="font-semibold text-[#51331b] text-xl">Report 4</p>
+                <span class="text-4xl font-bold">34</span>
+            </div>
+           
+        </div>
+    </div>
+    
+    <div class="pl-12 pr-12  pb-6 flex gap-3 grid-col-[30%_100%]">
+        
+            <div class="card">
+                <div class="card-body border rounded-xl w-full border-gray-300 p-6 py-3">
+                    <h2 class="font-bold text-xl pb-3">Recent Orders</h2>
+                    <table class="table table-striped text-[12px]">
+                        <thead>
+                            <tr>
+                                <th class="p-1">#</th>
+                                <th class="p-1">Customer</th>
+                                <th class="p-1">Amount</th>
+                                <th class="p-1">Status</th>
+                                <th class="p-1" >Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="p-1">1</td>
+                                <td class="p-1">John Doe</td>
+                                <td class="p-1">$120.00</td>
+                                <td class="p-1"><span class="badge bg-success">Completed</span></td>
+                                <td class="p-1">2025-03-12</td>
+                            </tr>
+                            <tr>
+                                <td class="p-1">2</td>
+                                <td class="p-1">Jane Smith</td>
+                                <td class="p-1">$80.00</td>
+                                <td class="p-1"><span class="badge bg-warning">Pending</span></td>
+                                <td class="p-1">2025-03-11</td>
+                            </tr>
+                            <tr>
+                                <td class="p-1">3</td>
+                                <td class="p-1">Michael Brown</td>
+                                <td class="p-1">$150.00</td>
+                                <td class="p-1"><span class="badge bg-danger">Cancelled</span></td>
+                                <td class="p-1">2025-03-10</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> 
 
-            <!-- Recent Orders Table -->
-            <div class="card mt-4">
-                <div class="card-header">
-                    Recent Orders
-                </div>
-                <div class="card-body">
+                <div class="card-body border rounded-xl w-full border-gray-300 p-6 mt-4 py-3">
+                    <h2 class="font-bold text-xl pb-3">Recent Orders</h2>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -84,11 +106,14 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </div> 
             </div>
 
-            <!-- Placeholder for Chart -->
-            <div class="card mt-4">
+            
+        
+
+        <!-- Placeholder for Chart -->
+        <div class="card w-full h-auto border border-gray-200 rounded-xl p-6">
                 <div class="card-header">
                     Sales Chart
                 </div>
@@ -96,7 +121,18 @@
                     <canvas id="salesChart"></canvas>
                 </div>
             </div>
-        </main>
+                
+    </div>
+
+
+
+
+            
+</div>
+
+
+
+
 
 
 
