@@ -13,13 +13,13 @@
             <h1 class="fw-bold text-4xl pb-1">Welcome back!</h1>
             <p class="text-muted pb-4">Login to continue</p>
 
-            <form method="POST" action="{{ route('login') }}">
+            <form wire:submit.prevent="login">
                 @csrf
 
                 <!-- Email Field -->
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+                    <label for="email" class="form-label" >Email</label>
+                    <input type="email" wire:model.lazy="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
                 </div>
 
                 <!-- Password Field -->
@@ -36,6 +36,7 @@
 
                 <!-- Login Button -->
                 <button type="submit" class="btn btn-dark w-100">Login</button>
+                
 
                 <!-- Forgot Password -->
                 <div class="text-center mt-3">
@@ -53,8 +54,11 @@
 
                 <!-- Sign Up -->
                 <p class="text-center mt-3">
-                    Don't have an account? <a href="#" class="fw-bold">Sign up here.</a>
+                    Don't have an account? <a href="{{ route('register') }}" class="fw-bold">Sign up here.</a>
                 </p>
+                @if(session('error'))
+                    <p style="color:red;">{{ session('error') }}</p>
+                @endif
             </form>
         </div>
     </div>
