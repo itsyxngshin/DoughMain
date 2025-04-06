@@ -1,8 +1,8 @@
 @extends('layouts.navbar')
 
 @section('content')
-<div class="">
-    <div class="w-full max-w-30xl bg-white shadow-lg rounded-lg p-6 mt-5">
+<div class="min-h-screen flex justify-center items-start mt-8">
+    <div class="w-full max-w-6xl bg-white shadow-lg rounded-lg p-6">
         <!-- Title -->
         <h2 class="text-2xl font-bold text-brown-700 flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="mr-2" fill="currentColor">
@@ -70,10 +70,36 @@
             <div class="text-lg font-semibold">
                 Total (1 item): <span class="text-brown-700">₱100</span>
             </div>
-            <button class="px-6 py-2 bg-[#1E1E1E] text-white font-semibold rounded-lg shadow-md hover:bg-black">
+            <button onclick="toggleModal(true)" class="px-6 py-2 bg-[#1E1E1E] text-white font-semibold rounded-lg shadow-md hover:bg-black">
                 Check Out
             </button>
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    <div class="bg-white p-8 rounded-lg shadow-lg text-center relative">
+        <button onclick="toggleModal(false)" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-xl">&times;</button>
+        <h3 class="text-2xl font-bold text-[#4A2E0F] mb-6">Proceed to Checkout?</h3>
+        <div class="flex justify-center gap-4">
+            <button onclick="toggleModal(false)" class="px-4 py-2 border border-[#4A2E0F] text-[#4A2E0F] rounded-md hover:bg-gray-100">
+                No
+            </button>
+            <a href="{{ route('checkout.page') }}">
+                <button class="px-4 py-2 bg-[#4A2E0F] text-white rounded-md hover:bg-[#3c2410]">
+                    Yes
+                </button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Script -->
+<script>
+    function toggleModal(show) {
+        const modal = document.getElementById('checkoutModal');
+        modal.classList.toggle('hidden', !show);
+    }
+</script>
 @endsection

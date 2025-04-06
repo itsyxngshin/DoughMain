@@ -7,6 +7,7 @@ use App\Http\Livewire\Posts;
 use App\Http\Controllers\DashboardController;
 use App\Livewire\Auth\Login;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CheckoutController;
 
 // Seller
 use App\Livewire\Seller\ProductManagement;
@@ -80,3 +81,21 @@ Route::prefix('admin')->group(function () {
 Route::get('/cart', function () {
     return view('cart');
 })->name('cart');
+
+
+Route::get('/checkout', function () {
+    return view('checkout');
+})->name('checkout.page');
+
+Route::get('/order-placed', function () {
+    return view('order-placed');
+})->name('order.placed');
+
+Route::get('/home', function () {
+    return view('home'); // Replace with actual view
+})->name('home');
+
+Route::get('/purchases', function () {
+    return view('purchases'); // Replace with actual view
+})->name('purchases');
+
