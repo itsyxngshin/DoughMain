@@ -4,19 +4,29 @@
 
 @section('screen-verification')
 <div class="flex justify-center items-center min-h-screen bg-white">
-  <div class="w-full max-w-7xl h-screen flex justify-center items-center">
+  <div class="w-1/4 max-w-7xl h-20 p-8 flex justify-center items-center">
     <div class="relative w-[1026px] h-[847px] bg-white rounded-[25px] shadow-lg flex flex-col items-center p-10">
-      <img class="w-[100px] h-[100px] mt-5" src="{{ asset('img/group.png') }}" alt="Logo" />
-      <div class="text-4xl font-bold text-gray-800 mt-5">Verification Code</div>
-      <img class="w-[173px] h-[146px] mt-5" src="{{ asset('img/image.svg') }}" alt="Illustration" />
-      <div class="relative w-[512px] h-[119px] mt-10">
-        <img class="absolute w-[492px] h-[99px] top-[7px] left-[2px]" src="{{ asset('img/vector.svg') }}" alt="Vector" />
-        <img class="absolute w-full h-full top-0 left-0" src="{{ asset('img/vector-2.svg') }}" alt="Vector 2" />
+      <img src="{{ asset('img/group.png') }}" alt="Logo" class="w-[100px] h-[100px] mt-5" />
+      
+      <div class="text-4xl font-bold text-gray-800 mt-5">
+        Verification Code
       </div>
-      <p class="text-lg text-gray-800 text-center mt-10 w-[590px]">
+
+      <img src="{{ asset('img/image.svg') }}" alt="Illustration" class="w-[173px] h-[146px] mt-5" />
+
+      <div class="relative w-[512px] h-[119px] mt-10">
+        @for ($i = 1; $i <= 6; $i++)
+        <input type="text" id="digit{{ $i }}" name="digit{{ $i }}" class="tfa-input"
+               maxlength="1" pattern="[0-9]" required>
+        @endfor
+
+      </div>
+
+      <p class="mt-10 w-[590px] text-lg text-gray-800 text-center">
         We have sent a verification code to your email account to verify your account. Please enter your verification
         code.
       </p>
+
       <button class="mt-10 w-[218px] h-[55px] bg-black text-white text-lg font-bold rounded-[20px]">
         Resend
       </button>

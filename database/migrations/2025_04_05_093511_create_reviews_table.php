@@ -12,7 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reviews', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+            $table->foreignId('order_id')->constrained('products')->onDelete('cascade');
+            $table->foreignId('shop_id')->constrained('products')->onDelete('cascade');
+            $table->text('review_text');
+            $table->string('review_image')->nullable(); #if upload of image is possible
+            $table->integer('rating')->default(0);
             $table->timestamps();
         });
     }

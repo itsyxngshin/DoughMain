@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('fees', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
+            $table->foreignId('order_id')->index();
+            $table->enum('fee_type', ['Delivery Fee', 'Service Fee', 'VAT'])->default('Delivery Fee');
+            $table->decimal('fee_amount', 10, 2);
             $table->timestamps();
         });
     }

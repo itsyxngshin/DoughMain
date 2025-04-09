@@ -12,7 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('payments', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
+            $table->foreignId('order_id')->index();
+            $table->foreignId('payment_method_id')->index();
+            $table->string('provider_transc_id')->nullable();
+            $table->string('provider_intend_id')->nullable();
+            $table->enum('status', ['pending', 'completed', 'failed', 'refunded'])->default('pending');
+            $table->decimal('amount', 10, 2)->nullable();
+            $table->json('provider_response');
+            $table->string('provider_response_code')->nullable();
+            $table->dateTime('paid_at')->nullable();
+            $table->dateTime('refunded_at')->nullable();
+            $table->dateTime('failed_at')->nullable();
             $table->timestamps();
         });
     }

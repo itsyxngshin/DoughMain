@@ -12,7 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('shops', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
+            $table->foreignId('manage_id'); 
+            $table->string('shop_name')->unique();
+            $table->string('shop_description')->nullable();
+            $table->foreignId('shop_logo_id')->nullable()->constrained('shop_logos')->onDelete('set null');
+            $table->string('shop_address_id')->nullable();
             $table->timestamps();
         });
     }

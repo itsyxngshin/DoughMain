@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('user_statuses', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
+            $table->string('name')->unique();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

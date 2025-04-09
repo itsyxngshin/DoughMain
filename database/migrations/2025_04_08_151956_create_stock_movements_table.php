@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shop_logos', function (Blueprint $table) {
+        Schema::create('stock_movements', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('logo_path')->nullable(false);
+            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+            $table->integer('quantity');
+            $table->enum('movement_type', ['in', 'out']);
+            $table->dateTime('change_date')->nullable();
+            $table->string('remarks')->nullable();
             $table->timestamps();
         });
     }
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('shop_logos');
+        Schema::dropIfExists('stock_movements');
     }
 };

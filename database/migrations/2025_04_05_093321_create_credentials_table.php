@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('credentials', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
+            $table->string('email')->unique();
+            $table->string('password')->nullable(false); // hashed
+            $table->string('phone_number')->nullable();
             $table->timestamps();
         });
     }
