@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('credentials', function (Blueprint $table) {
             $table->id()->autoIncrement();
+            $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password')->nullable(false); // hashed
             $table->string('phone_number')->nullable();

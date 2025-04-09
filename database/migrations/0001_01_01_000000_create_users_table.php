@@ -13,7 +13,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->foreignId('credential_id')->nullable()->index();
-            $table->string('username')->unique();
+            $table->string('profile_photo');
             $table->string('first_name');
             $table->string('last_name');
             $table->foreignId('status_id')->index();
