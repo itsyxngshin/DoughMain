@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('password')->nullable(false); // hashed
             $table->string('phone_number')->nullable();
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

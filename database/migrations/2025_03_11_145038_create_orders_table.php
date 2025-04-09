@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->foreignId('shop_id');
             $table->decimal('total_amount', 10, 2);
-            $table->enum('status', ['Pending', 'Completed', 'Failed'])->default('Pending');
+            $table->enum('status', ['Pending', 'Completed', 'Failed', 'Cancelled'])->default('Pending');
             $table->enum('payment_method', ['On-Pickup', 'Online Banking']);
             $table->string('delivery_address');
             $table->date('date_arrangement');

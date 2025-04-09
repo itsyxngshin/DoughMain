@@ -15,6 +15,8 @@ class LocationSeeder extends Seeder
     {
         DB::table('locations')->insert([
             'user_id' => 0, // Replace with the appropriate user ID
+            'shop_id' => 0, // Replace with the appropriate shop ID
+            // Assuming you have a user and shop with ID 1 for testing
             'latitude' => 13.1394,
             'longitude' => 123.7438,
             'region' => 'Bicol Region',

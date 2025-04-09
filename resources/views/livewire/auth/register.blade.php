@@ -1,4 +1,4 @@
-@extends('layouts.registration')
+@extends('components.layouts.registration')
 
 @section('title', 'Sign Up - DoughMain')
 

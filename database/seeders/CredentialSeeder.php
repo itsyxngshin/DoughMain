@@ -21,7 +21,7 @@ class CredentialSeeder extends Seeder
                 'phone_number' => '09123456789',
                 'created_at' => now(),
                 'updated_at' => now(),
-                'deleted_at' => now(),
+                'deleted_at' => null,
             ],
             [
                 'username' => 'itxme_elle',

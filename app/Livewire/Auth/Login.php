@@ -4,6 +4,8 @@ namespace App\Livewire\Auth;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Credential;
+use Illuminate\Support\Facades\Hash;
 
 
 class Login extends Component
@@ -21,16 +23,22 @@ class Login extends Component
     {
         $this->validate();
 
-        if (Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
-            session()->regenerate();
-            return redirect()->route('dashboard'); // Change to your desired route
+        // Check if the credentials exist in the credentials table
+        $credential = Credential::where('email', $this->email)->first();
+
+        if ($credential && Hash::check($this->password, $credential->password)) {
+            Auth::login($credential->user, $this->remember); // Log in the related User model
+
+            // Redirect after successful login
+            return redirect()->intended('/admin/dashboard');
         }
 
-        $this->addError('email', 'Invalid email or password.');
+        // If invalid credentials, show error
+        session()->flash('error', 'Invalid email or password');
     }
 
-    public function render()
-{
-    return view('livewire.auth.login')->with('extends', 'layouts.auth');
-}
+    public function render(){
+
+        return view('livewire.auth.login')->with('layout', 'components.layouts.app'); // Specify layout here;
+    }
 }

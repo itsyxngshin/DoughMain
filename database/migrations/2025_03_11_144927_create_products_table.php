@@ -20,8 +20,9 @@ return new class extends Migration
             $table->string('product_image')->nullable();
             $table->decimal('product_price', 10, 2);
             $table->enum('product_status', ['available', 'unavailable'])->default('available');
-            $table->foreignId('stocks_id')->index()->notNullable();
+            $table->foreignId('stock_id')->index()->notNullable();
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

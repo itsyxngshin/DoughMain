@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('components.layouts.app')
 
 @section('log_screen')
 <div class="container-fluid min-vh-80 pt-4 d-flex align-items-center justify-content-center">
@@ -19,7 +19,7 @@
                 <!-- Email Field -->
                 <div class="mb-3">
                     <label for="email" class="form-label" >Email</label>
-                    <input type="email" wire:model.lazy="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+                    <input type="email" wire:model.lazy="email" id="email" name="email" class="form-control" placeholder="Enter your email" value="{{ old('email') }}" required>
                 </div>
 
                 <!-- Password Field -->
