@@ -14,11 +14,34 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'total_price', 'status'];
-
+    protected $table = 'orders';
+    protected $fillable = [
+        'user_id',
+        'shop_id',
+        'total_amount',
+        'total_items',
+        'delivery_address',
+        'order_status',
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
+    }
+    public function fees()
+    {
+        return $this->hasMany(Fee::class);
+    }
+    public function logs()
+    {
+        return $this->hasMany(Log::class);
+    }
+    public function order()
+    {
+        return $this->hasMany(Order::class);
     }
 }
 

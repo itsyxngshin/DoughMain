@@ -33,11 +33,11 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::get('/register', function () {
-    return view('user_register');
+    return view('livewire.auth.register');
 })->name('register');
 
 Route::get('/forgot', function () {
-    return view('password.request');
+    return view('livewire.auth.two-factor');
 })->name('forgot');
 
 Route::get('/dashboard', function () {
