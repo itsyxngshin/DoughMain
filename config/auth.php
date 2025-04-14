@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
     'guard' => 'web',
-    'passwords' => 'credentials',
+    'passwords' => 'users',
     ],
 
     /*
@@ -62,7 +62,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\Credential::class),
+            'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
 
         // 'users' => [

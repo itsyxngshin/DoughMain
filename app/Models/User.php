@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Model
+class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -19,7 +19,8 @@ class User extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
     ];
@@ -30,7 +31,6 @@ class User extends Model
      * @var list<string>
      */
     protected $hidden = [
-        'password',
         'remember_token',
     ];
 
@@ -47,10 +47,6 @@ class User extends Model
         ];
     }
 
-    function credential()
-    {
-        return $this->hasOne(Credential::class, 'credential_id', 'id');
-    }
     function password_reset_token()
     {
         return $this->hasOne(PasswordResetToken::class, 'email', 'email');

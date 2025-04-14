@@ -14,13 +14,17 @@ class AccessMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle($request, Closure $next, ...$roles)
+    public function handle(Request $request, Closure $next, $role)
     {
-        $credential = Auth::user(); // You're authenticated as Credential
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
 
-        // Check if the related User has a role in the allowed roles
-        if (!$credential || !$credential->user || !in_array($credential->user->role->role_name, $roles)) {
-            abort(403, 'Unauthorized.');
+        // Assuming you have a role relationship or column
+        $user = Auth::user();
+        
+        if ($user->role->name !== $role) {
+            return abort(403, 'Unauthorized access.');
         }
 
         return $next($request);

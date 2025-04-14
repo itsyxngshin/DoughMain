@@ -2,7 +2,7 @@
 
 @section('title', 'Verification Code')
 
-@section('screen-verification')
+@section('content')
 <div class="flex justify-center items-center min-h-screen bg-white">
   <div class="w-1/4 max-w-7xl h-20 flex justify-center items-center">
     <div class="relative w-[900px] h-[650px] bg-white rounded-[25px] shadow-lg flex flex-col items-center p-10">

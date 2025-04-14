@@ -4,9 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\DoughMainComp;
 use App\Http\Livewire\Counter;
 use App\Http\Livewire\Posts;
+use App\Http\Controllers\AuthController;
+use App\Livewire\Auth\Register; // Import the Register class
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController; // Import AdminController
 use App\Http\Controllers\Auth\CredentialAuthController; // Add this import at the top
+use App\Http\Controllers\Auth\AuthenticatedSessionController; // Import AuthenticatedSessionController
 use App\Livewire\Auth\Login;
 
 //seller
@@ -24,16 +27,50 @@ use App\Livewire\Admin\AdminProductManagement;
 use App\Livewire\Seller\Dashboard;
 
 
+Route::middleware('guest')->group(function () {
+    // Show the login form
+    Route::get('/register', [AuthController::class, 'registerView'])->name('register');
+    Route::post('/passRegister', [AuthController::class, 'register'])->name('passRegister');
+    Route::get('/login', [AuthController::class, 'loginView'])->name('login');
+    Route::post('/passLogin', [AuthController::class, 'login'])->name('passLogin');
+});
+
+/*
+Route::middleware('guest')->group(function () {
+    Route::get('/login', Login::class)->name('login');
+    Route::get('/register', Register::class)->name('register');
+});
+*/
+Route::middleware('auth')->get('/home', function () {
+    return view('homepage');
+})->name('homepage');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', function () {
+        return view('homepage');
+    })->name('homepage');
+});
+
+
+// Logout route
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('livewire.seller.dashboard');
     })->name('register');
 
+
+Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+
     //Route::get('/admin/dashboard', [AdminController::class, 'index']);
 });
 
-Route::get('/login', Login::class)->name('login'); // Points to Livewire component
-Route::post('/login', [CredentialAuthController::class, 'login']); // Fallback for any manual POST handling
+#Route::get('/login', function () {
+ #   return view('livewire.auth.login'); // This loads the Blade view where you include Livewire component
+#})->name('login');
+
+# Route::post('/login', [CredentialAuthController::class, 'login']); // Fallback for any manual POST handling
 
 Route::get('/register', function () {
     return view('livewire.auth.register');
@@ -43,6 +80,7 @@ Route::get('/forgot', function () {
     return view('livewire.auth.two-factor');
 })->name('forgot');
 
+/*
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware('auth')->name('dashboard');

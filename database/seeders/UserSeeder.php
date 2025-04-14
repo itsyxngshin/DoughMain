@@ -19,18 +19,19 @@ class UserSeeder extends Seeder
             [
                 'first_name' => 'Adornado',
                 'last_name' => 'Cabalbag',
-                'credential_id' => '0',
+                'username' => 'its_yxngshinn',
+                'email' => 'yxngshinn@gmail.com',
+                'password' => bcrypt('adminShin'),
+                'phone_number' => '+639123456789',
                 'profile_photo' => '1000071957-01.jpg',
-                'role_id' => 0,
+                'role_id' => 2,
                 'status_id' => 0,
                 'location_id' => 0,
                 'nationality' => 'Filipino',
                 'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-                
+                'updated_at' => Carbon::now(), 
             ],
         ];
-
         DB::table('users')->insert($users);
     }
 }

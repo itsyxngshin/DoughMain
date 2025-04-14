@@ -1,6 +1,6 @@
 @extends('components.layouts.app')
 
-@section('log_screen')
+@section('content')
 <div class="container-fluid min-vh-80 pt-4 d-flex align-items-center justify-content-center">
     <div class="row w-55 shadow-lg rounded overflow-hidden mt-4">
         <!-- Left Side: Image (Hidden on small screens) -->
@@ -13,24 +13,24 @@
             <h1 class="fw-bold text-4xl pb-1">Welcome back!</h1>
             <p class="text-muted pb-4">Login to continue</p>
 
-            <form wire:submit.prevent="login">
+            <form method="POST" action="{{ route('passLogin') }}">
                 @csrf
 
                 <!-- Email Field -->
                 <div class="mb-3">
                     <label for="email" class="form-label" >Email</label>
-                    <input type="email" wire:model.lazy="email" id="email" name="email" class="form-control" placeholder="Enter your email" value="{{ old('email') }}" required>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" value="{{ old('email') }}" required>
                 </div>
 
                 <!-- Password Field -->
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required autocomplete="current-password">
                 </div>
 
                 <!-- Remember Me -->
                 <div class="mb-3 form-check">
-                    <input type="checkbox" id="remember" name="remember" class="form-check-input">
+                    <input type="checkbox" id="remember" wire:model.defer="remember" name="remember" class="form-check-input">
                     <label for="remember" class="form-check-label">Remember me</label>
                 </div>
 
