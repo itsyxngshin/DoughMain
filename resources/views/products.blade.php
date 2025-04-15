@@ -19,10 +19,19 @@
       </div>
     </div>
 
-    <!-- Bakery Banner -->
+    <!-- Bakery Banner with Review Section -->
     <div class="relative">
-      <img src="{{ asset('storage/image3.jpg') }}" alt="Bakery Display" class="w-full h-80 object-cover rounded-lg shadow-md">
+      <img src="{{ asset('storage/bakery1.jpg') }}" alt="Bakery Display" class="w-full h-80 object-cover rounded-lg shadow-md">
       <h1 class="absolute top-10 left-10 text-white text-4xl font-bold">BJ's Bakery</h1>
+
+      <!-- Review Section with Transparent Background -->
+      <div class="absolute bottom-4 left-4 p-3 rounded-lg cursor-pointer bg-transparent" id="reviewSection">
+        <div class="flex items-center">
+          <span class="text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+          <span class="font-semibold text-white ml-2">4/5 stars</span>
+        </div>
+        <p class="text-black-500 text-xs">Click to see reviews</p>
+      </div>
     </div>
 
     <h1 class="text-center text-4xl font-semibold mt-10 italic">Pastries</h1>
@@ -89,7 +98,7 @@
     </div>
   @endforeach
 </div>
-    
+
   </div>
 </section>
 
@@ -114,6 +123,31 @@
             <!-- Add to Cart Button (Dark Background) -->
             <a id="addToCartLink" href="#" class="text-white text-center py-2 px-7 rounded"
                style="background-color: #1E1E1E;">Add to Cart</a>
+        </div>
+    </div>
+</div>
+
+<!-- Review Modal -->
+<div id="reviewModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative">
+        <button id="closeReviewModal" class="absolute top-2 right-2 text-gray-500 hover:text-red-500">✕</button>
+
+        <h2 class="text-xl font-semibold text-center">Customer Reviews</h2>
+
+        <!-- Reviews Content -->
+        <div class="mt-4">
+            <div class="flex items-center">
+                <span class="text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                <p class="text-gray-700 text-sm ml-2">“Great cakes! My favorite is the Yema cake. It's so moist and fluffy.” – Sarah</p>
+            </div>
+            <div class="flex items-center mt-4">
+                <span class="text-yellow-400">&#9733;&#9733;&#9733;&#9734;&#9734;</span>
+                <p class="text-gray-700 text-sm ml-2">“The bread is soft, but I think the pies could use a little more flavor.” – John</p>
+            </div>
+            <div class="flex items-center mt-4">
+                <span class="text-yellow-400">&#9733;&#9733;&#9733;&#9734;&#9734;</span>
+                <p class="text-gray-700 text-sm ml-2">“Love the fresh taste of the pastries! Will definitely return.” – Emma</p>
+            </div>
         </div>
     </div>
 </div>
@@ -201,8 +235,29 @@ document.addEventListener("DOMContentLoaded", function () {
             modal.classList.add("hidden");
         }
     });
+
+    // Review Modal Elements
+    const reviewModal = document.getElementById("reviewModal");
+    const reviewSection = document.getElementById("reviewSection");
+    const closeReviewModal = document.getElementById("closeReviewModal");
+
+    // Open Review Modal Event
+    reviewSection.addEventListener("click", function () {
+        reviewModal.classList.remove("hidden");
+    });
+
+    // Close Review Modal
+    closeReviewModal.addEventListener("click", function () {
+        reviewModal.classList.add("hidden");
+    });
+
+    // Close Review Modal When Clicking Outside of It
+    reviewModal.addEventListener("click", function (event) {
+        if (event.target === reviewModal) {
+            reviewModal.classList.add("hidden");
+        }
+    });
 });
 </script>
-
 
 @endsection
