@@ -18,14 +18,20 @@
 
                 <!-- Email Field -->
                 <div class="mb-3">
-                    <label for="email" class="form-label" >Email</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" value="{{ old('email') }}" required>
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Enter your email" value="{{ old('email') }}" required>
+                    @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- Password Field -->
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required autocomplete="current-password">
+                    <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Enter your password" required autocomplete="current-password">
+                    @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- Remember Me -->
@@ -36,11 +42,10 @@
 
                 <!-- Login Button -->
                 <button type="submit" class="btn btn-dark w-100">Login</button>
-                
 
                 <!-- Forgot Password -->
                 <div class="text-center mt-3">
-                    <a href="#" class="text-decoration-none text-muted">Forgot Password?</a>
+                    <a href="javascript:void(0);" class="text-decoration-none text-muted" id="forgotPasswordLink">Forgot Password?</a>
                 </div>
 
                 <!-- Divider -->
@@ -63,4 +68,59 @@
         </div>
     </div>
 </div>
+
+<!-- Forgot Password Modal -->
+<div id="forgotPasswordModal" class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50 d-none" style="z-index: 1050;">
+    <div class="bg-white p-4 p-md-5 rounded-4 shadow-lg" style="width: 100%; max-width: 420px;">
+        <div class="mb-4 text-center">
+            <h4 class="fw-bold mb-1">Forgot Password</h4>
+            <p class="text-muted mb-0">Enter your email and we'll send you a reset link.</p>
+        </div>
+
+        <!-- Displaying errors inside the modal only -->
+        @if(session('forgot_password_error'))
+            <div class="alert alert-danger mt-3" role="alert">
+                {{ session('forgot_password_error') }}
+            </div>
+        @endif
+
+        <form method="POST" action="{{ route('password.email') }}">
+            @csrf
+            <div class="mb-3">
+                <label for="resetEmail" class="form-label">Email Address</label>
+                <input type="email" class="form-control @error('email') is-invalid @enderror" id="resetEmail" name="email" placeholder="example@example.com" required>
+                @error('email')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="d-flex justify-content-end mt-4">
+                <button type="button" class="btn btn-outline-secondary me-2" id="closeModalBtn">Cancel</button>
+                <button type="submit" class="btn btn-dark">Send Reset Link</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+        const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        forgotPasswordLink.addEventListener('click', () => {
+            forgotPasswordModal.classList.remove('d-none');
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            forgotPasswordModal.classList.add('d-none');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === forgotPasswordModal) {
+            }
+        });
+    });
+</script>
 @endsection

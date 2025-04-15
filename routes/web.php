@@ -12,7 +12,7 @@ use App\Http\Controllers\Auth\CredentialAuthController; // Add this import at th
 use App\Http\Controllers\Auth\AuthenticatedSessionController; // Import AuthenticatedSessionController
 use App\Livewire\Auth\Login;
 
-//seller
+// seller
 use App\Livewire\Seller\ProductManagement;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
@@ -21,11 +21,13 @@ use Illuminate\Validation\ValidationException;
 use App\Models\Credential; // Ensure this is the correct namespace for the Credential model
 use Illuminate\Support\Facades\Hash;
 
-//admin
+// admin
 use App\Livewire\Admin\AdminDashboard;
 use App\Livewire\Admin\AdminProductManagement;
 use App\Livewire\Seller\Dashboard;
 
+// Forgot Password Controller
+use App\Http\Controllers\Auth\ForgotPasswordController; // <--- Added this line
 
 Route::middleware('guest')->group(function () {
     // Show the login form
@@ -34,6 +36,9 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'loginView'])->name('login');
     Route::post('/passLogin', [AuthController::class, 'login'])->name('passLogin');
 });
+
+// Forgot Password Route
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email'); // <--- Added this line
 
 /*
 Route::middleware('guest')->group(function () {
@@ -60,14 +65,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         return view('livewire.seller.dashboard');
     })->name('register');
 
-
-Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+    Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
     //Route::get('/admin/dashboard', [AdminController::class, 'index']);
 });
 
 #Route::get('/login', function () {
- #   return view('livewire.auth.login'); // This loads the Blade view where you include Livewire component
+#   return view('livewire.auth.login'); // This loads the Blade view where you include Livewire component
 #})->name('login');
 
 # Route::post('/login', [CredentialAuthController::class, 'login']); // Fallback for any manual POST handling
@@ -102,8 +106,7 @@ Route::get('/products', function () {
     return view('products'); 
 });
 
-
-//SELLERS 
+// SELLERS 
 Route::prefix('seller')->group(function() {
     Route::get('/products', function () {
         return view('livewire.seller.product-management'); 
@@ -114,14 +117,7 @@ Route::prefix('seller')->group(function() {
     })->name('sellerdashboard');
 });
 
-
-
-
-
-
-
-//ADMIN
-
+// ADMIN
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
