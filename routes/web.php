@@ -50,15 +50,17 @@ Route::middleware('auth')->get('/home', function () {
     return view('homepage');
 })->name('homepage');
 
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', function () {
         return view('homepage');
     })->name('homepage');
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-
 // Logout route
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', function () {

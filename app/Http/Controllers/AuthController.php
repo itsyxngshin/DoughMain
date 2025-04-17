@@ -64,43 +64,13 @@ class AuthController extends Controller
         return back()->with('error', 'Invalid email or password');
     }
     
-    public function blue(Request $request)
-    {
-        // Validate the login data
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-        ]);
+    public function logout(Request $request)
+{
+    Auth::logout();
 
-        // Log login attempt data for debugging
-        Log::debug('Login attempt', [
-            'email' => $request->email,
-            'remember' => $request->remember,
-        ]);
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
 
-        // Attempt to authenticate the user
-        if (Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
-            // Regenerate session to prevent session fixation
-            $request->session()->regenerate();
-
-            // Redirect to the intended URL or dashboard
-            return redirect()->intended('/dashboard');
-        }
-
-        // Return with an error message if authentication fails
-        return back()->withErrors([
-            'email' => 'These credentials do not match our records.',
-        ]);
-    }
-
-    /**
-     * Log the user out of the application.
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function logout()
-    {
-        Auth::logout();
-        return redirect('/login');
-    }
+    return redirect('/login')->with('success', 'Logged out successfully.');
+}
 }
