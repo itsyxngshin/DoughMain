@@ -1,4 +1,4 @@
-@extends('layouts.seller')
+@extends('components.layouts.seller')
 
 @section('Product Management')
 

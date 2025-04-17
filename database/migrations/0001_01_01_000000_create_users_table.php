@@ -9,14 +9,22 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
+    public function up(): void{
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->id()->autoIncrement();
+            $table->string('username')->nullable();
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable(false); // hashed
+            $table->string('phone_number')->nullable();
+            $table->string('profile_photo')->nullable(true);
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->foreignId('status_id')->index();
+            $table->foreignId('role_id')->index();
+            $table->string('nationality')->nullable()->default('Filipino');
+            $table->foreignId('location_id')->index();
+            # $table->timestamp('email_verified_at')->nullable();
+            # $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
