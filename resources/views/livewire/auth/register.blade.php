@@ -3,21 +3,26 @@
 @section('title', 'Sign Up - DoughMain')
 
 @section('content')
-<main class="bg-white shadow-lg rounded-xl overflow-hidden flex flex-col lg:flex-row max-w-screen-lg w-full mx-auto h-screen">
-    <!-- Left (Form Side) -->
-    <div class="flex-1 p-6 md:p-8 overflow-y-auto max-h-screen">
+<main class="bg-white shadow-lg rounded-xl overflow-hidden flex flex-col lg:flex-row max-w-screen-lg w-full mx-auto my-9 h-[90vh]">
+     <!-- Left (Form Side) -->
+     <div class="flex-1 p-6 md:p-8 overflow-y-auto max-h-screen">
         <h1 class="text-3xl font-bold text-gray-800 mb-2">Welcome!</h1>
         <p class="text-gray-600 mb-6">Register to continue.</p>
 
         <!-- Tabs -->
         <div class="flex space-x-4 mb-6 justify-center items-center text">
-            <button id="userTab" class="tab-button text-gray-700 font-semibold px-4 py-2 border-b-2 border-blue-500 focus:outline-none">User</button>
-            <button id="sellerTab" class="tab-button text-gray-500 font-semibold px-4 py-2 border-b-2 border-transparent hover:border-blue-300 focus:outline-none">Seller</button>
+            <button id="userTab" class="tab-button text-gray-700 font-semibold px-4 py-2 relative focus:outline-none">
+                User
+                <span id="userIndicator" class="absolute bottom-0 left-0 w-full h-1 bg-blue-500 transition-all duration-300 transform scale-x-0"></span>
+            </button>
+            <button id="sellerTab" class="tab-button text-gray-500 font-semibold px-4 py-2 relative focus:outline-none">
+                Seller
+                <span id="sellerIndicator" class="absolute bottom-0 left-0 w-full h-1 bg-green-500 transition-all duration-300 transform scale-x-0"></span>
+            </button>
         </div>
 
-
         <!-- User Registration Form -->
-        <form id="userForm" class="space-y-4" method="POST" action="{{ route('passRegister') }}">
+        <form id="userForm" class="space-y-4 w-full max-w-md transition-all opacity-100 transform" method="POST" action="{{ route('passRegister') }}">
             @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -67,7 +72,7 @@
         </form>
 
         <!-- Seller Registration Form -->
-        <form id="sellerForm" class="space-y-4 hidden" method="POST" action="{{ route('register') }}">
+        <form id="sellerForm" class="space-y-4 w-full max-w-md hidden transition-all opacity-100 transform" method="POST" action="{{ route('register') }}">
             @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -121,10 +126,11 @@
             By continuing, you agree to our <a href="#" class="text-blue-500">Terms Of Service</a> and
             <a href="#" class="text-blue-500">Privacy Policy</a>.
         </p>
-        <button class="flex items-center justify-center w-full border py-2 rounded-md mt-4 hover:bg-gray-100">
+        <button class="flex items-center justify-center w-full border py-2 rounded-md mt-4 hover:bg-gray-800 hover:text-white">
             <img src="{{ asset('img/google-icon-colour.png') }}" alt="Google icon" class="w-5 h-5 mr-2">
             <span>Continue with Google</span>
         </button>
+
         <p class="text-gray-600 text-sm text-center mt-4">
             Already have an account? <a href="{{ route('login') }}" class="text-blue-500">Log in here.</a>
         </p>
@@ -139,48 +145,48 @@
 <!-- Tab Toggle Script -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-    const userTab = document.getElementById('userTab');
-    const sellerTab = document.getElementById('sellerTab');
-    const userForm = document.getElementById('userForm');
-    const sellerForm = document.getElementById('sellerForm');
+        const userTab = document.getElementById('userTab');
+        const sellerTab = document.getElementById('sellerTab');
+        const userForm = document.getElementById('userForm');
+        const sellerForm = document.getElementById('sellerForm');
+        const userIndicator = document.getElementById('userIndicator');
+        const sellerIndicator = document.getElementById('sellerIndicator');
 
-    // Function to handle form switching with animation
-    function switchForm(showForm, hideForm, activeTab, inactiveTab) {
-        // Animate out the current form
-        hideForm.classList.add('opacity-0', 'translate-x-4'); // Slide out to the right
-        hideForm.classList.remove('opacity-100', 'translate-x-0');
-
-        // Wait for the slide-out animation to complete before hiding it and showing the other form
-        setTimeout(() => {
-            hideForm.classList.add('hidden');
-
-            // Show new form with fade-in and slide-in animation from the opposite direction (left to right)
-            showForm.classList.remove('hidden');
-            showForm.classList.add('opacity-0', '-translate-x-4'); // Start hidden with a slide-in from the left
+        function switchForm(showForm, hideForm, activeTab, inactiveTab, activeIndicator, inactiveIndicator) {
+            hideForm.classList.add('opacity-0', 'translate-x-4'); 
+            hideForm.classList.remove('opacity-100', 'translate-x-0');
 
             setTimeout(() => {
-                showForm.classList.remove('opacity-0', '-translate-x-4');
-                showForm.classList.add('opacity-100', 'translate-x-0');
-            }, 20);
-        }, 300); // Duration of the animation (matches hideForm animation)
+                hideForm.classList.add('hidden');
 
-        // Update tab styles
-        activeTab.classList.add('text-gray-700', 'border-blue-500');
-        inactiveTab.classList.remove('text-gray-700', 'border-blue-500');
-        inactiveTab.classList.add('text-gray-500');
-    }
+                showForm.classList.remove('hidden');
+                showForm.classList.add('opacity-0', 'translate-x-4');
 
-    // Event listener for the User tab
-    userTab.addEventListener('click', () => {
-        switchForm(userForm, sellerForm, userTab, sellerTab);
+                setTimeout(() => {
+                    showForm.classList.remove('opacity-0', 'translate-x-4');
+                    showForm.classList.add('opacity-100', 'translate-x-0');
+                }, 20);
+            }, 300); 
+
+            activeTab.classList.add('text-gray-700');
+            inactiveTab.classList.remove('text-gray-700');
+            inactiveTab.classList.add('text-gray-500');
+
+            activeIndicator.classList.add('scale-x-100');
+            inactiveIndicator.classList.remove('scale-x-100');
+        }
+
+        userTab.addEventListener('click', () => {
+            switchForm(userForm, sellerForm, userTab, sellerTab, userIndicator, sellerIndicator);
+        });
+
+        sellerTab.addEventListener('click', () => {
+            switchForm(sellerForm, userForm, sellerTab, userTab, sellerIndicator, userIndicator);
+        });
+
+        userTab.classList.add('text-gray-700');
+        sellerTab.classList.add('text-gray-500');
     });
-
-    // Event listener for the Seller tab
-    sellerTab.addEventListener('click', () => {
-        switchForm(sellerForm, userForm, sellerTab, userTab);
-    });
-});
-
 </script>
 
 @endsection
