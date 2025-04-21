@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -18,6 +21,7 @@ class Product extends Model
         'stock_id',
         'stock',
         'category_id',
+        'price',
     ];
     public function category()
     {
@@ -28,12 +32,34 @@ class Product extends Model
         return $this->hasMany(OrderItem::class, 'product_id', 'id');
     }
     public function stock(){
-        return $this->hasOne(Stock::class); 
+        return $this->hasOne(Stock::class, 'stocks_id'); 
     }
     public function reviews(){
         return $this->hasMany(Review::class, 'product_id', 'id');
     }
+    
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
+    }
 
+    public function stockMovements(): HasMany
+    {
+        return $this->hasMany(StockMovement::class, 'product_id', 'id');
+    }
+
+    public function getRemainingStockAttribute()
+    {
+        $stockIn = $this->stockMovements()->where('movement_type', 'in')->sum('quantity');
+        $stockOut = $this->stockMovements()->where('movement_type', 'out')->sum('quantity');
+        return $stockIn - $stockOut;
+    }
+
+    public function getTotalSoldAttribute()
+    {
+        return $this->stockMovements->where('movement_type', 'out')->sum('quantity');
+    }
+    
     public function scopeSearch($query, $search)
     {
         return $query->where('product_name', 'like', "%{$search}%")

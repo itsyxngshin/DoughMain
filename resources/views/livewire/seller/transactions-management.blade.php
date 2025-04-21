@@ -5,7 +5,7 @@
 @section('content')
     <div class="top-0 left-0 w-full h-auto bg-white shadow-lg bg-cover bg-center bg-no-repeat items-center px-0 " >
         <div class="top-0 left-0 w-full h-[60px] bg-white border-b border-gray-200 bg-cover bg-center bg-no-repeat flex items-center px-6 rounded-t-xl">
-            <h1 class="text-[#51331b] font-bold text-2xl px-3">BJ Bakery</h1>
+            <h1 class="text-[#51331b] font-bold text-2xl px-3">{{$payments->first()->order->shop->shop_name ?? 'N/A'}}</h1>
         </div> 
 
         <!--
@@ -80,8 +80,6 @@
                             <tr class="border-b ">
                                 <th class="p-2 font-semibold">Transaction ID</th>
                                 <th class="p-2 font-semibold">Order Date & Time</th>
-                                <th class="p-2 font-semibold">Shop Name</th>
-                                <th class="p-2 font-semibold">Customer Name</th>
                                 <th class="p-2 font-semibold">Order ID</th>
                                 <th class="p-2 font-semibold">Total Amount</th>
                                 <th class="p-2 font-semibold">Payment Method</th>
@@ -90,18 +88,25 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($payments as $payment)
                             <tr class="border-b text-sm text-center">
-                                <td class="p-2">00121</td>
-                                <td class="p-2">12/28/25 12:09 PM</td>
-                                <td class="p-2">Shop Name</td>
-                                <td class="p-2">John Doe</td>
-                                <td class="p-2">00011001</td>
-                                <td class="p-2">200.00</td>
-                                <td class="p-2">E-Wallet</td>
-                                <td class="p-2 font-semibold">Completed</td>
-                                <td class="p-2"> @livewire('seller.modal.view-details')</td>
+                                <td class="p-2">{{ $payment->id }}</td>
+                                <td class="p-2">{{ $payment->created_at}}</td>
+                                <td class="p-2">@if($payment->order)
+                                                    {{ $payment->order->id }}
+                                                @else
+                                                    No Order
+                                                @endif</td>
+                                <td class="p-2">@if($payment->mode_of_payment->payment_method)
+                                                    {{ $payment->mode_of_payment->payment_method }}
+                                                @else
+                                                    No Order
+                                                @endif</td>
+                                <td class="p-2 font-semibold">{{ $payment->status}}</td>
+                                <td class="p-2"> @livewire('seller.modal.view-details', ['payment_id' => $payment->id], key($payment->id))</td>
 
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                   

@@ -15,11 +15,11 @@ class Shop extends Model
         'email_address',
     ];
 
-    public function owner()
+    /*public function owner()
     {
         return $this->belongsTo(User::class, 'manage_id', 'id');
-    }
-
+    }*/
+   
     public function products()
     {
         return $this->hasMany(Product::class, 'shop_id', 'id');
@@ -31,5 +31,13 @@ class Shop extends Model
     public function orders()
     {
         return $this->hasMany(Order::class, 'shop_id', 'id');
+    }
+    public function shopLogo()
+    {
+        return $this->hasOne(ShopLogo::class);
+    }
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 }

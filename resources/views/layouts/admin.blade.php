@@ -1,7 +1,3 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,8 +10,8 @@
     @vite(['resources/css/app.css']) <!-- Laravel asset management -->
 </head>
 <body class="bg-gray-50 w-full h-screen">
-    <!-- Navbar -->
-    <!-- Navbar -->
+    <div>
+        <!-- Navbar -->
     <nav class="bg-white shadow-md py-1 px-2 flex justify-between items-center fixed top-0 left-0 w-full z-50">
         <div class="flex items-center gap-0">
             <!-- Burger Button -->
@@ -122,54 +118,56 @@
         </div>
     </div>
 -->
+    <script>
+        window.onload = function () {
+            document.getElementById('navbar').classList.remove('hidden');
+        };
+
+        document.getElementById('burger').addEventListener('click', function () {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.querySelector('.flex-1');
+
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                mainContent.classList.add('ml-64');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                mainContent.classList.remove('ml-64');
+            }
+        });
+
+        // 🔔 Notification Functionality
+        document.addEventListener("DOMContentLoaded", function () {
+            const notifButton = document.getElementById("notifButton");
+            const notifDropdown = document.getElementById("notifDropdown");
+            const notifBadge = document.getElementById("notifBadge");
+            const notifList = document.getElementById("notifList");
+            const clearNotif = document.getElementById("clearNotif");
+
+            let notifications = [
+                { id: 1, text: "New order received!", time: "2 min ago" },
+                { id: 2, text: "Payment completed successfully.", time: "10 min ago" }
+            ];
+
+            function updateNotifications() {
+                notifList.innerHTML = notifications.length === 0
+                    ? '<p class="p-3 text-gray-500 text-sm">No new notifications</p>'
+                    : notifications.map(notif => `<div class="p-3 border-b hover:bg-gray-100">${notif.text} <br><small>${notif.time}</small></div>`).join("");
+                notifBadge.textContent = notifications.length;
+                notifBadge.classList.toggle("hidden", notifications.length === 0);
+            }
+
+            notifButton.addEventListener("click", () => notifDropdown.classList.toggle("hidden"));
+            clearNotif.addEventListener("click", () => { notifications = []; updateNotifications(); });
+
+            updateNotifications();
+        });
+    </script>
+
+    </div><!-- Navbar -->
+    
 
 
-
-<script>
-    window.onload = function () {
-        document.getElementById('navbar').classList.remove('hidden');
-    };
-
-    document.getElementById('burger').addEventListener('click', function () {
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.querySelector('.flex-1');
-
-        if (sidebar.classList.contains('-translate-x-full')) {
-            sidebar.classList.remove('-translate-x-full');
-            mainContent.classList.add('ml-64');
-        } else {
-            sidebar.classList.add('-translate-x-full');
-            mainContent.classList.remove('ml-64');
-        }
-    });
-
-    // 🔔 Notification Functionality
-    document.addEventListener("DOMContentLoaded", function () {
-        const notifButton = document.getElementById("notifButton");
-        const notifDropdown = document.getElementById("notifDropdown");
-        const notifBadge = document.getElementById("notifBadge");
-        const notifList = document.getElementById("notifList");
-        const clearNotif = document.getElementById("clearNotif");
-
-        let notifications = [
-            { id: 1, text: "New order received!", time: "2 min ago" },
-            { id: 2, text: "Payment completed successfully.", time: "10 min ago" }
-        ];
-
-        function updateNotifications() {
-            notifList.innerHTML = notifications.length === 0
-                ? '<p class="p-3 text-gray-500 text-sm">No new notifications</p>'
-                : notifications.map(notif => `<div class="p-3 border-b hover:bg-gray-100">${notif.text} <br><small>${notif.time}</small></div>`).join("");
-            notifBadge.textContent = notifications.length;
-            notifBadge.classList.toggle("hidden", notifications.length === 0);
-        }
-
-        notifButton.addEventListener("click", () => notifDropdown.classList.toggle("hidden"));
-        clearNotif.addEventListener("click", () => { notifications = []; updateNotifications(); });
-
-        updateNotifications();
-    });
-</script>
 </body>
 </html>
 

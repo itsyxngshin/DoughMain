@@ -21,6 +21,7 @@ use App\Livewire\Seller\UpdateProduct;
 // ADMIN
 use App\Livewire\Admin\AdminDashboard;
 //use App\Livewire\Admin\AdminProductManagement;
+use App\Livewire\Admin\UsersManagement;
 use App\Livewire\Admin\UpdateBakery;
 use App\Livewire\Admin\AddBakery;
 use App\Livewire\Admin\AdminBakeryManagement;
@@ -69,25 +70,21 @@ Route::put('/profile', [ProfileController::class, 'update'])->name('profile.upda
 
 // Sellers
 Route::prefix('seller')->group(function() {
-    //product management
-    Route::get('/products', function () {
-        return view('livewire.seller.product-management'); 
-    })->name('productmanagement');
-
+    Route::get('/products', ProductManagement::class)
+    ->name('productmanagement');
+    
     //seller dashboard
     Route::get('/dashboard', function () {
         return view('livewire.seller.dashboard'); 
     })->name('sellerdashboard');
 
     //order management
-    Route::get('/orders', function () {
-        return view('livewire.seller.order-management'); 
-    })->name('ordermanagement');
+    Route::get('/orders', OrderManagement::class)
+    ->name('ordermanagement');
 
     //transactions management
-    Route::get('/transactions', function () {
-        return view('livewire.seller.transactions-management'); 
-    })->name('transactionmanagement');
+    Route::get('/transactions', TransactionsManagement::class)
+    ->name('transactionmanagement');
 
     //seller chat
     Route::get('/chat', function () {
@@ -95,9 +92,7 @@ Route::prefix('seller')->group(function() {
     })->name('sellerchat');
 
     //add products page
-    Route::get('/products/add', function () {
-        return view('livewire.seller.add-product'); 
-    })->name('addproduct');
+    Route::get('/products/add', AddProduct::class)->name('addproduct');
 
     //update products page
     Route::get('/products/update', function () {
@@ -124,9 +119,8 @@ Route::prefix('admin')->group(function () {
     })->name('admin.dashboard');
 
     //bakery management
-    Route::get('/bakerymanagement', function () {
-        return view('livewire.admin.admin-bakery-management');
-    })->name('admin.bakery');
+    Route::get('/bakerymanagement', AdminBakeryManagement::class)
+        ->name('admin.bakery');
 
     //Admin chat
     Route::get('/chat', function () {
@@ -134,9 +128,8 @@ Route::prefix('admin')->group(function () {
     })->name('admin.chat');
 
     //Users Management
-    Route::get('/Users', function () {
-        return view('livewire.admin.users-management');
-    })->name('admin.users');
+    Route::get('/Users', UsersManagement::class)
+        ->name('admin.users');
 
     //Add bakery
     Route::get('bakerymanagement/add-bakery', function () {

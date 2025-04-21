@@ -25,7 +25,7 @@
                
             </div>
 
-            <!-- Dropdown for Categories -->
+            <!-- Dropdown for Categories
             <div class=" flex gap-2 items-center">
                 <p class="text-sm text-gray-500 ">Category</p>
                 <select name="category" class="border border-[#51331b] px-2 py-1 rounded-md flex">
@@ -35,7 +35,7 @@
                     <option value="3">Cake</option>
                 </select>
             </div>
-
+            -->
                 <!-- Add Bakery Button -->
                 <div class="ml-auto">
                     <button 
@@ -59,26 +59,23 @@
                         <thead>
                             <tr class="border-b ">
                                 <th class="p-2 font-semibold">Bakery ID</th>
-                                <th class="p-2 font-semibold">Picture</th>
-                                <th class="p-2 font-semibold">Name</th>
-                                <th class="p-2 font-semibold">Date Created</th>
-                                <th class="p-2 font-semibold">Available Stocks</th>
-                                <th class="p-2 font-semibold">Products Sold</th>
-                                <th class="p-2 font-semibold">Status</th>
+                                <th class="p-2 font-semibold">Profile Picture</th>
+                                <th class="p-2 font-semibold">Bakery Name</th>
+                                <th class="p-2 font-semibold">Started since</th>
                                 <th class="p-2 font-semibold"> </th>
                                 <th class="p-2 font-semibold"> </th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($shops as $shop)
                             <tr class="border-b text-sm text-center">
-                                <td class="p-2">00121</td>
-                                <td class="p-2 items-center"><img src="#" alt="Thumbnail" class="w-12"></td>
-                                <td class="p-2">Name</td>
-                                <td class="p-2">P 250.00</td>
-                                <td class="p-2">T-Shirt</td>
-                                <td class="p-2">20</td>
-                                <td class="p-2">2</td>
-
+                                <td class="p-2">{{$shop->id}}</td>
+                                <td class="p-2 items-center"><img src="{{ asset('storage/shop_logos/' . $shop->logo_path) }}" alt="Thumbnail" class="w-12 m-auto"></td>
+                                <td class="p-2">{{$shop->shop_name}}</td>
+                                <td class="p-2">{{$shop->created_at}}</td>
+                                <td class="p-2"></td>
+                                <td class="p-2"></td>
+                            @endforeach
                             <!-- INSERT BUTTON FOR MODALS AND CONNECT THE PAGES-->
                                 <td class="p-2"><button class="mt-2" 
                                     x-data 

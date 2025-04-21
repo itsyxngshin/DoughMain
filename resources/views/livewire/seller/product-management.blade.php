@@ -1,17 +1,17 @@
 @extends('layouts.seller')
 
-@section('Product Management')
-
 @section('content')
-    <div class="top-0 left-0 w-full h-auto bg-white shadow-lg bg-cover bg-center bg-no-repeat items-center px-0 " >
+<div> {{-- ✅ This is the required single root element --}}
+    <div class="top-0 left-0 w-full h-auto bg-white shadow-lg bg-cover bg-center bg-no-repeat items-center px-0">
         <div class="top-0 left-0 w-full h-[60px] bg-white border-b border-gray-200 bg-cover bg-center bg-no-repeat flex items-center px-6 rounded-t-xl">
-            <h1 class="text-[#51331b] font-bold text-2xl px-3">BJ Bakery</h1>
+            <h1 class="text-[#51331b] font-bold text-2xl px-3">{{$products->first()->shop->shop_name ??'N/A'}}</h1>
         </div>    
+        
         <h1 class="px-12 pt-6 font-bold text-[#51331b] text-3xl">Products</h1>
+
         <div class="flex items-center h-[50px] px-12 space-between gap-10 mt-2">
-            
-        <!-- Dropdown for Items per Page -->
-            <div class=" flex gap-2 items-center px-6">
+            <!-- Dropdown for Items per Page -->
+            <div class="flex gap-2 items-center px-6">
                 <select name="contents" class="border border-[#51331b] px-2 py-1 rounded-md flex">
                     <option value="1">5</option>
                     <option value="2" selected>10</option>
@@ -22,79 +22,88 @@
             </div>
 
             <!-- Search Bar -->
-            <div class=" flex">
+            <div class="flex">
                 <input type="text" placeholder="Search" class="pl-3 pr-3 py-1 text-sm border border-[#51331b] rounded-md">
-               
             </div>
 
             <!-- Dropdown for Categories -->
-            <div class=" flex gap-2 items-center">
-                <p class="text-sm text-gray-500 ">Category</p>
+            <div class="flex gap-2 items-center">
+                <p class="text-sm text-gray-500">Category</p>
                 <select name="category" class="border border-[#51331b] px-2 py-1 rounded-md flex">
                     <option value="" selected>All</option>
-                    <option value="1" selected>Bread</option>
+                    <option value="1">Bread</option>
                     <option value="2">Pastries</option>
                     <option value="3">Cake</option>
                 </select>
             </div>
 
-                <!-- Add Product Button -->
-                <div class="ml-auto">
-                    <button 
-                        x-data 
-                        @click="window.location.href='{{ route('addproduct') }}'" 
-                        class="border border-[#51331b] text-[351331b] px-3 py-1 rounded-md text-sm flex items-center mr-3 hover:bg-[#51331b] hover:text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M5 13v-1h6V6h1v6h6v1h-6v6h-1v-6z"/></svg> Add Product
-                    </button>
-                </div>
-            
-            
-            
-        </div>
-            
-
-
-
-            <div class="flex px-12 py-2 pb-10 gap-4 flex-grow " style="max-height: 60%">
-                <div class="border px-2 py-0 border-gray-300 rounded-xl p-4 flex-1">
-                    <table class="w-full border-collapse">
-                        <thead>
-                            <tr class="border-b ">
-                                <th class="p-2 font-semibold">Product ID</th>
-                                <th class="p-2 font-semibold">Picture</th>
-                                <th class="p-2 font-semibold">Name</th>
-                                <th class="p-2 font-semibold">Price</th>
-                                <th class="p-2 font-semibold">Category</th>
-                                <th class="p-2 font-semibold">Available Stocks</th>
-                                <th class="p-2 font-semibold">Products Sold</th>
-                                <th class="p-2 font-semibold"> </th>
-                                <th class="p-2 font-semibold"> </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="border-b text-sm text-center">
-                                <td class="p-2">00121</td>
-                                <td class="p-2 items-center"><img src="#" alt="Thumbnail" class="w-12"></td>
-                                <td class="p-2">Name</td>
-                                <td class="p-2">P 250.00</td>
-                                <td class="p-2">T-Shirt</td>
-                                <td class="p-2">20</td>
-                                <td class="p-2">2</td>
-                                <td class="p-2"><button class="mt-2" 
-                                    x-data 
-                                    @click="window.location.href='{{ route('updateproduct') }}'"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32"><path fill="currentColor" d="M2 26h28v2H2zM25.4 9c.8-.8.8-2 0-2.8l-3.6-3.6c-.8-.8-2-.8-2.8 0l-15 15V24h6.4zm-5-5L24 7.6l-3 3L17.4 7zM6 22v-3.6l10-10l3.6 3.6l-10 10z"/></svg></button></td>
-                                <td class="p-2">@livewire('seller.modal.delete-product')</td>
-                                <td class="p-2"> @livewire('seller.modal.view-product-modal')</td>
-
-                            </tr>
-                        </tbody>
-                    </table>
-                  
-                </div>
+            <!-- Add Product Button -->
+            <div class="ml-auto">
+                <button 
+                    x-data 
+                    @click="window.location.href='{{ route('addproduct') }}'" 
+                    class="border border-[#51331b] text-[351331b] px-3 py-1 rounded-md text-sm flex items-center mr-3 hover:bg-[#51331b] hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M5 13v-1h6V6h1v6h6v1h-6v6h-1v-6z"/>
+                    </svg> 
+                    Add Product
+                </button>
             </div>
         </div>
-   
 
-
-
+        <div class="flex px-12 py-2 pb-10 gap-4 flex-grow" style="max-height: 60%">
+            <div class="border px-2 py-0 border-gray-300 rounded-xl p-4 flex-1">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr class="border-b">
+                            <th class="p-2 font-semibold">Product ID</th>
+                            <th class="p-2 font-semibold">Picture</th>
+                            <th class="p-2 font-semibold">Name</th>
+                            <th class="p-2 font-semibold">Price</th>
+                            <th class="p-2 font-semibold">Category</th>
+                            <th class="p-2 font-semibold">Stocks</th>
+                            <th class="p-2 font-semibold">Products Sold</th>
+                            <th class="p-2 font-semibold">Remaining Stocks</th>
+                            <th class="p-2 font-semibold"> </th>
+                            <th class="p-2 font-semibold"> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($products as $product)
+                        <tr class="border-b text-sm text-center">
+                            <td class="p-2">{{ $product->id }}</td>
+                            <td class="p-2 items-center">
+                                <img src="{{ asset('storage/products/' . $product->product_image) }}" alt="product image" class="w-12 h-12 object-cover m-auto rounded" />
+                            </td>
+                            <td class="p-2">{{ $product->product_name }}</td>
+                            <td class="p-2">{{ number_format($product->product_price, 2) }}</td>
+                            <td class="p-2">{{ $product->category->category_name ?? 'No Category' }}</td>
+                            <td class="p-2">{{ ($product->stock->quantity ?? 0) + $product->stockMovements->where('movement_type', 'in')->sum('quantity') }}</td>
+                            <td class="p-2">{{  $product->stockMovements->where('movement_type', 'out')->sum('quantity') }}</td>
+                            <td class="p-2">{{ (($product->stock->quantity ?? 0)
+                                            + $product->stockMovements->where('movement_type', 'in')->sum('quantity'))
+                                            - $product->stockMovements->where('movement_type', 'out')->sum('quantity') }}</td>
+                            <td class="p-2">
+                                <button class="mt-2" 
+                                    x-data 
+                                    @click="window.location.href='{{ route('updateproduct') }}'">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
+                                        <path fill="currentColor" d="M2 26h28v2H2zM25.4 9c.8-.8.8-2 0-2.8l-3.6-3.6c-.8-.8-2-.8-2.8 0l-15 15V24h6.4zm-5-5L24 7.6l-3 3L17.4 7zM6 22v-3.6l10-10l3.6 3.6l-10 10z"/>
+                                    </svg>
+                                </button>
+                            </td>
+                            <td class="p-2">
+                                @livewire('seller.modal.delete-product')
+                            </td>
+                            <td class="p-2">
+                                @livewire('seller.modal.view-product-modal', ['product' => $product], key($product->id))
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div> {{-- ✅ Closing the root wrapper div --}}
 @endsection

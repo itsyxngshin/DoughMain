@@ -18,10 +18,17 @@
                 <div class="flex border-b-1 border-gray-400 items-center p-6 py-2 gap-5 w-full">
                     <div class="w-full items-center flex gap-3">
                         <img src="" alt="" class="rounded-full w-[30px] h-[30px]">
-                        <p class="font-bold text-xl">Bakery Name</p>
+                        <p class="font-bold text-xl">{{ $selectedOrder->shop->shop_name}}</p>
                     </div>
                     <div class="border rounded border-[#FBBC04] w-[40%] justify-end">
-                        <p class="text-[#FBBC04] text-[8px]">Out For Delivery</p>
+                    <p class="text-[#FBBC04] text-[12px] @if(strtolower($selectedOrder->status) == 'pending') text-yellow-500
+                            @elseif(strtolower($selectedOrder->status) == 'completed') text-green-600
+                            @elseif(strtolower($selectedOrder->status) == 'Preparing') text-green-600
+                            @elseif(strtolower($selectedOrder->status) == 'Out For Delivery') text-green-600
+                            @elseif(strtolower($selectedOrder->status) == 'Canceled') text-red-600
+                            @else text-gray-600 @endif">
+                            {{ ucfirst($selectedOrder->status) }}
+                        </p>
                     </div>
                 </div>  
             </div>
@@ -40,21 +47,26 @@
                             </tr>
                         </thead>
                         <tbody >
-                            <tr class="text-sm text-left">
-                                <td class="p-2">image</td>
-                                <td class="p-2">Pandesal</td>
-                                <td class="p-2">Bread</td>
-                                <td class="p-2">2</td>
-                                <td class="p-2 text-right">20</td>
+                        @foreach ($selectedOrder->orderItems as $item)
+                                <tr class="text-sm text-left">
+                                    <td class="p-2"><img src="{{ asset('storage/products/' . $item->product->product_image) }}" alt="product image" class="w-auto h-12 object-cover m-auto " /></td>
+                                    <td class="p-2">{{ $item->product->product_name }}</td>
+                                    <td class="p-2">{{ $item->product->category->category_name }}</td>
+                                    <td class="p-2">{{ $item->quantity }}</td>
+                                    <td class="p-2">{{ $item->product->product_price }}</td>
+                                    <td class=" text-right">{{ $item->price }}</td>
+                                </tr>
+                            @endforeach
 
-                            </tr>
                             <tr>
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td></td>
                                 <td class="p-2 font-semibold text-left">Subtotal:</td>
-                                <td class="text-right font-semibold">P 170</td>
+                                <td class=" text-right font-semibold">{{ $selectedOrder->total_amount }}</td>
                             </tr>
+
                         </tbody>
                 </table>
             </div>
@@ -63,28 +75,23 @@
                     <tbody>
                         <tr >
                             <td class="text-left">Order ID:</td>
-                            <td class="text-right">000000</td>
+                            <td class="text-right">{{ $selectedOrder->id }}</td>
                         </tr>
                         <tr>
                             <td class="text-left">Total Amount:</td>
-                            <td class="text-right">P 200.00</td>
+                            <td class="text-right">P {{ $selectedOrder->payment->amount }}</td>
                         </tr>
                         <tr>
                             <td class="text-left">Payment Method</td>
-                            <td class="text-right">Cash On Delivery</td>
+                            <td class="text-right">{{ $selectedOrder->payment->mode_of_payment->payment_method }}</td>
                         </tr>
                         <tr>
-                            <td class="text-left">Reference No.</td>
-                            <td class="text-right">01010101010101</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Tracking No.</td>
-                            <td class="text-right">109439204</td>
-
+                            <td class="text-left">Transaction ID</td>
+                            <td class="text-right">{{ $selectedOrder->payment->provider_transc_id}}</td>
                         </tr>
                         <tr class="">
                             <td class="text-left">Status</td>
-                            <td class="font-bold text-right">Paid</td>
+                            <td class="font-bold text-right">{{ $selectedOrder->payment->status }}</td>
                         </tr>
                         
                     </tbody>

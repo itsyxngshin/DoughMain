@@ -1,11 +1,9 @@
 @extends('layouts.seller')
 
-@section('Order Management')
-
 @section('content')
     <div class="top-0 left-0 w-full h-auto bg-white shadow-lg bg-cover bg-center bg-no-repeat items-center px-0 " >
         <div class="top-0 left-0 w-full h-[60px] bg-white border-b border-gray-200 bg-cover bg-center bg-no-repeat flex items-center px-6 rounded-t-xl">
-            <h1 class="text-[#51331b] font-bold text-2xl px-3">BJ Bakery</h1>
+            <h1 class="text-[#51331b] font-bold text-2xl px-3">{{$orders->first()->shop->shop_name ?? 'N/A' }}</h1>
         </div> 
 
         <h1 class="px-12 pt-6 font-bold text-[#51331b] text-3xl">Orders</h1>
@@ -37,26 +35,8 @@
                     <option value="2">Tomorrow</option>
                     <option value="3">Next Week</option>
                 </select>
-            </div>
-
-            <!-- Dropdown for filter by 
-            <div class="relative flex gap-2 items-center">
-                <p class="text-sm text-gray-500 ">Filter by</p>
-                <select name="category" class="border border-[#51331b] px-2 py-1 rounded-md flex">
-                    <option value="0" selected>-</option>
-                    <option value="1" >Status (Completed) </option>
-                    <option value="2">Status</option>
-                    <option value="3">Next Week</option>
-                </select>
-            </div>
-            -->
-            
-            
+            </div>      
         </div>
-            
-
-
-
             <div class="flex px-12 py-2 pb-10 gap-4 flex-grow " style="max-height: 60%">
                 <div class="border px-2 py-0 border-gray-300 rounded-xl p-4 flex-1">
                     <table class="w-full border-collapse">
@@ -64,32 +44,44 @@
                             <tr class="border-b ">
                                 <th class="p-2 font-semibold">Order ID</th>
                                 <th class="p-2 font-semibold">Customer Name</th>
-                                <th class="p-2 font-semibold">Order Date & Time</th>
-                                <th class="p-2 font-semibold">Scheduled Date & Time</th>
+                                <th class="p-2 font-semibold">Scheduled Date</th>
+                                <th class="p-2 font-semibold">Scheduled Time</th>
                                 <th class="p-2 font-semibold">Total Amount</th>
                                 <th class="p-2 font-semibold">Payment Method</th>
-                                <th class="p-2 font-semibold">Payment Status</th>
-                                <th class="p-2 font-semibold">Shipping Method</th>
-                                <th class="p-2 font-semibold">Tracking Number</th>
                                 <th class="p-2 font-semibold">Order Status</th>
                                 <th class="p-2 font-semibold"> </th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($orders as $order)
                             <tr class="border-b text-sm text-center">
-                                <td class="p-2">00121</td>
-                                <td class="p-2">Alice Jones</td>
-                                <td class="p-2">12/28/25 12:09 PM</td>
-                                <td class="p-2">12/28/25 12:09 PM</td>
-                                <td class="p-2">200.00</td>
-                                <td class="p-2">COD</td>
-                                <td class="p-2 font-semibold">Pending</td>
-                                <td class="p-2">Delivery</td>
-                                <td class="p-2">001-001</td>
-                                <td class="p-2 font-semibold">Out For Delivery</td>
-                                <td class="p-2"> @livewire('seller.modal.view-order')</td>
+                                <td class="p-2">{{ $order->id}}</td>
+                                <td class="p-2">{{$order->user->username ?? 'N/A'}}</td>
+                                <td class="p-2">{{$order->date_arrangement}}</td>
+                                <td class="p-2">{{ \Carbon\Carbon::parse($order->time_arrangement)->timezone('Asia/Manila')->format('h:i A') }}</td>
+                                <td class="p-2">{{$order->total_amount}}</td>
+                                <td class="p-2">{{$order->payment_method}}</td>
+                                <td class="p-2 font-semibold
+                                        @if(strtolower($order->status) == 'pending')
+                                            text-yellow-500
+                                        @elseif(strtolower($order->status) == 'completed')
+                                            text-green-600
+                                        @elseif(strtolower($order->status) == 'Preparing')
+                                            text-green-600
+                                        @elseif(strtolower($order->status) == 'Out For Delivery')
+                                            text-green-600
+                                        @elseif(strtolower($order->status) == 'Canceled')
+                                            text-red-600
+                                        @else
+                                            text-gray-600
+                                        @endif
+                                    ">
+                                        {{ ucfirst($order->status) }}
+                                    </td>
+                                <td class="p-2"> @livewire('seller.modal.view-order', ['orderId' => $order->id], key($order->id))</td>
 
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                   

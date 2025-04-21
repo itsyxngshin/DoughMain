@@ -83,4 +83,9 @@ class User extends Model
     function sessions(){
         return $this->hasMany(Session::class, 'user_id', 'id');
     }
+
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }

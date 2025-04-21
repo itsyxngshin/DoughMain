@@ -14,6 +14,10 @@ class StockMovement extends Model
         'movement_type', // 'in' or 'out'
     ];
 
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
+    }
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
