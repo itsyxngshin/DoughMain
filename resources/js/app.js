@@ -1,9 +1,3 @@
-import './bootstrap';
-import Alpine from 'alpinejs';
-
-window.Alpine = Alpine;
-Alpine.start();
-
 let lastScrollTop = 0;
 const nav = document.querySelector('.navigation');
 const secondNav = document.querySelector('.second-nav');
