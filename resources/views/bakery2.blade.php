@@ -6,7 +6,7 @@
 
     <!-- Search Bar -->
     <div class="sticky top-1 py-2 z-50 ml-3 mb-5 mt-3">
-        <div class="w-[700px] mx-auto relative">
+         <div class="w-[700px] mx-auto relative">
         <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" 
              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -21,9 +21,9 @@
 
     <!-- Bakery Banner with Review Section -->
     <div class="relative">
-      <img src="{{ asset('storage/pandesal.jpg') }}" alt="Bakery Display" class="w-full h-80 object-cover rounded-lg shadow-md">
-      <div class="absolute inset-0 bg-black bg-opacity-30 rounded-lg"></div>
-      <h1 class="absolute top-10 left-10 text-white text-4xl font-bold">BJ's Bakery</h1>
+      <img src="{{ asset('storage/image1.jpg') }}" alt="Bakery Display" class="w-full h-80 object-cover rounded-lg shadow-md">
+      <div class="absolute inset-0 bg-black bg-opacity-25 rounded-lg"></div> 
+      <h1 class="absolute top-10 left-10 text-white text-4xl font-bold z-10">Kodie Bakery</h1>
 
       <!-- Review Section with Transparent Background -->
       <div class="absolute bottom-4 left-4 p-3 rounded-lg cursor-pointer bg-transparent" id="reviewSection">
@@ -37,14 +37,6 @@
 
     <h1 class="text-center text-4xl font-semibold mt-10 italic">Pastries</h1>
     <p class="text-gray-600 mb-4 mt-4 text-center">Indulge in our delicious Filipino pastries.</p>
-    <div class="relative my-12">
-  <div class="border-t border-gray-300"></div>
-  <div class="absolute inset-0 flex items-center justify-center">
-    <span class="bg-white px-4 text-gray-500 text-sm tracking-wide uppercase">Our Selection</span>
-  </div>
-</div>
-
-
     <!-- Cakes Section -->
     <div class="flex items-center justify-center my-12">
       <div class="w-1/5 border-t border-gray-300"></div>
@@ -58,15 +50,14 @@
       <span class="inline-block text-gray-400 text-xl tracking-widest">&#10022;&#10022;&#10022;</span>
     </div>
 
-    
     <div class="grid md:grid-cols-3 gap-6">
       @foreach([
-        ['name' => 'Chiffon Cake', 'img' => 'chiffon.png', 'desc' => 'A buttery and fluffy sponge cake.', 'price' => '₱160.00'],
-        ['name' => 'Yema Cake', 'img' => 'yema.png', 'desc' => 'Chiffon cake topped with sweet yema custard.', 'price' => '₱160.00'],
-        ['name' => 'Chocolate Cake', 'img' => 'choco.webp', 'desc' => 'Rich and decadent chocolate cake.', 'price' => '₱180.00'],
-        ['name' => 'Red Velvet Cake', 'img' => 'red_velvet.png', 'desc' => 'Velvety cake with a cream cheese frosting.', 'price' => '₱200.00'],
-        ['name' => 'Coffee Cake', 'img' => 'coffee_cake.png', 'desc' => 'Light coffee flavored cake topped with streusel.', 'price' => '₱180.00'],
-        ['name' => 'Carrot Cake', 'img' => 'carrot_cake.png', 'desc' => 'Moist cake made with fresh carrots and cream cheese frosting.', 'price' => '₱190.00'],
+        ['name' => 'Leche Flan Cake', 'img' => 'leche-flan-cake.png', 'desc' => 'Smooth caramel custard on soft chiffon cake.', 'price' => '₱180.00'],
+        ['name' => 'Mango Bravo', 'img' => 'mango-bravo.png', 'desc' => 'Layers of mango, meringue, and cream filling.', 'price' => '₱200.00'],
+        ['name' => 'Ube Leche Flan Cake', 'img' => 'ube-leche-flan.png', 'desc' => 'Traditional leche flan with ube flavor.', 'price' => '₱220.00'],
+        ['name' => 'Buko Pandan Cake', 'img' => 'buko-pandan-cake.png', 'desc' => 'Coconut and pandan-flavored cake with creamy frosting.', 'price' => '₱170.00'],
+        ['name' => 'Yema Cake', 'img' => 'yema-cake.png', 'desc' => 'Fluffy cake topped with rich yema custard.', 'price' => '₱160.00'],
+        ['name' => 'Taro Cake', 'img' => 'taro-cake.png', 'desc' => 'Taro-flavored cake with creamy frosting.', 'price' => '₱180.00'],
       ] as $cake)
         <div class="searchable-item bg-transparent hover:bg-gray-200 p-5 shadow-lg rounded-lg text-center transition-transform transform hover:scale-105 duration-300">
           <a href="#" class="openModal" data-name="{{ $cake['name'] }}" data-img="{{ asset('storage/' . $cake['img']) }}" data-desc="{{ $cake['desc'] }}" data-price="{{ $cake['price'] }}">
@@ -95,20 +86,20 @@
 
     <div class="grid md:grid-cols-3 gap-6">
       @foreach([
-        ['name' => 'Spanish Bread', 'img' => 'spanish.png', 'desc' => 'A soft, rolled bread filled with a sweet, buttery mixture.', 'price' => '₱5.00'],
+        ['name' => 'Pandesal', 'img' => 'pandesal.png', 'desc' => 'Soft, round Filipino bread rolls, perfect with coffee or as a snack.', 'price' => '₱10.00'],
+        ['name' => 'Hopia', 'img' => 'hopia.png', 'desc' => 'A flaky pastry filled with sweet lotus paste.', 'price' => '₱50.00'],
+        ['name' => 'Putok', 'img' => 'putok.png', 'desc' => 'A soft, round bread with a sweet, sugary topping.', 'price' => '₱25.00'],
+        ['name' => 'Panderegla', 'img' => 'regla.webp', 'desc' => 'Sweet and soft bread with a slight crisp crust.', 'price' => '₱30.00'],
+        ['name' => 'Pandecoco', 'img' => 'pandecoco.png', 'desc' => 'Coconut-filled bread roll with a hint of sweetness.', 'price' => '₱35.00'],
         ['name' => 'Kababayan', 'img' => 'kababayan.webp', 'desc' => 'A cupcake-shaped Filipino bread that is slightly sweet and buttery.', 'price' => '₱5.00'],
-        ['name' => 'Monay', 'img' => 'monay.png', 'desc' => 'Dense and chewy bread with a sweet taste.', 'price' => '₱5.00'],
-        ['name' => 'Pan de Sal', 'img' => 'pandesal.png', 'desc' => 'Classic Filipino bread rolls, soft and slightly sweet.', 'price' => '₱4.00'],
-        ['name' => 'Pan de Coco', 'img' => 'pandecoco.png', 'desc' => 'Soft bread filled with sweetened grated coconut.', 'price' => '₱7.00'],
-        ['name' => 'Pandesal With Cheese', 'img' => 'pandesal_cheese.png', 'desc' => 'Pandesal bread with a delicious cheese filling.', 'price' => '₱6.00'],
-      ] as $bread)
+      ] as $pastry)
         <div class="searchable-item bg-transparent hover:bg-gray-200 p-5 shadow-lg rounded-lg text-center transition-transform transform hover:scale-105 duration-300">
-          <a href="#" class="openModal" data-name="{{ $bread['name'] }}" data-img="{{ asset('storage/' . $bread['img']) }}" data-desc="{{ $bread['desc'] }}" data-price="{{ $bread['price'] }}">
-            <img src="{{ asset('storage/' . $bread['img']) }}" alt="{{ $bread['name'] }}" class="w-32 mx-auto transition-transform transform hover:scale-110 duration-300">
+          <a href="#" class="openModal" data-name="{{ $pastry['name'] }}" data-img="{{ asset('storage/' . $pastry['img']) }}" data-desc="{{ $pastry['desc'] }}" data-price="{{ $pastry['price'] }}">
+            <img src="{{ asset('storage/' . $pastry['img']) }}" alt="{{ $pastry['name'] }}" class="w-40 mx-auto transition-transform transform hover:scale-110 duration-300">
           </a>
-          <h4 class="font-semibold">{{ $bread['name'] }}</h4>
-          <p class="text-gray-500">{{ $bread['desc'] }}</p>
-          <p class="text-gray-800 font-bold">{{ $bread['price'] }}</p>
+          <h4 class="font-semibold mt-2">{{ $pastry['name'] }}</h4> <!-- Added mt-2 to add space above the text -->
+          <p class="text-gray-500">{{ $pastry['desc'] }}</p>
+          <p class="text-gray-800 font-bold">{{ $pastry['price'] }}</p>
         </div>
       @endforeach
     </div>
@@ -126,15 +117,14 @@
         <span class="inline-block text-gray-400 text-xl tracking-widest">&#10022;&#10022;&#10022;</span>
       </div>
 
-
     <div class="grid md:grid-cols-3 gap-6">
       @foreach([
-        ['name' => 'Buko Pie', 'img' => 'buko.png', 'desc' => 'Flaky pastry filled with young coconut.', 'price' => '₱120.00'],
-        ['name' => 'Pineapple Pie', 'img' => 'pine.png', 'desc' => 'Sweet pie with caramelized pineapple.', 'price' => '₱120.00'],
-        ['name' => 'Egg Pie', 'img' => 'egg.png', 'desc' => 'Creamy custard pie with a crisp crust.', 'price' => '₱120.00'],
-        ['name' => 'Lemon Tart', 'img' => 'lemon_tart.png', 'desc' => 'Tangy lemon curd in a buttery tart shell.', 'price' => '₱130.00'],
-        ['name' => 'Ube Pie', 'img' => 'ube_pie.png', 'desc' => 'Purple yam pie with a sweet, velvety filling.', 'price' => '₱130.00'],
-        ['name' => 'Mango Tart', 'img' => 'mango_tart.png', 'desc' => 'Buttery tart with fresh, ripe mango filling.', 'price' => '₱140.00'],
+        ['name' => 'Buko Pie', 'img' => 'buko-pie.png', 'desc' => 'Coconut pie with a creamy filling in a flaky crust.', 'price' => '₱150.00'],
+        ['name' => 'Mango Pie', 'img' => 'mango-pie.png', 'desc' => 'Sweet and tangy mango pie with a buttery crust.', 'price' => '₱160.00'],
+        ['name' => 'Sampaloc Tart', 'img' => 'sampaloc-tart.png', 'desc' => 'Tart with tamarind filling, sweet and sour flavor.', 'price' => '₱120.00'],
+        ['name' => 'Custard Tart', 'img' => 'custard-tart.png', 'desc' => 'Smooth custard filling with a crunchy crust.', 'price' => '₱140.00'],
+        ['name' => 'Banana Tart', 'img' => 'banana-tart.png', 'desc' => 'Tart with a sweet banana filling and hint of cinnamon.', 'price' => '₱130.00'],
+        ['name' => 'Langka Pie', 'img' => 'langka-pie.png', 'desc' => 'Jackfruit-filled pie with a soft, buttery crust.', 'price' => '₱150.00'],
       ] as $pie)
         <div class="searchable-item bg-transparent hover:bg-gray-200 p-5 shadow-lg rounded-lg text-center transition-transform transform hover:scale-105 duration-300">
           <a href="#" class="openModal" data-name="{{ $pie['name'] }}" data-img="{{ asset('storage/' . $pie['img']) }}" data-desc="{{ $pie['desc'] }}" data-price="{{ $pie['price'] }}">
@@ -186,15 +176,15 @@
         <div class="mt-4">
             <div class="flex items-center">
                 <span class="text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
-                <p class="text-gray-700 text-sm ml-2">“Great cakes! My favorite is the Yema cake. It's so moist and fluffy.” – Sarah</p>
+                <p class="text-gray-700 text-sm ml-2">“Great pastries! I love the Pandecoco, it's so soft!” – Sarah</p>
             </div>
             <div class="flex items-center mt-4">
                 <span class="text-yellow-400">&#9733;&#9733;&#9733;&#9734;&#9734;</span>
-                <p class="text-gray-700 text-sm ml-2">“The bread is soft, but I think the pies could use a little more flavor.” – John</p>
+                <p class="text-gray-700 text-sm ml-2">“The Hopia is the best! The sweetness is just right.” – John</p>
             </div>
             <div class="flex items-center mt-4">
                 <span class="text-yellow-400">&#9733;&#9733;&#9733;&#9734;&#9734;</span>
-                <p class="text-gray-700 text-sm ml-2">“Love the fresh taste of the pastries! Will definitely return.” – Emma</p>
+                <p class="text-gray-700 text-sm ml-2">“I tried the Regla, and it was absolutely delightful!” – Emma</p>
             </div>
         </div>
     </div>

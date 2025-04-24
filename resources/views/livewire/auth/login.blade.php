@@ -1,15 +1,64 @@
 @extends('layouts.app')
 
 @section('log_screen')
-<div class="container-fluid min-vh-80 pt-4 d-flex align-items-center justify-content-center">
+<style>
+    /* Animation keyframes */
+    @keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideInRight {
+        0% {
+            opacity: 0;
+            transform: translateX(40px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes imageZoomInLeft {
+        0% {
+            opacity: 0;
+            transform: scale(1.1) translateX(-50px);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1) translateX(0);
+        }
+    }
+
+    /* Apply animations */
+    .animated-container {
+        animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .animated-form {
+        animation: slideInRight 0.8s ease forwards;
+    }
+
+    .animated-image {
+        animation: imageZoomInLeft 1s ease-out forwards;
+    }
+</style>
+
+<div class="container-fluid min-vh-80 pt-4 d-flex align-items-center justify-content-center animated-container">
     <div class="row w-55 shadow-lg rounded overflow-hidden mt-4">
         <!-- Left Side: Image (Hidden on small screens) -->
         <div class="col-lg-6 d-none d-lg-block p-0">
-            <img src="{{ asset('img/image 10.png') }}" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="Ube Cheese Pandesal">
+            <img src="{{ asset('img/image 10.png') }}" class="img-fluid w-100 h-100 animated-image" style="object-fit: cover;" alt="Ube Cheese Pandesal">
         </div>
 
         <!-- Right Side: Login Form -->
-        <div class="col-md-6 p-5 bg-white">
+        <div class="col-md-6 p-5 bg-white animated-form">
             <h1 class="fw-bold text-4xl pb-1">Welcome back!</h1>
             <p class="text-muted pb-4">Login to continue</p>
 

@@ -52,6 +52,17 @@ Route::get('/products', function () {
     return view('products'); 
 });
 
+Route::get('/bakery2', function () {
+    return view('bakery2');
+});
+
+Route::view('/cakessection', 'cakessection')->name('cakessection');
+Route::view('/breadsection', 'breadsection')->name('breadsection');
+Route::view('/cupcakesection', 'cupcakesection')->name('cupcakesection');
+Route::view('/pietartsection', 'pietartsection')->name('pietartsection');
+
+
+
 // Profile Routes
 Route::get('/userprofile', [ProfileController::class, 'show'])->name('profile.show');
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
