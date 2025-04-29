@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
     @vite(['resources/css/app.css']) <!-- Laravel asset management -->
+    <style>[x-cloak] { display: none !important; }</style>
 </head>
 <body class="bg-gray-50 w-full h-screen">
     <div>
@@ -21,7 +22,7 @@
                 </svg>
             </button>
 
-            <img src="{{ asset('storage/logof.png') }}" alt="Logo" class="w-16 h-16 scale-110">
+            <img src="{{ asset('storage/doughmainLogo.png') }}" alt="Logo" class="w-12 h-12 mx-3 my-2 scale-100">
             <span class="text-xl text-[#51331B] font-bold">DoughMain</span>
         </div>
 
@@ -65,7 +66,7 @@
             </button>
             </a>
 
-            <a href="userprofile">
+            <!--<a href="userprofile">
                 <button class="p-2 bg-transparent">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <g fill="none" stroke="currentColor" stroke-width="1.5">
@@ -74,7 +75,7 @@
                         </g>
                     </svg>
                 </button>
-            </a>
+            </a>-->
 
         </div>
     </nav>

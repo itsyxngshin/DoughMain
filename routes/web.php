@@ -15,7 +15,7 @@ use App\Http\Controllers\ProfileController;
 
 // SELLER
 use App\Livewire\Seller\ProductManagement;
-use App\Livewire\Seller\AddProduct;
+//use App\Livewire\Seller\AddProduct;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +27,8 @@ use App\Livewire\Seller\Dashboard;
 use App\Livewire\Seller\OrderManagement;
 use App\Livewire\Seller\TransactionsManagement;
 use App\Livewire\Seller\UpdateProduct;
+use App\Http\Controllers\AddProductController;
+use App\Http\Controllers\UpdateProductController;
 
 // ADMIN
 use App\Livewire\Admin\AdminDashboard;
@@ -127,17 +129,24 @@ Route::put('/profile', [ProfileController::class, 'update'])->name('profile.upda
 
 // Sellers
 Route::prefix('seller')->group(function() {
-    Route::get('/products', ProductManagement::class)
+    Route::get('/productsmanagement', ProductManagement::class)
     ->name('productmanagement');
-    
+
+    Route::get('/add-product/{shop_id}', [AddProductController::class, 'create'])->name('addproduct');
+
+    Route::post('/add-product', [AddProductController::class, 'store'])->name('products.store');
+
+    Route::get('/products/{id}/edit', [UpdateProductController::class, 'edit'])->name('updateproduct');
+    Route::put('/products/{id}', [UpdateProductController::class, 'update'])->name('products.update');
+
+
     //seller dashboard
-    Route::get('/dashboard', function () {
-        return view('livewire.seller.dashboard'); 
-    })->name('sellerdashboard');
+    Route::get('/dashboard', Dashboard::class)
+    ->name('sellerdashboard');
 
     //order management
-    Route::get('/orders', OrderManagement::class)
-    ->name('ordermanagement');
+    Route::get('seller/orders', OrderManagement::class)->name('ordermanagement');
+
 
     //transactions management
     Route::get('/transactions', TransactionsManagement::class)
@@ -148,16 +157,13 @@ Route::prefix('seller')->group(function() {
         return view('livewire.seller.chat'); 
     })->name('sellerchat');
 
-    //add products page
-    Route::get('/products/add', AddProduct::class)->name('addproduct');
 
-    //update products page
+    /*update products page
     Route::get('/products/update', function () {
         return view('livewire.seller.update-product'); 
     })->name('updateproduct');
-
-    //adding product Post
-    //Route::post('products/add', [AddProduct::class, 'store'])->name('addproduct');
+*/
+    
 });
 
 // ADMIN

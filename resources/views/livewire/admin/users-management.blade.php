@@ -1,9 +1,9 @@
-@extends('layouts.admin')
+@extends('components.layouts.admin')
 
-@section('Users Management')
+@section('title', 'Users Management')
 
 @section('content')
-    <div class="top-0 left-0 w-full h-auto bg-white shadow-lg bg-cover bg-center bg-no-repeat items-center px-0 " >
+    <div  x-data="{ search: '', firstname: '', lastname: ''}" class="top-0 left-0 w-full h-auto bg-white shadow-lg bg-cover bg-center bg-no-repeat items-center px-0 " >
         
 
         <h1 class="px-12 pt-6 font-bold text-[#51331b] text-3xl">Users</h1>
@@ -22,7 +22,7 @@
 
             <!-- Search Bar -->
             <div class="relative flex">
-                <input type="text" placeholder="Search" class="pl-3 pr-3 py-1 text-sm border border-[#51331b] rounded-md">
+                <input type="text" x-model="search" placeholder="Search" class="pl-3 pr-3 py-1 text-sm border border-[#51331b] rounded-md">
                
             </div>
 
@@ -69,16 +69,41 @@
                         </thead>
                         <tbody>
                             @foreach ($users as $user)
-                            <tr class="border-b text-sm text-center">
+                           
+                            <tr class="border-b text-sm text-center"
+                            x-data="{
+                                    username: '{{ strtolower($user->username) }}',
+                                    firstname: '{{ strtolower($user->first_name) }}',
+                                    lastname: '{{ strtolower($user->last_name) }}'
+                                }"
+                                x-show="search === '' 
+                                    || username.includes(search.toLowerCase()) 
+                                    || firstname.includes(search.toLowerCase()) 
+                                    || lastname.includes(search.toLowerCase())">
                                 <td class="p-2">{{$user->id}}</td>
                                 <td class="p-2">{{$user->username}}</td>
                                 <td class="p-2">{{$user->first_name}} {{$user->last_name}}</td>
                                 <td class="p-2">{{$user->created_at}}</td>
-                                <td class="p-2"></td>
+                                <td class="p-2">
+                                    <button class="mt-2" 
+                                        x-data 
+                                        @click="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
+                                            <path fill="currentColor" d="M2 26h28v2H2zM25.4 9c.8-.8.8-2 0-2.8l-3.6-3.6c-.8-.8-2-.8-2.8 0l-15 15V24h6.4zm-5-5L24 7.6l-3 3L17.4 7zM6 22v-3.6l10-10l3.6 3.6l-10 10z"/>
+                                        </svg>
+                                    </button>
+                                </td>
                                
-                                <td class="p-2"> </td>
-                            @endforeach
+                                <td class="p-2">
+                                    <button @click="open = true" class="mt-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M7.616 20q-.672 0-1.144-.472T6 18.385V6H5V5h4v-.77h6V5h4v1h-1v12.385q0 .69-.462 1.153T16.384 20zM17 6H7v12.385q0 .269.173.442t.443.173h8.769q.23 0 .423-.192t.192-.424zM9.808 17h1V8h-1zm3.384 0h1V8h-1zM7 6v13z"/>
+                                        </svg>
+                                    </button>
+                                </td>
+                           
                             </tr>
+                             @endforeach
                         </tbody>
                     </table>
                   

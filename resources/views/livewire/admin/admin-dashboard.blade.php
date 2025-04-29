@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('components.layouts.admin')
 
 @section('content')
 <div class="top-0 left-0 w-auto h-auto bg-white shadow-lg bg-cover bg-center bg-no-repeat items-center" >
@@ -7,23 +7,19 @@
           
           <div class="px-12 py-6">
               <div class="flex gap-3">
-                  <div class="border shadow-md rounded-xl shadow-gray-[10%] w-[30%] h-auto p-6 py-3 items-center gap-8">
-                      <p class="font-semibold text-[#51331b] text-xl">Report 1</p>
+                  <div class="border shadow-md rounded-xl shadow-gray-[10%] w-[35%] h-auto p-6 py-3 items-center gap-8">
+                      <p class="font-semibold text-[#51331b] text-xl">Shops</p>
                       <span class="text-4xl  font-bold">1</span>
                   </div>
-                  <div class="border shadow-md rounded-xl shadow-gray-[10%] w-[30%] h-auto p-6 py-3 items-center gap-8">
-                      <p class="font-semibold text-[#51331b] text-xl">Report 2</p>
+                  <div class="border shadow-md rounded-xl shadow-gray-[10%] w-[35%] h-auto p-6 py-3 items-center gap-8">
+                      <p class="font-semibold text-[#51331b] text-xl">Users</p>
                       <span class="text-4xl font-bold">P 200</span>
                   </div>
-                  <div class="border shadow-md rounded-xl shadow-gray-[10%] w-[30%] h-auto p-6 py-3 items-center gap-8">
-                      <p class="font-semibold text-[#51331b] text-xl">Report 3</p>
+                  <div class="border shadow-md rounded-xl shadow-gray-[10%] w-[35%] h-auto p-6 py-3 items-center gap-8">
+                      <p class="font-semibold text-[#51331b] text-xl">Monthly Orders</p>
                       <span class="text-4xl font-bold">P 170</span>
                   </div>
-                  <div class="border shadow-md rounded-xl shadow-gray-[10%] w-[30%] h-auto p-6 py-3 items-center gap-8">
-                      <p class="font-semibold text-[#51331b] text-xl">Report 4</p>
-                      <span class="text-4xl font-bold">34</span>
-                  </div>
-                 
+                  
               </div>
           </div>
           
@@ -31,7 +27,7 @@
               
                   <div class="card">
                       <div class="card-body border rounded-xl w-full border-gray-300 p-6 py-3">
-                          <h2 class="font-bold text-xl pb-3">Recent Orders</h2>
+                          <h2 class="font-bold text-xl pb-3">Top Shops</h2>
                           <table class="table table-striped text-[12px]">
                               <thead>
                                   <tr>
@@ -69,7 +65,7 @@
                       </div> 
       
                       <div class="card-body border rounded-xl w-full border-gray-300 p-6 mt-4 py-3">
-                          <h2 class="font-bold text-xl pb-3">Recent Orders</h2>
+                          <h2 class="font-bold text-xl pb-3">Top Users</h2>
                           <table class="table table-striped">
                               <thead>
                                   <tr>
@@ -113,7 +109,7 @@
               <!-- Placeholder for Chart -->
               <div class="card w-full h-auto border border-gray-200 rounded-xl p-6">
                       <div class="card-header">
-                          Sales Chart
+                          DoughMain Chart
                       </div>
                       <div class="card-body">
                           <canvas id="salesChart"></canvas>

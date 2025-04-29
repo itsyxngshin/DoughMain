@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Fees;
 use App\Models\Shop;
 use App\Models\Payment;
+use App\Models\Product;
 
 class ViewOrder extends Component
 {

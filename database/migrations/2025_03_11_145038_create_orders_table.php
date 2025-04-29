@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->foreignId('shop_id');
             $table->decimal('total_amount', 10, 2);
-            $table->enum('status', ['Pending', 'Completed', 'Failed', 'Cancelled'])->default('Pending');
-            $table->enum('payment_method', ['On-Pickup', 'Online Banking']);
+            $table->enum('status', ['Pending', 'On Process', 'Out For Delivery', 'Completed', 'On Pick-Up', 'Cancelled'])->default('Pending');
+            $table->enum('payment_method', ['On-Pickup', 'Cash On Delivery', 'Online Banking']);
             $table->string('delivery_address');
             $table->date('date_arrangement');
             $table->time('time_arrangement'); 

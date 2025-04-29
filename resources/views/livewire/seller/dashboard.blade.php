@@ -7,23 +7,46 @@
           
     <h1 class="px-12 pt-6 font-bold text-[#51331b] text-3xl">Dashboard</h1>
     
-    <div class="px-12 py-6">
+    <div class="px-12 pt-3 pb-3">
         <div class="flex gap-3">
-            <div class="border shadow-md rounded-xl shadow-gray-[10%] w-[30%] h-auto p-6 py-3 items-center gap-8">
-                <p class="font-semibold text-[#51331b] text-xl">Report 1</p>
-                <span class="text-4xl  font-bold">1</span>
+            <div class="border flex shadow-md rounded-xl shadow-gray-[10%] w-[30%] h-auto p-6 py-3 items-center gap-20">
+                <div class="">  
+                    <p class="font-bold text-[#51331b] text-3xl ">Orders</p>
+                    <span class="italic text-xs text-gray-500">as of {{ now()->format('m/d/Y') }}</span>
+                    
+                </div>
+                <span class="text-4xl font-bold">{{ $totalOrdersLast30Days }}</span>
             </div>
-            <div class="border shadow-md rounded-xl shadow-gray-[10%] w-[30%] h-auto p-6 py-3 items-center gap-8">
-                <p class="font-semibold text-[#51331b] text-xl">Report 2</p>
-                <span class="text-4xl font-bold">P 200</span>
+            <div class="border flex shadow-md rounded-xl shadow-gray-[10%] w-[30%] h-auto p-6 py-3 items-center gap-10">
+                <div class="">  
+                    <p class="font-bold text-[#51331b] text-3xl ">Products</p>
+                    <span class="italic text-xs text-gray-500">as of {{ now()->format('m/Y') }}</span>
+                    
+                </div>
+                <span class="text-4xl font-bold">{{ $totalProductsThisWeek }}</span>
             </div>
-            <div class="border shadow-md rounded-xl shadow-gray-[10%] w-[30%] h-auto p-6 py-3 items-center gap-8">
-                <p class="font-semibold text-[#51331b] text-xl">Report 3</p>
-                <span class="text-4xl font-bold">P 170</span>
+            
+            
+            <div class="border flex shadow-md rounded-xl shadow-gray-[10%] w-[30%] h-auto p-6 py-3 items-center gap-5">
+                <div class="">  
+                    <p class="font-bold text-[#51331b] text-3xl ">Products Sold</p>
+                    <span class="italic text-xs text-gray-500">as of {{ now()->format('m/Y') }}</span>
+                    
+                </div>
+                <span class="text-4xl font-bold">{{ $totalProductsSold }}</span>
             </div>
-            <div class="border shadow-md rounded-xl shadow-gray-[10%] w-[30%] h-auto p-6 py-3 items-center gap-8">
-                <p class="font-semibold text-[#51331b] text-xl">Report 4</p>
-                <span class="text-4xl font-bold">34</span>
+            <div class="border flex shadow-md rounded-xl shadow-gray-[10%] w-[30%] h-auto p-6 py-3 items-center gap-5">
+                <div class="">  
+                    <p class="font-bold text-[#51331b] text-3xl ">Total Revenue</p>
+                    @if($shop) <!-- Check if $shop exists -->
+                        <span class="italic text-xs text-gray-500">
+                            since {{ \Carbon\Carbon::parse($shop->created_at)->format('m/d/Y') }}
+                        </span>
+                    @else
+                        <span class="italic text-xs text-gray-500">Shop not available</span>
+                    @endif
+                </div>
+                <span class="text-3xl font-bold">₱{{ number_format($totalRevenue, 2) }}</span>
             </div>
            
         </div>
@@ -70,8 +93,8 @@
                     </table>
                 </div> 
 
-                <div class="card-body border rounded-xl w-full border-gray-300 p-6 mt-4 py-3">
-                    <h2 class="font-bold text-xl pb-3">Recent Orders</h2>
+                <div class="card-body border rounded-xl w-full border-gray-300 p-6 mt-3 py-3">
+                    <h2 class="font-bold text-xl pb-3">Completed Orders</h2>
                     <table class="table table-striped">
                         <thead>
                             <tr>

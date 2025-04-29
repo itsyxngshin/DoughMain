@@ -11,6 +11,8 @@ class StockMovement extends Model
         'id',
         'product_id',
         'quantity',
+        'change_date',
+        'remarks',
         'movement_type', // 'in' or 'out'
     ];
 

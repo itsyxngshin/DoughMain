@@ -5,7 +5,7 @@
     </button>
 
     <!-- Modal -->
-    <div x-show="open" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div x-show="open" x-cloak wire:ignore.self class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white p-6 rounded-lg shadow-lg w-96">
             <div class="relative w-full">
                 <button @click="open = false" class="absolute right-1 bg-transparent text-gray p-1 rounded-full">
@@ -16,9 +16,9 @@
             </div>
             
             <!-- Product Image -->
-            <div class="mt-3">
+            <div class="m-5">
                 <!-- You can dynamically change the product image using a variable -->
-                <img src="{{ asset('storage/products/' . $product->product_image)  }}" alt="Product Image" class="w-auto h-40 m-auto object-cover rounded">
+                <img src="{{ asset('storage/' . $product->product_image)  }}" alt="Product Image" class="w-auto h-40 m-auto object-cover rounded">
             </div>
 
             <!-- Product Name -->
@@ -27,11 +27,16 @@
             
             <!-- Price & Quantity -->
             <p class="mt-2"><strong>Price:</strong> ₱{{ number_format($product->product_price ?? 0, 2) }}</p>
-            <p><strong>Quantity:</strong> {{ ($product->stock->quantity ?? 0) + $product->stockMovements->where('movement_type', 'in')->sum('quantity') }}</p>
+            <p><strong>Quantity:</strong> {{ $product->stock->quantity ?? 0 }}</p>
             <p><strong>Products Sold:</strong> {{ $product->stockMovements->where('movement_type', 'out')->sum('quantity') }}</p>
-            <p><strong>Remaining Stocks:</strong> {{ (($product->stock->quantity ?? 0)
-                                            + $product->stockMovements->where('movement_type', 'in')->sum('quantity'))
-                                            - $product->stockMovements->where('movement_type', 'out')->sum('quantity')  }}</p>
+            <p><strong>Remaining Stocks:</strong> {{ $product->stockMovements->where('movement_type', 'in')->sum('quantity') 
+                - $product->stockMovements->where('movement_type', 'out')->sum('quantity') }}</p>
+                <p><strong>Status:</strong> <span class="font-semibold italic 
+                                @if(strtolower($product->product_status) == 'available')
+                                    text-green-500
+                                @elseif(strtolower($product->product_status) == 'unavailable')
+                                    text-gray-600
+                                @endif">{{ $product->product_status ?? 'N/A' }}</span></p>  
             <!-- Actions -->
             <div class="mt-6 flex gap-1 justify-center">
                 <!-- You can replace the delete functionality with an actual delete method -->

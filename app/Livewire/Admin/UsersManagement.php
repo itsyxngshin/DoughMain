@@ -17,6 +17,6 @@ class UsersManagement extends Component
 
     public function render()
     {
-        return view('livewire.admin.users-management')->layout('layouts.admin');
+        return view('livewire.admin.users-management')->layout('components.layouts.admin');
     }
 }

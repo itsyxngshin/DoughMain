@@ -8,15 +8,18 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Product extends Model
 {
     use HasFactory;
 
     protected $table = 'products';
     protected $fillable = [
+        'shop_id',
         'product_name',
         'product_description',
         'product_image',
+        'product_price',
         'status',
         'stock_id',
         'stock',
@@ -32,7 +35,7 @@ class Product extends Model
         return $this->hasMany(OrderItem::class, 'product_id', 'id');
     }
     public function stock(){
-        return $this->hasOne(Stock::class, 'stocks_id'); 
+        return $this->hasOne(Stock::class); 
     }
     public function reviews(){
         return $this->hasMany(Review::class, 'product_id', 'id');
@@ -43,7 +46,7 @@ class Product extends Model
         return $this->belongsTo(Shop::class);
     }
 
-    public function stockMovements(): HasMany
+    public function stockMovements()
     {
         return $this->hasMany(StockMovement::class, 'product_id', 'id');
     }

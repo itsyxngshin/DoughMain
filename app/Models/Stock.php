@@ -10,11 +10,14 @@ class Stock extends Model
     protected $fillable = [
         'id',
         'product_id',
+        'stock_movements_id',
         'quantity',
+        'last_updated'
     ];
 
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
+    
 }

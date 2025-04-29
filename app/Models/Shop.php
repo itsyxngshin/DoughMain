@@ -40,4 +40,5 @@ class Shop extends Model
     {
         return $this->hasMany(Payment::class);
     }
+    
 }
