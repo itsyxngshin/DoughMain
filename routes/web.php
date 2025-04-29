@@ -57,8 +57,16 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/home', function () {
         return view('homepage');
     })->name('homepage');
-
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::prefix('user')->group(function () {
+       Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+       Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+       Route::post('/profile/update', [ProfileController::class, 'edit'])->name('profile.update');
+    
+        // Product Management Page for Admin (Livewire)
+        Route::get('/products', AdminProductManagement::class)->name('admin.products');
+    });
+    
 });
 
 // Logout route
@@ -139,3 +147,4 @@ Route::get('/profile', function () {
 Route::get('/profile/edit', function () {
     return view('profile');
 })->name('profile.edit');
+
