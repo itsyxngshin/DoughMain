@@ -32,28 +32,29 @@ body {
 .navigation {
   font-family: 'Montserrat', sans-serif;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap; 
+  justify-content: flex-start;
   align-items: center;
-  position: fixed;
+  gap: 35px;
+  position: fixed; 
   top: 0;
   left: 0;
   width: 100%;
-  padding: 20px 10%;
+  text-align: left;
+  padding: 25px 10%; 
+  height: auto;
   z-index: 1000;
-  transition: background 0.2s ease-in-out, transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  opacity: 1;
+  transform: translateY(0);
+  transition: transform 0.3s ease-in-out;
 }
 
-/* Smooth animation for when user scrolls */
-.navigation.hidden {
-  transform: translateY(-100%);
-  opacity: 0;
-}
-
-/* Navigation links */
-.nav-left, .nav-right {
+.second-nav {
   display: flex;
+  justify-content: flex-end;
   align-items: center;
-  gap: 30px;
+  gap: 20px;
+  padding-right: 10%;
 }
 
 .navigation a {
@@ -61,43 +62,50 @@ body {
   color: white;
   font-size: 16px;
   font-weight: 400;
-  transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+  transition: color 0.3s;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .navigation a:hover {
-  color: #ffcc00;
-  transform: scale(1.1);
+  color: #51331B;
 }
 
-/* Icons */
-.icon {
+.navigation a:hover {
+  color: #51331B; 
+}
+
+.navigation img {
   width: 25px;
   height: 25px;
   cursor: pointer;
-  transition: transform 0.3s ease-in-out;
 }
 
-.icon:hover {
-  transform: scale(1.2);
-}
-
-/* Responsive Adjustments */
 @media (max-width: 1024px) {
   .navigation {
-    padding: 15px 5%;
+    padding: 20px 5%; 
+    gap: 20px;
+  }
+  .second-nav {
+    padding-right: 5%;
   }
 }
 
 @media (max-width: 768px) {
   .navigation {
     flex-direction: column;
+    align-items: center;
     text-align: center;
-    padding: 10px;
+    padding: 15px;
   }
 
-  .nav-left, .nav-right {
-    flex-direction: column;
-    gap: 10px;
+  .second-nav {
+    justify-content: center;
+    padding-right: 0;
+    gap: 15px;
+  }
+
+  .navigation a {
+    font-size: 14px;
   }
 }
 

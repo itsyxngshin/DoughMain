@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
+use App\Models\Shop;
+use App\Models\Role;
 
 class AuthController extends Controller
 {
@@ -29,12 +31,52 @@ class AuthController extends Controller
         $user->password = Hash::make($request->password);
         $user->nationality = $request->nationality;
         $user->location_id = 0;
-        $user->role_id = 0;
-        $user->status_id = 0;
+        $user->role_id = 1;
+        $user->status_id = 1;
         $user->save();
 
         return view('livewire.auth.login')->with('success', 'Register successfully');
     }
+
+    public function shopRegister(Request $request)
+{
+    Log::info($request->all());
+
+    // Validate inputs (optional but recommended)
+    $validated = $request->validate([
+        'username' => 'required|unique:users',
+        'first_name' => 'required',
+        'last_name' => 'required',
+        'email' => 'required|email|unique:users',
+        'password' => 'required|min:6|confirmed',
+        'phone_number' => 'required',
+        'nationality' => 'required',
+        'shop_name' => 'required|string|max:255',
+        'description' => 'nullable|string'
+    ]);
+
+    // Create the User
+    $user = new User();
+    $user->username = $request->username;
+    $user->first_name = $request->first_name;
+    $user->last_name = $request->last_name;
+    $user->phone_number = $request->phone_number;
+    $user->email = $request->email;
+    $user->password = Hash::make($request->password);
+    $user->nationality = $request->nationality;
+    $user->location_id = 0;
+    $user->role_id = 2; // assume 2 = Shop Owner
+    $user->status_id = 1; // assume 1 = Active
+    $user->save();
+
+    // Create the Shop linked to the User
+    $shop = new Shop();
+    $shop->manage_id= $user->id;
+    $shop->shop_name = $request->shop_name;
+    $shop->save();
+
+    return view('livewire.auth.login')->with('success', 'Registered successfully as a shop');
+}
     public function registerView()
     {
         return view('livewire.auth.register')->with('layout', 'components.layouts.app');
@@ -59,9 +101,23 @@ class AuthController extends Controller
         ];
 
         if (Auth::attempt($credentials)) {
-            return redirect('/home')->with('success', 'Login successful!');
+            $user = User::where('id', Auth::id())->with('role')->first(); // Eager-load 'role'
+        
+            if (!$user->role) {
+                return back()->with('error', 'No role assigned to user.');
+            }
+        
+            $redirect = match($user->role->role_name) {
+                'admin' => route('admin.dashboard'),
+                'user' => route('hometown'),
+                'seller' => route('seller.dashboard'),
+                default => route('hometown'),
+            };
+        
+            return redirect($redirect)->with('success', 'Login successful!');
         }
-        return back()->with('error', 'Invalid email or password');
+
+        return back()->with('error', 'Invalid credentials. Please try again.');
     }
     
     public function logout(Request $request)

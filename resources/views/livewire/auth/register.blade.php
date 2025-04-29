@@ -80,6 +80,10 @@
                 </div>
             </div>
             <div>
+                <label class="block text-gray-700 font-medium">Shop Name</label>
+                <input type="text" name="shop_name" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Choose a username" required>
+            </div>
+            <div>
                 <label class="block text-gray-700 font-medium">Username</label>
                 <input type="text" name="username" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Choose a username" required>
             </div>
