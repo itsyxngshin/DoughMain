@@ -35,6 +35,7 @@ Route::middleware('guest')->group(function () {
     // Show the login form
     Route::get('/register', [AuthController::class, 'registerView'])->name('register');
     Route::post('/passRegister', [AuthController::class, 'register'])->name('passRegister');
+    Route::post('/passRegister', [AuthController::class, 'shopRegister'])->name('shopRegister');
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/passLogin', [AuthController::class, 'login'])->name('passLogin');
 });
