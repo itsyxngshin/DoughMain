@@ -1,4 +1,4 @@
-@extends('layouts.none')
+@extends('components.layouts.none')
 
 @section('content')
 <div class="min-h-screen flex items-center justify-center bg-white px-4">

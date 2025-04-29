@@ -1,4 +1,4 @@
-@extends('layouts.navbar')
+@extends('components.layouts.navbar')
 
 @section('content')
 <div class="min-h-screen flex justify-center items-start mt-8">
