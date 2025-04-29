@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('profile_photo')->nullable(true);
             $table->string('first_name');
             $table->string('last_name');
-            $table->foreignId('status_id')->index();
-            $table->foreignId('role_id')->index();
+            $table->foreignId('user_status_id');
+            $table->foreignId('role_id');
             $table->string('nationality')->nullable()->default('Filipino');
             $table->foreignId('location_id')->index();
             # $table->timestamp('email_verified_at')->nullable();

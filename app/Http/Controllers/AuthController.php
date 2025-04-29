@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
+use App\Models\Role;
 
 class AuthController extends Controller
 {
@@ -59,9 +60,23 @@ class AuthController extends Controller
         ];
 
         if (Auth::attempt($credentials)) {
-            return redirect('/home')->with('success', 'Login successful!');
+            $user = User::where('id', Auth::id())->with('role')->first(); // Eager-load 'role'
+        
+            if (!$user->role) {
+                return back()->with('error', 'No role assigned to user.');
+            }
+        
+            $redirect = match($user->role->role_name) {
+                'admin' => route('admin.dashboard'),
+                'user' => route('hometown'),
+                'seller' => route('seller.dashboard'),
+                default => route('hometown'),
+            };
+        
+            return redirect($redirect)->with('success', 'Login successful!');
         }
-        return back()->with('error', 'Invalid email or password');
+
+        return back()->with('error', 'Invalid credentials. Please try again.');
     }
     
     public function logout(Request $request)

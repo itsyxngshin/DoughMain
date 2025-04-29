@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Role;
+use App\Models\Status;
+use App\Models\Location;
+use App\Models\Shop;
+use App\Models\Order;
+use App\Models\Review;
 
 class User extends Authenticatable
 {
@@ -53,11 +59,11 @@ class User extends Authenticatable
     }
     function status()
     {
-        return $this->hasOne(UserStatus::class, 'status_id', 'id');
+        return $this->belongsTo(UserStatus::class, 'status_id', 'id');
     }
     function role()
     {
-        return $this->hasOne(Role::class);
+        return $this->belongsTo(Role::class, 'role_id');
     }
     function location()
     {

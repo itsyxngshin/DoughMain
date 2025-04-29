@@ -71,12 +71,8 @@
             @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-gray-700 font-medium mb-1">First Name</label>
+                    <label class="block text-gray-700 font-medium mb-1">Shop Name</label>
                     <input type="text" name="first_name" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your first name" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700 font-medium mb-1">Last Name</label>
-                    <input type="text" name="last_name" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your last name" required>
                 </div>
             </div>
             <div>

@@ -19,15 +19,24 @@
                     <div class="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center">
                         <span class="text-gray-500">Image</span>
                     </div>
-                    <button type="button" class="mt-2 px-4 py-1 bg-orange-300 text-white rounded-lg text-sm">Upload</button>
-                    <p class="text-xs text-gray-500 mt-1">File size: max 1MB, JPEG, PNG</p>
+                    @can('admin') <!-- Replace 'admin' with the role or permission you want to check -->
+                        <button type="button" class="mt-2 px-4 py-1 bg-orange-300 text-white rounded-lg text-sm">Upload</button>
+                        <p class="text-xs text-gray-500 mt-1">File size: max 1MB, JPEG, PNG</p>
+                    @endcan
+                    
                 </div>
 
                 <!-- User Info -->
                 <div class="flex-1 space-y-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Full Name</label>
-                        <input type="text" name="name" value="{{ isset($user) ? $user->name : '' }}"
+                        <label class="block text-sm font-medium text-gray-700">First Name</label>
+                        <input type="text" name="first_name" value="{{ isset($user) ? $user->first_name: '' }}"
+                               class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Last Name</label>
+                        <input type="text" name="last_name" value="{{ isset($user) ? $user->last_name: '' }}"
                                class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
                     </div>
 
@@ -38,8 +47,8 @@
                                    class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Phone</label>
-                            <input type="tel" name="phone" value="{{ isset($user) ? $user->phone : '' }}"
+                            <label class="block text-sm font-medium text-gray-700">Phone Number</label>
+                            <input type="tel" name="phone" value="{{ isset($user) ? $user->phone_number : '' }}"
                                    class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
                         </div>
                     </div>
@@ -48,7 +57,7 @@
 
             <!-- Address Section -->
             <div>
-                <h3 class="text-lg font-semibold text-gray-700">Address (saved for delivery)</h3>
+                <h3 class="text-lg font-semibold text-gray-700">Address(saved for delivery)</h3>
                 <div class="grid grid-cols-2 gap-4 mt-2">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">House/Building & Street</label>

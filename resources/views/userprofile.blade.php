@@ -17,7 +17,7 @@
                 <div class="flex-1 space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Full Name</label>
-                        <p class="mt-1 text-gray-900">{{ isset($user) ? $user->name : 'N/A' }}</p>
+                        <p class="mt-1 text-gray-900">{{ isset($user) ? $user->first_name . ' ' . $user->last_name : 'N/A' }}</p>
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
@@ -27,7 +27,7 @@
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Phone</label>
-                            <p class="mt-1 text-gray-900">{{ isset($user) ? $user->phone : 'N/A' }}</p>
+                            <p class="mt-1 text-gray-900">{{ isset($user) ? $user->phone_number : 'N/A' }}</p>
                         </div>
                     </div>
                 </div>
