@@ -31,6 +31,38 @@ class UserSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(), 
             ],
+
+            [
+                'first_name' => 'Danielle',
+                'last_name' => 'Rubis',
+                'username' => 'dmrubis',
+                'email' => 'danielle@gmail.com',
+                'password' => bcrypt('adminElle'),
+                'phone_number' => '+639987654321',
+                'profile_photo' => '1000071957-01.jpg',
+                'role_id' => 2,
+                'status_id' => 0,
+                'location_id' => 0,
+                'nationality' => 'Filipino',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(), 
+            ],
+
+            [
+                'first_name' => 'John',
+                'last_name' => 'Doe',
+                'username' => 'johndoe22',
+                'email' => 'danielle@gmail.com',
+                'password' => bcrypt('adminShin'),
+                'phone_number' => '+639987654321',
+                'profile_photo' => '1000071957-01.jpg',
+                'role_id' => 0,
+                'status_id' => 0,
+                'location_id' => 0,
+                'nationality' => 'Filipino',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(), 
+            ],
         ];
         DB::table('users')->insert($users);
     }
