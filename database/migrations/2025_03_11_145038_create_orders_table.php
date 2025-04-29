@@ -12,7 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
+            $table->foreignId('user_id');
+            $table->foreignId('shop_id');
+            $table->decimal('total_amount', 10, 2);
+            $table->enum('status', ['Pending', 'Completed', 'Failed', 'Cancelled'])->default('Pending');
+            $table->enum('payment_method', ['On-Pickup', 'Online Banking']);
+            $table->string('delivery_address');
+            $table->date('date_arrangement');
+            $table->time('time_arrangement'); 
             $table->timestamps();
         });
     }

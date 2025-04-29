@@ -4,32 +4,91 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\DoughMainComp;
 use App\Http\Livewire\Counter;
 use App\Http\Livewire\Posts;
+use App\Http\Controllers\AuthController;
+use App\Livewire\Auth\Register; // Import the Register class
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AdminController; // Import AdminController
+use App\Http\Controllers\Auth\CredentialAuthController; // Add this import at the top
+use App\Http\Controllers\Auth\AuthenticatedSessionController; // Import AuthenticatedSessionController
 use App\Livewire\Auth\Login;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CheckoutController;
 
-// Seller
+// seller
 use App\Livewire\Seller\ProductManagement;
 use App\Http\Controllers\ProductController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
+use App\Models\Credential; // Ensure this is the correct namespace for the Credential model
+use Illuminate\Support\Facades\Hash;
 
-// Admin
+// admin
 use App\Livewire\Admin\AdminDashboard;
 use App\Livewire\Admin\AdminProductManagement;
 use App\Livewire\Seller\Dashboard;
 
-Route::get('/login', function () {
-    return view('livewire.auth.login');
-})->name('login');
+// Forgot Password Controller
+use App\Http\Controllers\Auth\ForgotPasswordController; // <--- Added this line
+
+Route::middleware('guest')->group(function () {
+    // Show the login form
+    Route::get('/register', [AuthController::class, 'registerView'])->name('register');
+    Route::post('/passRegister', [AuthController::class, 'register'])->name('passRegister');
+    Route::get('/login', [AuthController::class, 'loginView'])->name('login');
+    Route::post('/passLogin', [AuthController::class, 'login'])->name('passLogin');
+});
+
+// Forgot Password Route
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email'); // <--- Added this line
+
+/*
+Route::middleware('guest')->group(function () {
+    Route::get('/login', Login::class)->name('login');
+    Route::get('/register', Register::class)->name('register');
+});
+*/
+Route::middleware('auth')->get('/home', function () {
+    return view('homepage');
+})->name('homepage');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', function () {
+        return view('homepage');
+    })->name('homepage');
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+// Logout route
+
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', function () {
+        return view('livewire.seller.dashboard');
+    })->name('register');
+
+    Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+
+    //Route::get('/admin/dashboard', [AdminController::class, 'index']);
+});
+
+#Route::get('/login', function () {
+#   return view('livewire.auth.login'); // This loads the Blade view where you include Livewire component
+#})->name('login');
+
+# Route::post('/login', [CredentialAuthController::class, 'login']); // Fallback for any manual POST handling
 
 Route::get('/register', function () {
-    return view('user_register');
+    return view('livewire.auth.register');
 })->name('register');
 
 Route::get('/forgot', function () {
-    return view('password.request');
+    return view('livewire.auth.two-factor');
 })->name('forgot');
 
+/*
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware('auth')->name('dashboard');
@@ -52,23 +111,7 @@ Route::get('/products', function () {
     return view('products'); 
 });
 
-Route::get('/bakery2', function () {
-    return view('bakery2');
-});
-
-Route::view('/cakessection', 'cakessection')->name('cakessection');
-Route::view('/breadsection', 'breadsection')->name('breadsection');
-Route::view('/cupcakesection', 'cupcakesection')->name('cupcakesection');
-Route::view('/pietartsection', 'pietartsection')->name('pietartsection');
-
-
-
-// Profile Routes
-Route::get('/userprofile', [ProfileController::class, 'show'])->name('profile.show');
-Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-
-// Sellers
+// SELLERS 
 Route::prefix('seller')->group(function() {
     Route::get('/products', function () {
         return view('livewire.seller.product-management'); 
@@ -79,7 +122,7 @@ Route::prefix('seller')->group(function() {
     })->name('sellerdashboard');
 });
 
-// Admin
+// ADMIN
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
@@ -88,25 +131,3 @@ Route::prefix('admin')->group(function () {
     // Product Management Page for Admin (Livewire)
     Route::get('/products', AdminProductManagement::class)->name('admin.products');
 });
-
-Route::get('/cart', function () {
-    return view('cart');
-})->name('cart');
-
-
-Route::get('/checkout', function () {
-    return view('checkout');
-})->name('checkout.page');
-
-Route::get('/order-placed', function () {
-    return view('order-placed');
-})->name('order.placed');
-
-Route::get('/home', function () {
-    return view('home'); // Replace with actual view
-})->name('home');
-
-Route::get('/purchases', function () {
-    return view('purchases'); // Replace with actual view
-})->name('purchases');
-
