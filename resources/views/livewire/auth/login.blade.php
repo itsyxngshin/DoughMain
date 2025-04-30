@@ -5,11 +5,11 @@
     <div class="row w-55 shadow-lg rounded overflow-hidden mt-4">
         <!-- Left Side: Image (Hidden on small screens) -->
         <div class="col-lg-6 d-none d-lg-block p-0">
-            <img src="{{ asset('img/image 10.png') }}" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="Ube Cheese Pandesal">
+            <img src="{{ asset('img/image 10.png') }}" class="img-fluid w-100 h-100 animated-image" style="object-fit: cover;" alt="Ube Cheese Pandesal">
         </div>
 
         <!-- Right Side: Login Form -->
-        <div class="col-md-6 p-5 bg-white">
+        <div class="col-md-6 p-5 bg-white animated-form">
             <h1 class="fw-bold text-4xl pb-1">Welcome back!</h1>
             <p class="text-muted pb-4">Login to continue</p>
 

@@ -9,16 +9,124 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-        }
+     body {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      font-size: 15px;
+    }
+
+    #sidebar {
+      background-color: #ffff;
+      transform: translateX(-100%);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      z-index: 40;
+    }
+
+    #sidebar.show {
+      transform: translateX(0);
+      box-shadow: 8px 0 24px rgba(0, 0, 0, 0.1);
+    }
+
+    #sidebar a {
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      color: #5C3A21;
+    }
+
+    #sidebar a:hover {
+      background-color: #9C7F57;
+      color: white;
+    }
+
+    #sidebar a::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 4px;
+      height: 100%;
+      background-color: #F8E3B6;
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+      transform-origin: top;
+    }
+
+    #sidebar a:hover::before {
+      transform: scaleY(1);
+    }
+
+    #sidebarBackdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(3px);
+      z-index: 30;
+      display: none;
+    }
+
+    #sidebarBackdrop.show {
+      display: block;
+    }
+
+
+    img:hover {
+      transform: scale(1.05);
+      transition: transform 0.3s ease;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+    }
+
+    button:active {
+      transform: scale(0.97);
+      transition: transform 0.1s ease;
+    }
+
+    .shadow-modern {
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+      border-radius: 0.75rem;
+      transition: box-shadow 0.3s ease;
+    }
+
+    @keyframes fadeSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .flex-1 > * {
+      animation: fadeSlideIn 0.6s ease-out forwards;
+    }
+
+    /* Hide scrollbar for all elements using .no-scrollbar */
+    .no-scrollbar::-webkit-scrollbar {
+    display: none;
+    }
+    .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
+    }
+    
+  .border-brown-800 {
+    border-color: #51331B;
+  }
+
+
+
     </style>
 </head>
 <body class="bg-gray-50">
 
+<!-- Sidebar Backdrop -->
+<div id="sidebarBackdrop"></div>
+
     <!-- Navbar -->
     <nav class="bg-white shadow-md py-1 px-2 flex justify-between items-center fixed top-0 left-0 w-full z-50">
-        <div class="flex items-center gap-0">
+        <div class="flex items-center gap-0 ml-8">
             <!-- Burger Button -->
             <button id="burger" class="p-2 focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -107,10 +215,17 @@
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1 p-6 pt-20 ml-64">
+        <div class="flex-1 p-6 pt-20 ml-0 transition-all duration-300" id="mainContent">
             @yield('content')
         </div>
     </div>
+
+<!-- Loading Spinner -->
+<div id="pageLoader" class="fixed inset-0 bg-white bg-opacity-70 z-50 hidden flex items-center justify-center">
+  <div class="w-12 h-12 border-4 border-dashed rounded-full animate-spin border-brown-800 border-t-transparent"></div>
+</div>
+
+
 
     <script>
     window.onload = function () {
@@ -156,6 +271,45 @@
 
         updateNotifications();
     });
+
+  const burger = document.getElementById('burger');
+  const sidebar = document.getElementById('sidebar');
+  const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+  const mainContent = document.getElementById('mainContent');
+
+  burger.addEventListener('click', () => {
+    const isOpen = sidebar.classList.toggle('show');
+    sidebarBackdrop.classList.toggle('show');
+
+    if (isOpen) {
+      mainContent.classList.add('ml-64');
+      mainContent.classList.add('blur-sm');
+    } else {
+      mainContent.classList.remove('ml-64');
+      mainContent.classList.remove('blur-sm');
+    }
+  });
+
+  sidebarBackdrop.addEventListener('click', () => {
+    sidebar.classList.remove('show');
+    sidebarBackdrop.classList.remove('show');
+    mainContent.classList.remove('ml-64');
+    mainContent.classList.remove('blur-sm');
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const loader = document.getElementById('pageLoader');
+
+    document.body.addEventListener('click', function (e) {
+      const target = e.target.closest('a');
+
+      if (target && target.href && target.closest('.pagination')) {
+        loader.classList.remove('hidden');
+      }
+    });
+  });
+
+
 </script>
 
 

@@ -1,4 +1,4 @@
-@extends('layouts.navbar')
+@extends('components.layouts.navbar')
 
 @section('content')
     <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-20xl mt-5">
