@@ -59,7 +59,7 @@
 
                 <!-- Sign Up -->
                 <p class="text-center mt-3">
-                    Don't have an account? <a href="{{ route('register') }}" class="fw-bold">Sign up here.</a>
+                    Don't have an account? <a href="{{route('register')}}" class="fw-bold">Sign up here.</a>
                 </p>
                 @if(session('error'))
                     <p style="color:red;">{{ session('error') }}</p>

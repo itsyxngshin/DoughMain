@@ -19,7 +19,7 @@ class AccessMiddleware
         if (!Auth::check()) {
             return redirect('/login');
         }
-
+        
         // Assuming you have a role relationship or column
         $user = Auth::user();
         

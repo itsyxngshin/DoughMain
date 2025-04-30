@@ -11,6 +11,8 @@ use App\Http\Controllers\AdminController; // Import AdminController
 use App\Http\Controllers\Auth\CredentialAuthController; // Add this import at the top
 use App\Http\Controllers\Auth\AuthenticatedSessionController; // Import AuthenticatedSessionController
 use App\Livewire\Auth\Login;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CheckoutController;
 
 // seller
 use App\Livewire\Seller\ProductManagement;
@@ -32,13 +34,15 @@ use App\Http\Controllers\Auth\ForgotPasswordController; // <--- Added this line
 Route::middleware('guest')->group(function () {
     // Show the login form
     Route::get('/register', [AuthController::class, 'registerView'])->name('register');
-    Route::post('/passRegister', [AuthController::class, 'register'])->name('passRegister');
+    Route::post('user/register', [AuthController::class, 'register'])->name('passData');
+    Route::post('shop/Register', [AuthController::class, 'shopRegister'])->name('shopRegister');
     Route::get('/login', [AuthController::class, 'loginView'])->name('login');
     Route::post('/passLogin', [AuthController::class, 'login'])->name('passLogin');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email'); // <--- Added this line
 });
 
 // Forgot Password Route
-Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email'); // <--- Added this line
+
 
 /*
 Route::middleware('guest')->group(function () {
@@ -50,27 +54,55 @@ Route::middleware('auth')->get('/home', function () {
     return view('homepage');
 })->name('homepage');
 
-
-Route::middleware(['auth'])->group(function () {
+//AUTHENTICATED USER
+Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/home', function () {
         return view('homepage');
     })->name('homepage');
-
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::prefix('user')->group(function () {
+       Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+       Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+       Route::post('/profile/update', [ProfileController::class, 'edit'])->name('profile.update');
+    
+        // Product Management Page for Admin (Livewire)
+        Route::get('/products', AdminProductManagement::class)->name('admin.products');
+    });
 });
+
+//SELLER AUTHENTICATED USER
+Route::middleware(['auth', 'role:seller'])->group(function () {
+    Route::prefix('seller')->group(function() {
+        Route::get('/products', function () {
+            return view('livewire.seller.product-management'); 
+        })->name('productmanagement');
+    
+        Route::get('/dashboard', function () {
+            return view('livewire.seller.dashboard'); 
+        })->name('sellerdashboard');
+    });
+});
+
+//AUTHENTICATED ADMIN
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    // ADMIN
+    Route::prefix('admin')->group(function () {
+        Route::get('/dashboard', function () {
+            return view('admin.dashboard');
+        })->name('admin.dashboard');
+
+        // Product Management Page for Admin (Livewire)
+        Route::get('/products', AdminProductManagement::class)->name('admin.products');
+    });
+    //Route::get('/admin/dashboard', [AdminController::class, 'index']);
+});
+
+// SELLERS 
+
 
 // Logout route
 
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('livewire.seller.dashboard');
-    })->name('register');
-
-    Route::post('/login', [AuthenticatedSessionController::class, 'store']);
-
-    //Route::get('/admin/dashboard', [AdminController::class, 'index']);
-});
 
 #Route::get('/login', function () {
 #   return view('livewire.auth.login'); // This loads the Blade view where you include Livewire component
@@ -94,6 +126,7 @@ Route::get('/dashboard', function () {
 Route::get('/dashboard', function () {
     return view('admin/dashboard'); // This renders the Blade template
 });
+
 /*Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');*/
 
 Route::get('/', function () {
@@ -108,23 +141,4 @@ Route::get('/products', function () {
     return view('products'); 
 });
 
-// SELLERS 
-Route::prefix('seller')->group(function() {
-    Route::get('/products', function () {
-        return view('livewire.seller.product-management'); 
-    })->name('productmanagement');
 
-    Route::get('/dashboard', function () {
-        return view('livewire.seller.dashboard'); 
-    })->name('sellerdashboard');
-});
-
-// ADMIN
-Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
-
-    // Product Management Page for Admin (Livewire)
-    Route::get('/products', AdminProductManagement::class)->name('admin.products');
-});

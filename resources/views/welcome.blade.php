@@ -22,7 +22,7 @@
               <a href="#" class="text-wrapper-6">CONTACT US</a>
             </nav>
             <nav class="navigation group second-nav">
-            <a href="{{ route('login') }}" class="text-wrapper-7">Log in</a>
+            <a href="{{route('login')}}" class="text-wrapper-7">Log in</a>
               <img class="img" src="{{ asset('storage/profile.png') }}" alt="Social media icon 1" />
               <img class="group-2" src="{{ asset('storage/bag.png') }}" alt="Social media icon 2" />
             </nav>

@@ -17,7 +17,7 @@
 
 
         <!-- User Registration Form -->
-        <form id="userForm" class="space-y-4" method="POST" action="{{ route('passRegister') }}">
+        <form id="userForm" class="space-y-4" method="POST" action="{{route('passData')}}">
             @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -67,8 +67,12 @@
         </form>
 
         <!-- Seller Registration Form -->
-        <form id="sellerForm" class="space-y-4 hidden" method="POST" action="{{ route('register') }}">
+        <form id="sellerForm" class="space-y-4 hidden" method="POST" action="{{ route('shopRegister') }}">
             @csrf
+            <div>
+                <label class="block text-gray-700 font-medium">Shop Name</label>
+                <input type="text" name="shop_name" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter a shop name" required>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-gray-700 font-medium mb-1">First Name</label>
