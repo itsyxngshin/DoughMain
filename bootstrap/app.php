@@ -15,4 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => \App\Http\Middleware\AccessMiddleware::class,
         ]);
     })
+    ->withExceptions(function (Exceptions $exceptions) {
+        //
+    })
     ->create();

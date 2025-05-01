@@ -14,6 +14,17 @@ use App\Livewire\Auth\Login;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CheckoutController;
 
+
+
+// USER
+use App\Livewire\User\Homepage;
+use App\Livewire\User\ProductListingForShops;
+
+use App\Http\Controllers\CartController;
+
+
+
+
 // SELLER
 use App\Livewire\Seller\ProductManagement;
 //use App\Livewire\Seller\AddProduct;
@@ -31,6 +42,10 @@ use App\Livewire\Seller\UpdateProduct;
 use App\Http\Controllers\AddProductController;
 use App\Http\Controllers\UpdateProductController;
 
+
+
+
+
 // ADMIN
 use App\Livewire\Admin\AdminDashboard;
 //use App\Livewire\Admin\AdminProductManagement;
@@ -42,6 +57,10 @@ use App\Livewire\Admin\AdminChat;
 
 // Forgot Password Controller
 use App\Http\Controllers\Auth\ForgotPasswordController; // <--- Added this line
+
+
+
+
 
 Route::middleware('guest')->group(function () {
     // Show the login form
@@ -61,15 +80,14 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', Register::class)->name('register');
 });
 */
-Route::middleware('auth')->get('/home', function () {
-    return view('homepage');
-})->name('homepage');
 
 //AUTHENTICATED USER
 Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::get('/home', function () {
-        return view('homepage');
-    })->name('homepage');
+    Route::get('/home', Homepage::class)->name('homepage');
+
+    Route::get('/shops/{id}/products', ProductListingForShops::class)->name('shop.products');
+    Route::post('/add-to-cart', [CartController::class, 'addToCart']);
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::prefix('user')->group(function () {
        Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
@@ -144,9 +162,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/homepage', function () {
-    return view('homepage'); 
-});
+//Route::get('/home', Homepage::class)->name('homepage');  FOR DELETION
+
 
 Route::get('/products', function () {
     return view('products'); 

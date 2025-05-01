@@ -15,23 +15,23 @@
           <div class="overlap-2">
           <img class="image" src="{{ asset('storage/bgcover.JPG') }}" alt="Bakery background">
             <header class="header">
-              <nav class="navigation group">
-                <a href="#" class="text-wrapper-4">HOME</a>
-                <a href="#" class="text-wrapper-5">MENU</a>
-                <a href="#" class="text-wrapper-8">SERVICES</a>
-                <a href="#" class="text-wrapper-6">CONTACT US</a>
-              </nav>
-              <nav class="navigation group second-nav">
-                <a href="{{ route('login') }}" class="text-wrapper-7">Log in</a>
-                <img class="img" src="{{ asset('storage/profile.png') }}" alt="Social media icon 1" />
-                <img class="group-2" src="{{ asset('storage/bag.png') }}" alt="Social media icon 2" />
-              </nav>
-              <div class="group-3">
-              <img id="logo" class="brown-white-circle" src="{{ asset('storage/logo.png') }}" alt="DoughMain Bakery Logo">
-                <p class="text-wrapper-9">ORDER ONLINE</p>
-                <img class="line" src="img/line-1.svg" alt="Decorative line" />
-              </div>
+            <nav class="navigation group">
+              <a href="#" class="text-wrapper-4">HOME</a>
+              <a href="#" class="text-wrapper-5">MENU</a>
+              <a href="#" class="text-wrapper-8">SERVICES</a>
+              <a href="#" class="text-wrapper-6">CONTACT US</a>
+            </nav>
+            <nav class="navigation group second-nav">
+            <a href="{{ route('login') }}" class="text-wrapper-7">Log in</a>
+              <img class="img" src="{{ asset('storage/profile.png') }}" alt="Social media icon 1" />
+              <img class="group-2" src="{{ asset('storage/bag.png') }}" alt="Social media icon 2" />
+            </nav>
+            <div class="group-3">
+            <img id="logo" class="brown-white-circle" src="{{ asset('storage/logo.png') }}" alt="DoughMain Bakery Logo">
+              <p class="text-wrapper-9">ORDER ONLINE</p>
+              <img class="line" src="img/line-1.svg" alt="Decorative line" />
             </div>
+          </div>
         </header>
         <section class="best-sellers">
         <div class="features-container">
