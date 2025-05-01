@@ -20,7 +20,7 @@ class ProductManagement extends Component
     public function mount()
     {
         // Set shopId based on the authenticated user
-        $this->shopId = Auth::check() && Auth::user()->shop ? Auth::user()->shop->id : 2;
+        $this->shopId = Auth::check() && Auth::user()->shop ? Auth::user()->shop->id : 1;
         $this->categories = Category::all();
 
         // Fetch products for this shop

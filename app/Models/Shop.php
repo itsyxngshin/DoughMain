@@ -34,11 +34,12 @@ class Shop extends Model
     }
     public function shopLogo()
     {
-        return $this->hasOne(ShopLogo::class);
+        return $this->belongsTo(ShopLogo::class, 'shop_logo_id');
     }
     public function payments()
     {
         return $this->hasMany(Payment::class);
     }
+    
     
 }

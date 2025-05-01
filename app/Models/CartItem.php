@@ -11,7 +11,7 @@ class CartItem extends Model
         'cart_id',
         'product_id',
         'quantity',
-        'subtotal',
+        'sub_total',
     ];
 
     public function cart()

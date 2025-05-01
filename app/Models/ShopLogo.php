@@ -9,11 +9,11 @@ class ShopLogo extends Model
     protected $table = 'shop_logos';
     protected $fillable = [
         'id',
-        'directory',
+        'logo_path',
     ];
 
     public function shop()
     {
-        return $this->belongsTo(Shop::class, 'shop_id', 'id');
+        return $this->hasOne(Shop::class, 'shop_id', 'id');
     }
 }
