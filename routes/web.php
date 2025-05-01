@@ -67,7 +67,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'registerView'])->name('register');
     Route::post('/passRegister', [AuthController::class, 'register'])->name('passRegister');
     Route::post('/passRegister', [AuthController::class, 'shopRegister'])->name('shopRegister');
-    Route::get('/login', [AuthController::class, 'login'])->name('login');
+    Route::get('/login', [AuthController::class, 'loginView'])->name('login');
     Route::post('/passLogin', [AuthController::class, 'login'])->name('passLogin');
 });
 
@@ -96,6 +96,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     
         // Product Management Page for Admin (Livewire)
        // Route::get('/products', AdminProductManagement::class)->name('admin.products');
+       
     });
 });
 

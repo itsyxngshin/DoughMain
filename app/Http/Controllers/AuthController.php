@@ -109,9 +109,9 @@ class AuthController extends Controller
         
             $redirect = match($user->role->role_name) {
                 'admin' => route('admin.dashboard'),
-                'user' => route('hometown'),
+                'user' => route('homepage'),
                 'seller' => route('seller.dashboard'),
-                default => route('hometown'),
+                default => route('homepage'),
             };
         
             return redirect($redirect)->with('success', 'Login successful!');
