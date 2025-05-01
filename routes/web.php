@@ -95,7 +95,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
        Route::post('/profile/update', [ProfileController::class, 'edit'])->name('profile.update');
     
         // Product Management Page for Admin (Livewire)
-        Route::get('/products', AdminProductManagement::class)->name('admin.products');
+       // Route::get('/products', AdminProductManagement::class)->name('admin.products');
     });
 });
 
@@ -121,7 +121,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         })->name('admin.dashboard');
 
         // Product Management Page for Admin (Livewire)
-        Route::get('/products', AdminProductManagement::class)->name('admin.products');
+       // Route::get('/products', AdminProductManagement::class)->name('admin.products');
     });
     //Route::get('/admin/dashboard', [AdminController::class, 'index']);
 });
