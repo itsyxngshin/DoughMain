@@ -1,5 +1,4 @@
 <div 
-
     x-data="{ 
         open: false, 
         product: {
@@ -7,49 +6,48 @@
         } 
     }"
     x-init="
-    Livewire.on('successfully-added-to-cart', () => {
-        open = false;
-        setTimeout(() => {
-            window.location.reload();
-        }, 300); 
-    });
-"
-
+        Livewire.on('successfully-added-to-cart', () => {
+            open = false;
+            setTimeout(() => {
+                window.location.reload();
+            }, 300);
+        });
+    "
 >
 
+    <!-- Product Loop -->
+    <div class="grid md:grid-cols-3 gap-6">
+        @foreach ($product as $product)
+            <!-- Product Button Trigger -->
+            <button @click="
+                open = true;
+                product.id = {{ $product->id }};
+                product.name = '{{ addslashes($product->product_name) }}';
+                product.img = '{{ asset('storage/' . $product->product_image) }}';
+                product.desc = '{{ addslashes($product->product_description) }}';
+                product.price = '{{ $product->product_price }}';
+                product.quantity = 1;
+            ">
+                <div class="searchable-item bg-transparent hover:bg-gray-200 p-5 shadow-lg rounded-lg text-center transition-transform transform hover:scale-105 duration-300">
+                    <img src="{{ asset('storage/' . $product->product_image) }}" 
+                         alt="{{ $product->product_name }}" 
+                         class="w-40 mx-auto w-56 h-56 overflow-hidden">
+                    
+                    
+                    <h4 class="font-semibold">{{ $product->product_name }}</h4>
+                    <p class="text-gray-500">{{ $product->product_description }}</p>
+                    <p class="text-gray-800 font-bold">{{ $product->product_price }}</p>
+                </div>
+            </button>
+        @endforeach
+    </div>
 
-    <!-- Product Button -->
-    <button @click="
-    open = true;
-    product.id = {{ $product->id }};
-    product.name = '{{ $product->product_name }}';
-    product.img = '{{ asset('storage/' . $product->product_image) }}';
-    product.desc = '{{ $product->product_description }}';
-    product.price = '{{ $product->product_price }}';
-    product.quantity = 1;
-">
-
-        <div class="relative transition-transform transform hover:scale-105 duration-300 w-60 h-60 overflow-hidden">
-            <img src="{{ asset('storage/' . $product->product_image) }}" 
-                alt="{{ $product->product_name }}" 
-                class="rounded-lg w-full h-full object-cover transition-transform transform hover:scale-110 duration-300">
-            
-            <div class="absolute inset-0 bg-gradient-to-t from-[#51331B]/70 to-transparent rounded-lg"></div> 
-            <div class="flex">
-                <h3 class="absolute bottom-2 left-5 text-white font-semibold z-10">
-                    {{ $product->product_name }}
-                </h3>
-                <p class="absolute bottom-2 right-5 text-white font-semibold z-10">{{ $product->product_price}}</p>
-            </div>
-            
-        </div>
-    </button>
 
     <!-- Modal -->
     <div 
         x-show="open" 
         x-cloak 
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+        class="fixed inset-0 bg-black w-full h-screen bg-opacity-50 flex items-center justify-center z-50"
     >
         <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative">
             <button 

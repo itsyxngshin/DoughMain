@@ -37,7 +37,7 @@
                             quantity: 1
                         }; 
                         open = true;">
-                        <img src="{{ asset('storage/' . $product->product_image) }}" alt="{{ $product->product_name }}" class="w-40 mx-auto transition-transform transform hover:scale-110 duration-300">
+                        <img src="{{ asset('storage/' . $product->product_image) }}" alt="{{ $product->product_name }}" class="w-40 mx-auto w-56 h-56 overflow-hidden">
                     </a>
                     <h4 class="font-semibold">{{ $product->product_name }}</h4>
                     <p class="text-gray-500">{{ $product->product_description }}</p>

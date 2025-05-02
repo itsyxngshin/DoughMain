@@ -2,7 +2,7 @@
 
 @section('content')
 <section>
-  <div class="container mx-auto px-8 mt-0">
+  <div class="container mx-auto px-8 mt-0 pt-20">
 
     <!-- Search Bar -->
     <div class="sticky top-1 py-2 z-50 ml-3 mb-5 mt-3">
@@ -45,14 +45,23 @@
 </div>
 
 
-    @foreach($categories as $category)
-    
-            <div class="my-10 text-center">
-                <span class="inline-block text-gray-400 text-xl tracking-widest">&#10022;&#10022;&#10022;</span>
-            </div>
+@foreach($categories as $category)
+    @php
+        // Check if the bakery has products in the selected category
+        $hasProducts = $bakery->products()
+            ->where('category_id', $category->id)
+            ->exists();
+    @endphp
 
+    @if($hasProducts)
+        <!-- Only render Livewire component if the bakery has products in the selected category -->
         @livewire('user.modal.view-shop-product', ['shopId' => $bakery->id, 'categoryId' => $category->id], key($bakery->id . '-' . $category->id))
-    @endforeach
+        <div class="my-10 text-center">
+            <span class="inline-block text-gray-400 text-xl tracking-widest">&#10022;&#10022;&#10022;</span>
+        </div>
+    @endif
+@endforeach
+
 
 
 

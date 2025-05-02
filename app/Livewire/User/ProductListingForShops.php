@@ -27,6 +27,7 @@ class ProductListingForShops extends Component
 
         // Fetch products associated with this shop and group them by category_id
         $this->productsByCategory = Product::where('shop_id', $this->shopId)  // Use $this->shopId
+        ->where('product_status', 'available')
         ->with('category')  // Eager load category
         ->get();
     }

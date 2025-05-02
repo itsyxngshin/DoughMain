@@ -1,7 +1,7 @@
 @extends('components.layouts.navbar')
 
 @section('content')
-<div class="flex flex-col md:flex-row">
+<div class="flex flex-col md:flex-row pt-20">
 
     <!-- Sidebar -->
     <aside class="w-full md:w-1/4 h-auto md:h-screen sticky top-0 bg-[#ffffff] p-8 shadow-lg rounded-xl space-y-8 border border-[#ffffff] mb-8 md:mb-0">
@@ -37,9 +37,9 @@
             </div>
         </div>
 
-        <!-- Pastries -->
+        <!-- Category filter -->
         <div class="space-y-4">
-            <h3 class="text-lg font-semibold text-[#4C3C2C]">Pastries</h3>
+            <h3 class="text-lg font-semibold text-[#4C3C2C]">Categories</h3>
             <div class="flex flex-col space-y-2 text-base text-[#6E4B3B]">
                 <label class="inline-flex items-center gap-3 hover:text-[#8E6A4A] cursor-pointer">
                     <input type="checkbox" class="accent-[#D39B6A]">
@@ -62,7 +62,7 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="w-full md:w-3/4 p-8 ml-0 md:ml-8">
+    <main class="w-full md:w-3/4 p-8 ml-0 md:ml-8" >
 
         <!-- Search Bar -->
         <div class="sticky top-1 py-2 z-50 mb-4">
@@ -131,7 +131,7 @@
             @foreach ($categories as $category)
                 <div class="relative bg-cover bg-center rounded-lg shadow-lg flex items-end pl-2 h-32 transition-transform transform hover:scale-105 duration-300"
                     style="background-image: url('{{ asset('storage/' . $category->category_photo) }}');">
-                    <a href="cakessection">
+                    <a href="{{ route('category', ['id' => $category->id]) }}">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#51331B]/70 to-transparent rounded-lg"></div>
                         <h3 class="absolute bottom-2 left-5 text-white font-semibold z-10">
                             {{ $category->category_name }}

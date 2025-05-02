@@ -19,7 +19,7 @@ use App\Http\Controllers\CheckoutController;
 // USER
 use App\Livewire\User\Homepage;
 use App\Livewire\User\ProductListingForShops;
-
+use App\Livewire\User\ProductByCategory;
 use App\Http\Controllers\CartController;
 
 
@@ -84,6 +84,7 @@ Route::middleware('guest')->group(function () {
 //AUTHENTICATED USER
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/home', Homepage::class)->name('homepage');
+    Route::get('/Category/{id}', ProductByCategory::class)->name('category');
 
     Route::get('/shops/{id}/products', ProductListingForShops::class)->name('shop.products');
     Route::post('/add-to-cart', [CartController::class, 'addToCart']);
