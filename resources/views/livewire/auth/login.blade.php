@@ -52,7 +52,7 @@
                 <div class="text-center my-3 text-muted">Or login with</div>
 
                 <!-- Google Login -->
-                <a href="#" class="btn btn-outline-dark w-100 d-flex align-items-center justify-content-center">
+                <a href="{{route('google.login')}}" class="btn btn-outline-dark w-100 d-flex align-items-center justify-content-center">
                     <img src="{{ asset('img/google-icon-colour.png') }}" alt="Google" class="me-2" width="20">
                     Continue with Google
                 </a>

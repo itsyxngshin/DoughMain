@@ -12,6 +12,7 @@ use App\Http\Controllers\Auth\CredentialAuthController; // Add this import at th
 use App\Http\Controllers\Auth\AuthenticatedSessionController; // Import AuthenticatedSessionController
 use App\Livewire\Auth\Login;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\CheckoutController;
 
 // seller
@@ -30,6 +31,9 @@ use App\Livewire\Seller\Dashboard;
 
 // Forgot Password Controller
 use App\Http\Controllers\Auth\ForgotPasswordController; // <--- Added this line
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+
 
 Route::middleware('guest')->group(function () {
     // Show the login form
@@ -54,12 +58,13 @@ Route::middleware('auth')->get('/home', function () {
     return view('homepage');
 })->name('homepage');
 
+Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');
+
 //AUTHENTICATED USER
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/home', function () {
         return view('homepage');
     })->name('homepage');
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::prefix('user')->group(function () {
        Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
        Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -76,7 +81,6 @@ Route::middleware(['auth', 'role:seller'])->group(function () {
         Route::get('/products', function () {
             return view('livewire.seller.product-management'); 
         })->name('productmanagement');
-    
         Route::get('/dashboard', function () {
             return view('livewire.seller.dashboard'); 
         })->name('sellerdashboard');
@@ -90,11 +94,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/dashboard', function () {
             return view('admin.dashboard');
         })->name('admin.dashboard');
-
         // Product Management Page for Admin (Livewire)
         Route::get('/products', AdminProductManagement::class)->name('admin.products');
     });
     //Route::get('/admin/dashboard', [AdminController::class, 'index']);
+});
+
+Route::middleware(['web'])->group(function () {
+    Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
+    Route::get('/auth/callback/google', [GoogleController::class, 'handleGoogleCallback']);
 });
 
 // SELLERS 

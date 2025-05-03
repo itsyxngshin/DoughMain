@@ -14,7 +14,7 @@ return new class extends Migration
             $table->id()->autoIncrement();
             $table->string('username')->nullable();
             $table->string('email')->unique();
-            $table->string('password')->nullable(false); // hashed
+            $table->string('password')->nullable(true); // hashed
             $table->string('phone_number')->nullable();
             $table->string('profile_photo')->nullable(true);
             $table->string('first_name');
