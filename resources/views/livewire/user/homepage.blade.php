@@ -154,34 +154,27 @@
         <section class="mt-12 bg-[#f9f9f9] py-8">
             <h2 class="text-2xl font-bold text-[#51331B] text-center">What Our Customers Are Saying</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-                <!-- Testimonial 1 -->
-                <div class="p-6 border rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
-                    <div class="flex items-center mb-2">
-                        <span class="text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                @forelse ($testimonials as $review)
+                    <div class="p-6 border rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
+                        <p class="text-sm italic ">{{ $review->shop->shop_name ?? 'Secret Shop'}}</p>
+                        <div class="flex items-center mt-3">
+                            @for ($i = 1; $i <= 5; $i++)
+                                <span class="text-yellow-400">
+                                    {{ $i <= $review->rating ? '★' : '☆' }}
+                                </span>
+                            @endfor
+                        </div>
+                        <p class="text-sm italic text-gray-600">"{{ $review->review_text }}"</p>
+                        <h4 class="font-semibold mt-4 text-[#51331B]">
+                            -{{ $review->user->username ?? 'Anonymous' }}
+                        </h4>
                     </div>
-                    <p class="text-sm italic text-gray-600">"The best pandesal I've ever had! Fresh, soft, and delicious. Highly recommend!"</p>
-                    <h4 class="font-semibold mt-4 text-[#51331B]">Maria L.</h4>
-                </div>
-
-                <!-- Testimonial 2 -->
-                <div class="p-6 border rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
-                    <div class="flex items-center mb-2">
-                        <span class="text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
-                    </div>
-                    <p class="text-sm italic text-gray-600">"I love the variety of cakes here. The ube pandesal is a must-try!"</p>
-                    <h4 class="font-semibold mt-4 text-[#51331B]">Jesse B.</h4>
-                </div>
-
-                <!-- Testimonial 3 -->
-                <div class="p-6 border rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
-                    <div class="flex items-center mb-2">
-                        <span class="text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
-                    </div>
-                    <p class="text-sm italic text-gray-600">"Great service and even better baked goods. I come here every weekend!"</p>
-                    <h4 class="font-semibold mt-4 text-[#51331B]">Rachel S.</h4>
-                </div>
+                @empty
+                    <p class="text-center col-span-full text-gray-500">No reviews yet.</p>
+                @endforelse
             </div>
         </section>
+
     </main>
 </div>
 @endsection

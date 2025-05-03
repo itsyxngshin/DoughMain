@@ -6,6 +6,8 @@ use Livewire\Component;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Shop;
+use App\Models\Review;
+
 
 class Homepage extends Component
 {
@@ -13,12 +15,18 @@ class Homepage extends Component
     public $categories;
     public $bakeries;
     public $search = '';
+    public $testimonials;
 
     public function mount()
     {
-        $this->products = Product::where('product_status', 'available')->get();
+        $this->products = Product::with('reviews')->where('product_status', 'available')->get();
         $this->categories = Category::all();
         $this->bakeries = Shop::with('shopLogo')->get();
+    
+        $this->testimonials = Review::with(['user', 'shop'])
+            ->latest()
+            ->take(6)
+            ->get();
     }
 
     public function getFilteredProductsProperty()

@@ -8,7 +8,7 @@
           <div class="px-12 py-6">
               <div class="flex gap-3">
                   <div class="border shadow-md rounded-xl shadow-gray-[10%] w-[35%] h-auto p-6 py-3 items-center gap-8">
-                      <p class="font-semibold text-[#51331b] text-xl">Shops</p>
+                      <p class="font-semibold text-[#51331b] text-xl">Bakeries</p>
                       <span class="text-4xl  font-bold">{{ $totalShops }}</span>
                   </div>
                   <div class="border shadow-md rounded-xl shadow-gray-[10%] w-[35%] h-auto p-6 py-3 items-center gap-8">
