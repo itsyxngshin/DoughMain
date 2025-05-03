@@ -6,24 +6,31 @@ use Livewire\Component;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Shop;
-use App\Models\ShopLogo;
 
 class Homepage extends Component
 {
     public $products;
     public $categories;
     public $bakeries;
+    public $search = '';
 
     public function mount()
     {
-        // Fetch products with status 'available'
         $this->products = Product::where('product_status', 'available')->get();
-        
-        // Fetch all categories
         $this->categories = Category::all();
-        
-        // Fetch all bakeries with their logos
         $this->bakeries = Shop::with('shopLogo')->get();
+    }
+
+    public function getFilteredProductsProperty()
+    {
+        if (trim($this->search) === '') {
+            return [];
+        }
+
+        return Product::where('product_name', 'like', '%' . $this->search . '%')
+            ->where('product_status', 'available')
+            ->limit(10)
+            ->get();
     }
 
     public function render()

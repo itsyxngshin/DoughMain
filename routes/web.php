@@ -37,7 +37,6 @@ use Illuminate\Support\Facades\Hash;
 use App\Livewire\Seller\Chat;
 use App\Livewire\Seller\Dashboard;
 use App\Livewire\Seller\OrderManagement;
-use App\Livewire\Seller\TransactionsManagement;
 use App\Livewire\Seller\UpdateProduct;
 use App\Http\Controllers\AddProductController;
 use App\Http\Controllers\UpdateProductController;
@@ -66,7 +65,7 @@ Route::middleware('guest')->group(function () {
     // Show the login form
     Route::get('/register', [AuthController::class, 'registerView'])->name('register');
     Route::post('/passRegister', [AuthController::class, 'register'])->name('passRegister');
-    Route::post('/passRegister', [AuthController::class, 'shopRegister'])->name('shopRegister');
+    Route::post('/shopRegister', [AuthController::class, 'shopRegister'])->name('shopRegister');
     Route::get('/login', [AuthController::class, 'loginView'])->name('login');
     Route::post('/passLogin', [AuthController::class, 'login'])->name('passLogin');
 });
@@ -89,7 +88,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/shops/{id}/products', ProductListingForShops::class)->name('shop.products');
     Route::post('/add-to-cart', [CartController::class, 'addToCart']);
 
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('userlogout');
     Route::prefix('user')->group(function () {
        Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
        Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -101,16 +100,33 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     });
 });
 
-//SELLER AUTHENTICATED USER
+
+// AUTHENTICATED SELLER
 Route::middleware(['auth', 'role:seller'])->group(function () {
     Route::prefix('seller')->group(function() {
-        Route::get('/products', function () {
-            return view('livewire.seller.product-management'); 
-        })->name('productmanagement');
-    
-        Route::get('/dashboard', function () {
-            return view('livewire.seller.dashboard'); 
-        })->name('sellerdashboard');
+        // DASHBOARD
+        Route::get('/dashboard', Dashboard::class)
+        ->name('sellerdashboard');
+        // PRODUCTS MANAGEMENT
+        Route::get('/productsmanagement', ProductManagement::class)
+        ->name('productmanagement');   
+            //ADD PRODUCT PAGE FETCHING
+            Route::get('/add-product/{shop_id}', [AddProductController::class, 'create'])->name('addproduct');
+            // ADD PRODUCT PAGE POSTING
+            Route::post('/add-product', [AddProductController::class, 'store'])->name('products.store');
+            //UPDATE PRODUCT PAGE FETCHING
+            Route::get('/products/{id}/edit', [UpdateProductController::class, 'edit'])->name('updateproduct');
+            //UPDATE PRODUCT PAGE POSTING
+            Route::put('/products/{id}', [UpdateProductController::class, 'update'])->name('products.update');
+        // ORDER MANAGEMENT
+        Route::get('seller/orders', OrderManagement::class)->name('ordermanagement');
+        // CHAT FOR SELLERS
+        Route::get('/chat', function () {
+            return view('livewire.seller.chat'); 
+        })->name('sellerchat');
+
+        // LOGOUT FOR SELLER
+        Route::post('/logout', [AuthController::class, 'logout'])->name('sellerlogout');
     });
 });
 
@@ -118,15 +134,36 @@ Route::middleware(['auth', 'role:seller'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     // ADMIN
     Route::prefix('admin')->group(function () {
+        // ADMIN DASHBOARD
         Route::get('/dashboard', function () {
-            return view('admin.dashboard');
+            return view('livewire.admin.admin-dashboard');
         })->name('admin.dashboard');
 
-        // Product Management Page for Admin (Livewire)
-       // Route::get('/products', AdminProductManagement::class)->name('admin.products');
+        // BAKERY MANAGEMENT
+        Route::get('/bakerymanagement', AdminBakeryManagement::class)
+            ->name('admin.bakery');
+
+        // CHAT FOR ADMIN
+        Route::get('/chat', function () {
+            return view('livewire.admin.admin-chat');
+        })->name('admin.chat');
+
+        // USER MANAGEMENT
+        Route::get('/users', UsersManagement::class)
+            ->name('admin.users');
+
+        // LOGOUT FOR ADMIN
+        Route::post('/logout', [AuthController::class, 'logout'])->name('adminlogout');
     });
-    //Route::get('/admin/dashboard', [AdminController::class, 'index']);
+
 });
+
+
+
+
+
+
+
 
 // SELLERS 
 
@@ -176,65 +213,10 @@ Route::get('/userprofile', [ProfileController::class, 'show'])->name('profile.sh
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
-// Sellers
-Route::prefix('seller')->group(function() {
-    Route::get('/productsmanagement', ProductManagement::class)
-    ->name('productmanagement');
 
-    Route::get('/add-product/{shop_id}', [AddProductController::class, 'create'])->name('addproduct');
-
-    Route::post('/add-product', [AddProductController::class, 'store'])->name('products.store');
-
-    Route::get('/products/{id}/edit', [UpdateProductController::class, 'edit'])->name('updateproduct');
-    Route::put('/products/{id}', [UpdateProductController::class, 'update'])->name('products.update');
-
-
-    //seller dashboard
-    Route::get('/dashboard', Dashboard::class)
-    ->name('sellerdashboard');
-
-    //order management
-    Route::get('seller/orders', OrderManagement::class)->name('ordermanagement');
-
-
-    //transactions management
-    Route::get('/transactions', TransactionsManagement::class)
-    ->name('transactionmanagement');
-
-    //seller chat
-    Route::get('/chat', function () {
-        return view('livewire.seller.chat'); 
-    })->name('sellerchat');
-
-
-    /*update products page
-    Route::get('/products/update', function () {
-        return view('livewire.seller.update-product'); 
-    })->name('updateproduct');
-*/
-    
-});
-
-// ADMIN
+/* ADMIN
 Route::prefix('admin')->group(function () {
 
-    //Admin dashboard
-    Route::get('/dashboard', function () {
-        return view('livewire.admin.admin-dashboard');
-    })->name('admin.dashboard');
-
-    //bakery management
-    Route::get('/bakerymanagement', AdminBakeryManagement::class)
-        ->name('admin.bakery');
-
-    //Admin chat
-    Route::get('/chat', function () {
-        return view('livewire.admin.admin-chat');
-    })->name('admin.chat');
-
-    //Users Management
-    Route::get('/Users', UsersManagement::class)
-        ->name('admin.users');
 
     //Add bakery
     Route::get('bakerymanagement/add-bakery', function () {
@@ -248,3 +230,4 @@ Route::prefix('admin')->group(function () {
 
     
 });
+*/

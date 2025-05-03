@@ -19,8 +19,10 @@ class ProductManagement extends Component
 
     public function mount()
     {
-        // Set shopId based on the authenticated user
-        $this->shopId = Auth::check() && Auth::user()->shop ? Auth::user()->shop->id : 1;
+        // Get the shop managed by the currently logged-in user
+        $shop = Shop::where('manage_id', auth()->id())->firstOrFail();
+        $this->shopId = $shop->id;
+
         $this->categories = Category::all();
 
         // Fetch products for this shop
@@ -39,19 +41,19 @@ class ProductManagement extends Component
 
     public function render()
     {
-        // Fetch products based on shopId
-        $products = Product::with('category', 'stock', 'stockMovements')
-            ->where('shop_id', $this->shopId)
-            ->when($this->search, function ($query) {
-                $query->where('product_name', 'like', '%' . $this->search . '%');
-            })
-            ->when($this->selectedCategory, function ($query) {
-                $query->where('category_id', $this->selectedCategory);
-            })
-            ->get();
+        $products = Product::with(['category', 'stock', 'stockMovements', 'shop']) // ✅ Add 'shop'
+        ->where('shop_id', $this->shopId)
+        ->when($this->search, function ($query) {
+            $query->where('product_name', 'like', '%' . $this->search . '%');
+        })
+        ->when($this->selectedCategory, function ($query) {
+            $query->where('category_id', $this->selectedCategory);
+        })
+        ->get();
 
         return view('livewire.seller.product-management', [
-            'products' => $products
+            'products' => $products,
+            'shop' => Shop::find($this->shopId)
         ])->layout('components.layouts.seller');
     }
 }

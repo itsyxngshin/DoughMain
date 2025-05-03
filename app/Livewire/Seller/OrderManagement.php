@@ -21,11 +21,13 @@ class OrderManagement extends Component
 
     public function mount()
     {
-        $this->shop = Shop::find(2); // hardcoded for shop_id = 2
+         // Dynamically fetch the shop for the currently logged-in user
+         $this->shop = Shop::where('manage_id', auth()->id())->firstOrFail();
 
-        $this->orders = Order::with('user', 'orderItems.product', 'shop')
-                             ->where('shop_id', $this->shop->id)
-                             ->get();
+         // Get all orders for this shop
+         $this->orders = Order::with('user', 'orderItems.product', 'shop')
+                              ->where('shop_id', $this->shop->id)
+                              ->get();
     }
 
 

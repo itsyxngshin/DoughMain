@@ -11,7 +11,10 @@
                 <div class="mt-4 flex justify-center gap-2">
                     <div class="flex gap-2">
                         <button @click="open = false" class="bg-gray-300 px-4 py-2 rounded">No</button>
-                        <button class="bg-[#51331b] text-white px-4 py-2 rounded">Yes</button>
+                        <form method="POST" action="{{ route('sellerlogout') }}">
+                            @csrf
+                            <button type="submit" class="bg-[#51331b] text-white px-4 py-2 rounded">Yes</button>
+                        </form>
                     </div>
                     
                 </div>

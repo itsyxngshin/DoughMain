@@ -110,7 +110,7 @@ class AuthController extends Controller
             $redirect = match($user->role->role_name) {
                 'admin' => route('admin.dashboard'),
                 'user' => route('homepage'),
-                'seller' => route('seller.dashboard'),
+                'seller' => route('sellerdashboard'),
                 default => route('homepage'),
             };
         
