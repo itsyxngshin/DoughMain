@@ -15,21 +15,40 @@
                 class="w-full p-2.5 pl-10 border border-[#ffffff] rounded-full focus:outline-none 
                       focus:ring-2 focus:ring-[#D39B6A] transition-all duration-200">
     
-    <div x-show="show" 
-    x-transition
-    class="absolute w-full bg-white mt-2 rounded-lg shadow-lg z-50 border border-gray-200">
-        @foreach($products as $product)
-        <div  class="p-3 hover:bg-gray-100 cursor-pointer flex justify-between items-center">
-            <a > {{ $product['product_name']}}</a>
-            <div class="text-sm text-gray-500">
-                {{ $product->category->category_name ?? 'No Category' }} | 
-                {{ $product->shop->shop_name ?? 'No Shop' }}
-            </div>
-        </div>
-            
-        @endforeach
-    </div>
+                      <div x-show="show"
+     x-transition
+     class="absolute w-full bg-white mt-2 rounded-lg shadow-lg z-50 border border-gray-200">
 
+    {{-- Show matching shops --}}
+    @foreach($shops as $shop)
+        <div class="p-3 hover:bg-gray-100 cursor-pointer flex justify-between items-center">
+            <a href="{{ route('shop.products', ['id' => $shop->id]) }}">
+                {{ $shop->shop_name }}
+            </a>
+            <div class="text-sm text-gray-500 italic">Shop</div>
+        </div>
+    @endforeach
+
+    {{-- Show matching products --}}
+    @foreach($products as $product)
+        @if($product->shop)
+            <div class="p-3 hover:bg-gray-100 cursor-pointer flex justify-between items-center">
+                <a href="{{ route('shop.products', ['id' => $product->shop->id]) }}">
+                    {{ $product->product_name }}
+                </a>
+                <div class="text-sm text-gray-500">
+                    {{ $product->category->category_name ?? 'No Category' }} |
+                    {{ $product->shop->shop_name }}
+                </div>
+            </div>
+        @endif
+    @endforeach
 </div>
+
+            
+
+
+
+    </div>
     
 </div>

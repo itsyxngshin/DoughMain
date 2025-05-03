@@ -64,7 +64,7 @@
                             @endphp
                             <tr class="border-b text-sm text-center" x-show="(search === '' || '{{ $shopName }}'.includes(search.toLowerCase()))">
                                 <td class="p-2">{{$shop->id}}</td>
-                                <td class="p-2 items-center"><img src="{{ asset('storage/shop_logos/' . $shop->logo_path) }}" alt="Thumbnail" class="w-12 m-auto"></td>
+                                <td class="p-2 items-center"><img src="{{ asset('storage/shop_logos/' . $shop->shopLogo->logo_path) }}" alt="{{$shop->shopLogo->logo_path}}" class="w-12 m-auto"></td>
                                 <td class="p-2">{{$shop->shop_name}}</td>
                                 <td class="p-2">{{$shop->created_at}}</td>
                                

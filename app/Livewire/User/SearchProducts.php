@@ -3,31 +3,29 @@ namespace App\Livewire\User;
 
 use Livewire\Component;
 use App\Models\Product;
+use App\Models\Shop;
 use Illuminate\Support\Facades\Log;
 
 class SearchProducts extends Component
 {  // The search term
     public $query;
     public $products;
+    public $shops;
 
     public function mount()
     {
         $this->query = '';
         $this->products = [];
+        $this->shops = [];
     }
     public function updatedQuery()
 {
     $this->products = Product::with(['category', 'shop'])
-        ->where(function($q) {
-            $q->where('product_name', 'like', '%' . $this->query . '%')
-              ->orWhereHas('category', function ($q) {
-                  $q->where('category_name', 'like', '%' . $this->query . '%');
-              })
-              ->orWhereHas('shop', function ($q) {
-                  $q->where('shop_name', 'like', '%' . $this->query . '%');
-              });
-        })
+        ->where('product_name', 'like', '%' . $this->query . '%')
         ->get();
+
+    $this->shops = Shop::where('shop_name', 'like', '%' . $this->query . '%')->get();
+
 }
 
 

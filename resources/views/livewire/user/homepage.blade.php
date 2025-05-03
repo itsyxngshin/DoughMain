@@ -66,6 +66,7 @@
 
     
     @livewire('user.search-products')
+    @livewire('user.modal.view-product-from-search')
 
  
 

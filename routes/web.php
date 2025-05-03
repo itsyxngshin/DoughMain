@@ -25,6 +25,7 @@ use App\Http\Controllers\CartController;
 
 
 
+
 // SELLER
 use App\Livewire\Seller\ProductManagement;
 //use App\Livewire\Seller\AddProduct;
@@ -53,6 +54,7 @@ use App\Livewire\Admin\UpdateBakery;
 use App\Livewire\Admin\AddBakery;
 use App\Livewire\Admin\AdminBakeryManagement;
 use App\Livewire\Admin\AdminChat;
+
 
 // Forgot Password Controller
 use App\Http\Controllers\Auth\ForgotPasswordController; // <--- Added this line
@@ -135,9 +137,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     // ADMIN
     Route::prefix('admin')->group(function () {
         // ADMIN DASHBOARD
-        Route::get('/dashboard', function () {
-            return view('livewire.admin.admin-dashboard');
-        })->name('admin.dashboard');
+        Route::get('/dashboard', AdminDashboard::class)
+        ->name('admin.dashboard');
 
         // BAKERY MANAGEMENT
         Route::get('/bakerymanagement', AdminBakeryManagement::class)

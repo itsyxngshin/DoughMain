@@ -17,9 +17,9 @@
             </div>
             
             <!-- Product Image -->
-            <div class="m-5">
+            <div class="m-5 w-40 h-40 overflow-hidden">
                 <!-- You can dynamically change the product image using a variable -->
-                <img src="{{ asset('storage/' . $shop->shop_logo)  }}" alt="Product Image" class="w-auto h-40 m-auto object-cover rounded">
+                <img src="{{ asset('storage/shop_logos/' . $shop->shopLogo->logo_path)  }}" alt="{{$shop->shopLogo->logo_path}}" class="w-auto h-40 m-auto object-cover rounded">
             </div>
 
             <!-- Product Name -->
@@ -29,8 +29,16 @@
             
             <!-- Price & Quantity -->
             <p class="mt-2 "><strong>Joined Since: </strong><span class="text-right">{{ $shop->created_at }}</span> </p>
-            <p class="mb-5"><strong>Total Products Sold:</strong> {{ $shop->product?->stockMovements?->where('movement_type', 'out')->sum('quantity') ?? 0 }}
+            <p class="mb-5">
+                <strong>Total Products Sold:</strong>
+                {{
+                    $shop->products->sum(function($product) {
+                        return $product->stockMovements->where('movement_type', 'out')->sum('quantity');
+                    })
+                }}
             </p>
+
+          
             
 
             <!-- Actions
