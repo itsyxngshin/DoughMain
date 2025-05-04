@@ -62,10 +62,11 @@
                             </form>
                         </div>
                     @endforeach
-                </div>
-                <!-- Shop Subtotal -->
-                <div class="text-right mt-3 text-sm font-semibold text-brown-800">
-                    Subtotal for {{ $group['shop']->shop_name }}: ₱{{ number_format($group['total'], 2) }}
+
+                    <!-- Shop Subtotal -->
+                    <div class="text-right mt-3 text-sm font-semibold text-brown-800">
+                        Subtotal for {{ $group['shop']->shop_name }}: ₱{{ number_format($group['total'], 2) }}
+                    </div>
                 </div>
             @endforeach
         @endif
@@ -80,10 +81,10 @@
         </div>
 
         @php
-        $grandTotal = collect($cartItems)->sum(function($item) {
-            return $item->product->product_price * $item->quantity;
-        });
-    @endphp
+            $grandTotal = collect($cartItems)->sum(function($item) {
+                return $item->product->product_price * $item->quantity;
+            });
+        @endphp
 
 
         <!-- Select All & Checkout -->
