@@ -7,7 +7,7 @@
 
     <title>@yield('title', 'DoughMain')</title>
   
-    @vite(['resources/css/app.css']) <!-- Laravel asset management -->
+    @vite(['resources/css/app.css', 'resources/js/app.js']) <!-- Laravel asset management -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     
@@ -123,6 +123,7 @@
     </style>
     @livewireStyles
 </head>
+
 <body class="bg-gray-50">
 <div>
     <!-- Sidebar Backdrop -->
@@ -228,10 +229,6 @@
     <div class="w-12 h-12 border-4 border-dashed rounded-full animate-spin border-brown-800 border-t-transparent"></div>
     </div>
 
-
-
-
-
 </div>
 
 
@@ -323,7 +320,6 @@
     }
     });
     });
-
 
     </script>
     @livewireScripts

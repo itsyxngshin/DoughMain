@@ -104,6 +104,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
         //RENDER CART PAGE
        Route::get('/cart', [CartView::class, 'render'])->name('user.cart');
        Route::delete('/cart/{id}', [CartView::class, 'removeItem'])->name('cart.remove');
+       Route::delete('/cart/remove/selected', [CartView::class, 'removeSelected'])->name('cart.remove.selected');
        //SEND TO CHECKOUT PAGE
        Route::get('/checkout', [Checkout::class, 'render'])->name('user.checkout');
        //RENDER PROFILE PAGE

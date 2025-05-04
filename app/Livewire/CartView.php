@@ -6,10 +6,13 @@ use Livewire\Component;
 use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth; 
+use Illuminate\Http\Request;
+use App\Models\CartItem;
 
 class CartView extends Component
 {
     public $cartItems = [];
+    //Shows the cart and items in the cart
     public function render()
     {
 
@@ -38,36 +41,53 @@ class CartView extends Component
         ]);
     }
 
-    public function removeItem($cartItemId)
+    public function deleteItem($id)
     {
-        $cartItem = Cart::find($cartItemId);
-        if ($cartItem) {
-            $cartItem->delete();
-            session()->flash('message', 'Item removed from cart.');
-        } 
-        else {
-            session()->flash('error', 'Item not found.');
+        $item = CartItem::find($id);
+
+        if ($item && $item->cart->user_id === Auth::id()) {
+            $item->delete();
         }
+
+        $this->emitSelf('refreshComponent');
     }
-    public function updateQuantity($cartItemId, $quantity)
+
+    public function deleteItems($ids)
     {
-        $cartItem = Cart::find($cartItemId);
-        if ($cartItem) {
-            $cartItem->update(['quantity' => $quantity]);
-            session()->flash('message', 'Quantity updated.');
-        } else {
-            session()->flash('error', 'Item not found.');
+        CartItem::whereIn('id', $ids)
+            ->whereHas('cart', function ($query) {
+                $query->where('user_id', Auth::id());
+            })
+            ->delete();
+
+        $this->emitSelf('refreshComponent');
+    }
+
+    public function increaseQuantity($id)
+    {
+        $item = CartItem::find($id);
+
+        if ($item && $item->cart->user_id === Auth::id()) {
+            $item->quantity += 1;
+            $item->save();
         }
+
+        $this->emitSelf('refreshComponent');
     }
-    public function clearCart()
+
+    public function decreaseQuantity($id)
     {
-        $userId = Auth::id();
-        Cart::where('user_id', $userId)->delete();
-        session()->flash('message', 'Cart cleared.');
-    }
-    public function checkout()
-    {
-        // Logic for checkout process
-        session()->flash('message', 'Proceeding to checkout.');
+        $item = CartItem::find($id);
+
+        if ($item && $item->cart->user_id === Auth::id()) {
+            if ($item->quantity > 1) {
+                $item->quantity -= 1;
+                $item->save();
+            } else {
+                $item->delete(); // Optionally delete when quantity reaches 0 or 1
+            }
+        }
+
+        $this->emitSelf('refreshComponent');
     }
 }
