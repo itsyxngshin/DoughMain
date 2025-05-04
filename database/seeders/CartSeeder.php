@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class CartSeeder extends Seeder
 {
@@ -12,6 +13,11 @@ class CartSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $carts = [
+        ['user_id' => '2',],
+        ['user_id' => '5',],
+        ];
+        
+        DB::table('carts')->insert($carts);
     }
 }
