@@ -16,10 +16,10 @@
             </div>
 
             <!-- ORDER REVIEWS -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+            <div class="grid items-left mt-2">
                 @if($reviews && $reviews->count())
                     @foreach($reviews as $review)
-                        <div class="p-6 border rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
+                        <div class="p-6 text-left bg-white">
                             <p class="text-sm italic">{{ $review->shop->shop_name ?? 'Secret Shop' }}</p>
                             <div class="flex items-center mt-3">
                                 @for ($i = 1; $i <= 5; $i++)

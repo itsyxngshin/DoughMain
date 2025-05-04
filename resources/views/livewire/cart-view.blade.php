@@ -25,17 +25,20 @@
                 
             </table>
         </div>
-<!-- Loop through cart items -->
-<div x-data="cartComponent()" class="space-y-4">
-    @if($groupedItems->isEmpty())
-        <p>Your cart is empty.</p>
-    @else
-        @foreach($groupedItems as $group)
-            <div class="bg-white p-4 border rounded-lg mt-6">
-                <!-- Shop Info -->
-                <div class="flex items-center mb-3">
-                    <input type="checkbox" class="mr-2"
-                        @change="toggleSelectAll($event, {{ $group['items']->pluck('id') }})">
+
+        <!-- Loop through cart items -->
+        <div x-data="cartComponent()" class="space-y-4">
+            @if($groupedItems->isEmpty())
+                <p>Your cart is empty.</p>
+            @else
+                @foreach($groupedItems as $group)
+                    <div class="bg-white p-4 border rounded-lg mt-6">
+                        <!-- Shop Info -->
+                        <div class="flex items-center mb-3">
+                        <input type="checkbox" 
+            class="mr-2"
+            @change="toggleSelectAll($event, {{ $group['items']->pluck('id') }})">
+
                     <div class="flex items-center space-x-2">
                         {{-- Check if shop exists before trying to display the logo and shop name --}}
                         @if ($group['shop'])
@@ -54,33 +57,33 @@
                 </div>
 
                 <!-- Cart Items Under This Shop -->
-@foreach ($group['items'] as $item)
-    <div class="flex items-center justify-between border-t pt-3" wire:key="cart-item-{{ $item->id }}">
+                        @foreach ($group['items'] as $item)
+                            <div class="flex items-center justify-between border-t pt-3" wire:key="cart-item-{{ $item->id }}">
 
-        <div class="flex items-center space-x-3">
-            <input type="checkbox" 
-                   class="mr-2"
-                   :checked="isSelected({{ $item->id }})"
-                   @change="toggleItem({{ $item->id }})">
-            <img src="{{ asset('storage/' . $item->product->product_image) }}" class="w-12 h-12 rounded-lg object-cover" alt="{{ $item->product->product_name }}">
-            <span class="text-gray-700">{{ $item->product->product_name }}</span>
-        </div>
+                                <div class="flex items-center space-x-3">
+                                <input type="checkbox" 
+                                        class="mr-2"
+                                        :checked="isSelected({{ $item->id }})"
+                                        @change="toggleItem({{ $item->id }})">
+                                    <img src="{{ asset('storage/' . $item->product->product_image) }}" class="w-12 h-12 rounded-lg object-cover" alt="{{ $item->product->product_name }}">
+                                    <span class="text-gray-700">{{ $item->product->product_name }}</span>
+                                </div>
 
-        <span class="text-gray-700">{{ $item->product->product_price }}</span>
+                                <span class="text-gray-700">{{ $item->product->product_price }}</span>
 
-        <div x-data="{ quantity: {{ $item->quantity }} }" class="flex items-center border rounded">
-            <button @click="quantity = Math.max(1, quantity - 1)" class="px-3 py-1 text-gray-800 rounded-l">−</button>
-            <input type="number" x-model="quantity" min="1" class="w-16 p-1 text-center border-none">
-            <button @click="quantity++" class="px-3 py-1 text-gray-800 rounded-r">+</button>
-        </div>
+                                <div x-data="{ quantity: {{ $item->quantity }} }" class="flex items-center border rounded">
+                                    <button @click="quantity = Math.max(1, quantity - 1)" class="px-3 py-1 text-gray-800 rounded-l">−</button>
+                                    <input type="number" x-model="quantity" min="1" class="w-16 p-1 text-center border-none">
+                                    <button @click="quantity++" class="px-3 py-1 text-gray-800 rounded-r">+</button>
+                                </div>
 
-        <span class="text-gray-700 font-semibold">{{ $item->sub_total }}</span>
+                                <span class="text-gray-700 font-semibold">{{ $item->sub_total }}</span>
 
-        <!-- Trigger Delete Modal by Passing the cartItem ID -->
-        @livewire('user.modal.delete-selected-item', ['cartItemId' => $item->id], key($item->id))
+                                <!-- Trigger Delete Modal by Passing the cartItem ID -->
+                                @livewire('user.modal.delete-selected-item', ['cartItemId' => $item->id], key($item->id))
 
-    </div>
-@endforeach
+                            </div>
+                        @endforeach
 
 
 
@@ -93,9 +96,12 @@
                     @endforeach
                             <!-- Delete Selected Button -->
                             
-                    <div class="text-right mt-4">
-                        <button type="button" @click="$wire.deleteItems(selected)" class="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600">Delete Selected Items</button>
-                    </div>
+                            <button type="button"
+                            @click="$wire.deleteItems(selected)"
+                            class="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600">
+                            Delete Selected Items
+                        </button>
+
             @endif
             <!-- Shipping Promo -->
             <div class="flex items-center text-sm text-gray-600 mt-3">
@@ -131,7 +137,7 @@
             </div>
         </div>
     </div>
-    </div>
+    
 </div>
 
 
@@ -162,32 +168,30 @@
         modal.classList.toggle('hidden', !show);
     }
 
+
     function cartComponent() {
-    return {
-        selected: [],
-        toggleSelectAll(event, shopItems) {
-            const check = event.target.checked;
-            shopItems.forEach(id => {
-                if (check && !this.selected.includes(id)) {
+        return {
+            selected: [],
+            toggleItem(id) {
+                if (this.selected.includes(id)) {
+                    this.selected = this.selected.filter(item => item !== id);
+                } else {
                     this.selected.push(id);
-                } else if (!check) {
-                    this.selected = this.selected.filter(i => i !== id);
                 }
-            });
-        },
-        isSelected(id) {
-            return this.selected.includes(id);
-        },
-        toggleItem(id) {
-            if (this.selected.includes(id)) {
-                this.selected = this.selected.filter(i => i !== id);
-            } 
-            else {
-                this.selected.push(id);
+            },
+            isSelected(id) {
+                return this.selected.includes(id);
+            },
+            toggleSelectAll(event, ids) {
+                if (event.target.checked) {
+                    this.selected = [...new Set([...this.selected, ...ids])];
+                } else {
+                    this.selected = this.selected.filter(id => !ids.includes(id));
                 }
             }
         };
     }
+
 </script>
 @endsection
 
