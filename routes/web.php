@@ -101,6 +101,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 
     //ADD TO CART
     Route::post('/add-to-cart', [CartController::class, 'addToCart']);
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('user.checkout'); 
 
     //BASIC LOG-OUT
     Route::post('/logout', [AuthController::class, 'logout'])->name('userlogout');

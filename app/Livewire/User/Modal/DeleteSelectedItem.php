@@ -5,6 +5,7 @@ namespace App\Livewire\User\Modal;
 
 use Livewire\Component;
 use App\Models\CartItem;
+use Illuminate\Support\Facades\Auth;
 
 class DeleteSelectedItem extends Component
 {
@@ -23,7 +24,7 @@ class DeleteSelectedItem extends Component
         $cartItem = CartItem::findOrFail($this->cartItemId);
 
         // Ensure the cart item belongs to the authenticated user
-        if ($cartItem->cart->user_id === auth()->id()) {
+        if ($cartItem->cart->user_id === Auth::id()) {
             $cartItem->delete();
             session()->flash('message', 'Item deleted successfully.');
         } else {
