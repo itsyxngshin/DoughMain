@@ -51,6 +51,20 @@
                     <td class="p-3">20</td>
                     <td class="p-3">₱ 100.00</td>
                 </tr>
+                @if ($cartItems && $cartItems->isNotEmpty())
+                    @foreach ($cartItems as $item)
+                        <div>
+                            <tr class="border-t">
+                                <td class="p-3">{{ $item->product->product_name }}</td>
+                                <td class="p-3">₱ {{ number_format($item->product->product_price, 2) }}</td>
+                                <td class="p-3">{{ $item->quantity }}</td>
+                                <td class="p-3">₱ {{ number_format($item->product->product_price * $item->quantity, 2) }}</td>
+                            </tr>
+                        </div>
+                    @endforeach
+                @else
+                    <p>Your cart is empty.</p>
+                @endif
             </tbody>
         </table>
 
@@ -59,9 +73,17 @@
             <div class="text-sm text-gray-600">Item</div>
             <div class="text-right text-sm">
                 <a href="#" class="text-yellow-500 font-semibold">CHANGE</a>
-                <p class="mt-2">Items Subtotal: <span class="text-[#1E1E1E] font-semibold">₱260</span></p>
+                <p class="mt-2">
+                    Items Subtotal:
+                    <span class="text-[#1E1E1E] font-semibold">
+                        ₱ {{ number_format($cartItems->sum(fn ($item) => $item->product->product_price * $item->quantity), 2) }}
+                    </span>
+                </p>
                 <p>Shipping Subtotal: <span class="text-[#1E1E1E] font-semibold">₱ -</span></p>
-                <p class="text-lg mt-1 font-bold text-[#1E1E1E]">Total (21 item): ₱260</p>
+                <p class="text-lg mt-1 font-bold text-[#1E1E1E]">
+                    Total ({{ $cartItems->sum('quantity') }} item{{ $cartItems->sum('quantity') > 1 ? 's' : '' }}):
+                    ₱ {{ number_format($cartItems->sum(fn ($item) => $item->product->product_price * $item->quantity), 2) }}
+                </p>
             </div>
         </div>
 
@@ -69,6 +91,12 @@
         <div class="mt-6 flex justify-end space-x-3">
             <button class="px-4 py-2 border border-gray-400 rounded-lg">Cancel</button>
             <button class="px-6 py-2 bg-[#1E1E1E] text-white rounded-lg font-semibold hover:bg-black">Place Order</button>
+            {{--
+            <button wire:click="redirectToPaymongo"
+                class="px-6 py-2 bg-[#1E1E1E] text-white rounded-lg font-semibold hover:bg-black">
+                Place Order
+            </button>
+            --}}
         </div>
 
         <!-- Notice -->

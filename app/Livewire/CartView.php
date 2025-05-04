@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use App\Models\CartItem;
 
 class CartView extends Component
@@ -81,4 +82,21 @@ class CartView extends Component
 
         $this->emitSelf('refreshComponent');
     }
+    public function proceedToCheckout($selectedIds): RedirectResponse
+    {
+        // Validate the selected items belong to the user
+        $validIds = CartItem::whereIn('id', $selectedIds)
+            ->whereHas('cart', fn ($q) => $q->where('user_id', Auth::id()))
+            ->pluck('id')
+            ->toArray();
+
+        if (empty($validIds)) {
+            $this->dispatchBrowserEvent('checkout-error', ['message' => 'No valid items selected.']);
+            return redirect()->route('livewire.cart-view');
+        }
+
+        session(['checkout_item_ids' => $validIds]);
+
+        return redirect()->route('livewire.user.checkout');
+        }
 }
