@@ -7,7 +7,7 @@
 
     <title>@yield('title', 'DoughMain')</title>
   
-    @vite(['resources/css/app.css']) <!-- Laravel asset management -->
+    @vite(['resources/css/app.css', 'resources/js/app.js']) <!-- Laravel asset management -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     
@@ -123,6 +123,7 @@
     </style>
     @livewireStyles
 </head>
+
 <body class="bg-gray-50">
 <div>
     <!-- Sidebar Backdrop -->
@@ -174,7 +175,7 @@
             </div>
 
             <!-- Cart Button -->
-            <a href="cart">
+            <a href="{{ route('user.cart') }}">
             <button class="p-2 bg-transparent">
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M5 19V8.1L3.242 4.234l.916-.426L6.084 8.05h11.832l1.926-4.242l.916.427L19 8.1V19zm5-6.5h4q.213 0 .356-.144t.144-.357t-.144-.356T14 11.5h-4q-.213 0-.356.144t-.144.357t.144.356t.356.143M6 18h12V9.05H6zm0 0V9.05z"/>
@@ -227,10 +228,6 @@
     <div id="pageLoader" class="fixed inset-0 bg-white bg-opacity-70 z-50 hidden flex items-center justify-center">
     <div class="w-12 h-12 border-4 border-dashed rounded-full animate-spin border-brown-800 border-t-transparent"></div>
     </div>
-
-
-
-
 
 </div>
 
@@ -323,7 +320,6 @@
     }
     });
     });
-
 
     </script>
     @livewireScripts

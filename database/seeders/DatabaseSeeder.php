@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         UserStatusSeeder::class,
         UserSeeder::class,
         CategorySeeder::class,
+        CartSeeder::class,
         ProductSeeder::class,            // Insert products first
         StockSeeder::class,              // Insert stock after products
         StockMovementSeeder::class,      // Insert stock movements after stock is in place

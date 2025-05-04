@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Cart;
 use App\Models\CartItem;
+use Illuminate\Support\Facades\Auth;
 
 
 class ViewProducFromCategory extends Component
@@ -33,7 +34,7 @@ class ViewProducFromCategory extends Component
     $price = $product->product_price;
     $subTotal = $price * $quantity;
 
-    $cartId = auth()->user()->cart->id ?? 1;
+    $cartId = Auth::user()->cart->id ?? 1;
 
     CartItem::create([
         'cart_id' => $cartId,

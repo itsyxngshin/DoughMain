@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\DoughMainComp;
+use Inertia\Inertia; // Import the Inertia facade
 use App\Http\Livewire\Counter;
 use App\Http\Livewire\Posts;
 use App\Http\Controllers\AuthController;
@@ -21,6 +22,10 @@ use App\Livewire\User\Homepage;
 use App\Livewire\User\ProductListingForShops;
 use App\Livewire\User\ProductByCategory;
 use App\Http\Controllers\CartController;
+// Ensure the Cart class exists in the specified namespace
+use App\Livewire\CartView;
+use App\Livewire\User\Checkout;
+
 
 
 
@@ -85,14 +90,27 @@ Route::middleware('guest')->group(function () {
 
 //AUTHENTICATED USER
 Route::middleware(['auth', 'role:user'])->group(function () {
+    //HOMEPAGE
     Route::get('/home', Homepage::class)->name('homepage');
+    //CATEGORY PAGE
     Route::get('/Category/{id}', ProductByCategory::class)->name('category');
 
+    //SHOP PRODUCT LISTINGS
     Route::get('/shops/{id}/products', ProductListingForShops::class)->name('shop.products');
+
+    //ADD TO CART
     Route::post('/add-to-cart', [CartController::class, 'addToCart']);
 
+    //BASIC LOG-OUT
     Route::post('/logout', [AuthController::class, 'logout'])->name('userlogout');
     Route::prefix('user')->group(function () {
+        //RENDER CART PAGE
+       Route::get('/cart', [CartView::class, 'render'])->name('user.cart');
+       Route::delete('/cart/{id}', [CartView::class, 'removeItem'])->name('cart.remove');
+       Route::delete('/cart/remove/selected', [CartView::class, 'removeSelected'])->name('cart.remove.selected');
+       //SEND TO CHECKOUT PAGE
+       Route::get('/checkout', [Checkout::class, 'render'])->name('user.checkout');
+       //RENDER PROFILE PAGE
        Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
        Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
        Route::post('/profile/update', [ProfileController::class, 'edit'])->name('profile.update');

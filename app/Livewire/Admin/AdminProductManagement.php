@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use Livewire\Component;
+use App\Models\Product;
 
 class AdminProductManagement extends Component
 {
@@ -15,7 +16,6 @@ class AdminProductManagement extends Component
 
     public function render()
     {
-        return view('livewire.admin.admin-product-management')->extends('layouts.admin') // Extends admin layout
-        ->section('content');
+        return view('livewire.admin.admin-product-management')->with(['layout' => 'layouts.admin']); // Sets admin layout
     }
 }

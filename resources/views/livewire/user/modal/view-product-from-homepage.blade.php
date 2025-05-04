@@ -14,10 +14,7 @@
         }, 300); 
     });
 "
-
 >
-
-
     <!-- Product Button -->
     <button @click="
     open = true;
