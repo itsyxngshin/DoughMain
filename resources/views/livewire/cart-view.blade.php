@@ -122,19 +122,27 @@
             <!-- Select All & Checkout -->
             <div class="flex items-center justify-between bg-white p-3 rounded-lg mt-4 border">
                 <div class="flex items-center">
-                    <input type="checkbox" class="mr-2"
-                    :checked="selected.length === {{ collect($cartItems)->count() }}"
-                    @change="toggleSelectAll($event, {{ collect($cartItems)->pluck('id')->toJson() }})">
-                    
-                    <span>Select All  ({{ collect($cartItems)->count() }})</span>
+                    <input 
+                        type="checkbox" 
+                        class="mr-2"
+                        :checked="selected.length === {{ collect($cartItems)->count() }}"
+                        @change="toggleSelectAll($event, {{ collect($cartItems)->pluck('id')->toJson() }})"
+                    >
+                    <span>Select All ({{ collect($cartItems)->count() }})</span>
                 </div>
+
                 <div class="text-lg font-semibold">
-                    Total ({{ collect($cartItems)->count() }}): <span class="text-brown-700">₱{{ number_format($grandTotal, 2) }}</span>
+                    Total ({{ collect($cartItems)->count() }}): 
+                    <span class="text-brown-700">₱{{ number_format($grandTotal, 2) }}</span>
                 </div>
-                <button onclick="toggleModal(true)" class="px-6 py-2 bg-[#1E1E1E] text-white font-semibold rounded-lg shadow-md hover:bg-black">
-                    Check Out
-                </button>
+
+                <!-- Hidden input to pass selected IDs to Livewire -->
+                <input type="hidden" x-ref="selectedItems" :value="JSON.stringify(selected)">
+
+                <!-- Livewire Proceed to Checkout Modal -->
+                @livewire('user.proceed-to-checkout-modal')
             </div>
+
         </div>
     </div>
     

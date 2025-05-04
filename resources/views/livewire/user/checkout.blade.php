@@ -45,12 +45,6 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="border-t">
-                    <td class="p-3">Pandesal</td>
-                    <td class="p-3">₱ 5.00</td>
-                    <td class="p-3">20</td>
-                    <td class="p-3">₱ 100.00</td>
-                </tr>
                 @if ($cartItems && $cartItems->isNotEmpty())
                     @foreach ($cartItems as $item)
                         <div>
@@ -74,16 +68,20 @@
             <div class="text-right text-sm">
                 <a href="#" class="text-yellow-500 font-semibold">CHANGE</a>
                 <p class="mt-2">
+                <p class="mt-2">
                     Items Subtotal:
                     <span class="text-[#1E1E1E] font-semibold">
-                        ₱ {{ number_format($cartItems->sum(fn ($item) => $item->product->product_price * $item->quantity), 2) }}
+                        ₱ {{ $cartItems && $cartItems->isNotEmpty() ? number_format($cartItems->sum(fn ($item) => $item->product->product_price * $item->quantity), 2) : '0.00' }}
                     </span>
                 </p>
+
                 <p>Shipping Subtotal: <span class="text-[#1E1E1E] font-semibold">₱ -</span></p>
+
                 <p class="text-lg mt-1 font-bold text-[#1E1E1E]">
-                    Total ({{ $cartItems->sum('quantity') }} item{{ $cartItems->sum('quantity') > 1 ? 's' : '' }}):
-                    ₱ {{ number_format($cartItems->sum(fn ($item) => $item->product->product_price * $item->quantity), 2) }}
+                    Total ({{ $cartItems && $cartItems->isNotEmpty() ? $cartItems->sum('quantity') : 0 }} item{{ $cartItems && $cartItems->isNotEmpty() && $cartItems->sum('quantity') > 1 ? 's' : '' }}):
+                    ₱ {{ $cartItems && $cartItems->isNotEmpty() ? number_format($cartItems->sum(fn ($item) => $item->product->product_price * $item->quantity), 2) : '0.00' }}
                 </p>
+
             </div>
         </div>
 
