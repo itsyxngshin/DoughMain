@@ -63,6 +63,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController; // <--- Added this line
 
 
 
+
 Route::middleware('guest')->group(function () {
     // Show the login form
     Route::get('/register', [AuthController::class, 'registerView'])->name('register');

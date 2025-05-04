@@ -5,7 +5,8 @@
 
     <!-- Sidebar -->
     <aside class="w-full md:w-1/4 h-auto md:h-screen sticky top-0 bg-[#ffffff] p-8 shadow-lg rounded-xl space-y-8 border border-[#ffffff] mb-8 md:mb-0">
-        <h2 class="text-2xl font-bold text-[#51331B] border-b pb-3 mb-3">Filters</h2>
+        
+    <h2 class="text-2xl font-bold text-[#51331B] border-b pb-3 mb-3">Filters</h2>
 
         <!-- Sort By -->
         <div class="space-y-4">
@@ -37,28 +38,20 @@
             </div>
         </div>
 
-        <!-- Category filter -->
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold text-[#4C3C2C]">Categories</h3>
-            <div class="flex flex-col space-y-2 text-base text-[#6E4B3B]">
-                <label class="inline-flex items-center gap-3 hover:text-[#8E6A4A] cursor-pointer">
-                    <input type="checkbox" class="accent-[#D39B6A]">
-                    Cake
-                </label>
-                <label class="inline-flex items-center gap-3 hover:text-[#8E6A4A] cursor-pointer">
-                    <input type="checkbox" class="accent-[#D39B6A]">
-                    Bread
-                </label>
-                <label class="inline-flex items-center gap-3 hover:text-[#8E6A4A] cursor-pointer">
-                    <input type="checkbox" class="accent-[#D39B6A]">
-                    Cupcake
-                </label>
-                <label class="inline-flex items-center gap-3 hover:text-[#8E6A4A] cursor-pointer">
-                    <input type="checkbox" class="accent-[#D39B6A]">
-                    Pies and Tarts
-                </label>
-            </div>
-        </div>
+       <!-- Category filter -->
+       <div class="space-y-4">
+    <h3 class="text-lg font-semibold text-[#4C3C2C]">Categories</h3>
+    <div class="flex flex-col space-y-2 text-base text-[#6E4B3B]">
+        @foreach ($categories as $category)
+            <label class="inline-flex items-center gap-3 hover:text-[#8E6A4A] cursor-pointer">
+                <input type="checkbox" wire:model="selectedCategories" value="{{ $category->id }}" class="accent-[#D39B6A]">
+                {{ $category->category_name }}
+            </label>
+        @endforeach
+    </div>
+</div>
+
+
     </aside>
 
     <!-- Main Content -->
@@ -68,46 +61,17 @@
     @livewire('user.search-products')
     @livewire('user.modal.view-product-from-search')
 
- 
-
-        <!-- Deals Section 
-        <div class="mb-6">
-            <h2 class="text-2xl font-bold mb-4 text-[#51331B]">Bakery Deals</h2>
-            <div class="flex gap-4 overflow-x-auto no-scrollbar pr-4">
-                
-                <div class="min-w-[250px] p-4 rounded-xl text-white bg-gradient-to-b from-[#D39B6A] to-[#8E6A4A] shadow relative flex-shrink-0">
-                    <p class="text-xl font-bold">₱50 off</p>
-                    <p class="mt-2">Use code: <span class="bg-white text-black px-2 py-1 rounded font-semibold">BREAD50</span></p>
-                </div>
-
-            
-                <div class="min-w-[250px] p-4 rounded-xl text-white bg-gradient-to-b from-[#F2D7B6] to-[#bf9877] shadow relative flex-shrink-0">
-                    <p class="text-xl font-bold">Buy 1 Get 1</p>
-                    <p class="mt-1 text-sm">on Cupcakes</p>
-                    <p class="text-xs mt-2">Today only</p>
-                </div>
-
-                
-                <div class="min-w-[250px] p-4 rounded-xl text-white bg-gradient-to-b from-[#F3C98E] to-[#8e6d4f] shadow relative flex-shrink-0">
-                    <p class="text-xl font-bold">Free Pie</p>
-                    <p class="mt-1 text-sm">with ₱300+ order</p>
-                    <p class="text-xs mt-2">Limited time</p>
-                </div>
-
-             
-                <div class="min-w-[250px] p-4 rounded-xl text-white bg-gradient-to-b from-[#E1B17B] to-[#7A5A3C] shadow relative flex-shrink-0">
-                    <p class="text-xl font-bold">15% off</p>
-                    <p class="mt-1 text-sm">on Cakes</p>
-                    <p class="text-xs mt-2">Use code: 
-                        <span class="bg-white text-black px-2 py-1 rounded font-semibold">SWEET15</span>
-                    </p>
-                </div>
-            </div>
+        <div >
+        @if (count($selectedCategories) > 0)
+        <h2 class="text-2xl font-bold text-[#51331B]">Filtered Products</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+            @foreach ($products as $product)
+                @livewire('user.modal.view-product-from-homepage', ['productId' => $product->id], key($product->id))
+            @endforeach
         </div>
--->
-        <!-- Products -->
+    @else
+        {{-- Full homepage layout (products, categories, bakeries, testimonials) --}}
         <h2 class="text-2xl font-bold text-[#51331B]">Products</h2>
-        
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
             @foreach ($products as $product)
                 @livewire('user.modal.view-product-from-homepage', ['productId' => $product->id], key($product->id))
@@ -174,6 +138,8 @@
                 @endforelse
             </div>
         </section>
+    @endif
+        </div>
 
     </main>
 </div>

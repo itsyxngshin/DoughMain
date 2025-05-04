@@ -1,4 +1,4 @@
-<div x-data="{ show: false }" x-effect="show = query.length > 0" class="sticky top-1 py-2 z-50 mb-4" @click.away="show = false">
+<div x-data="{ show: false }" class="sticky top-1 py-2 z-50 mb-4" @click.away="show = false">
 
 
     <div class="relative ml-0 w-[700px]">

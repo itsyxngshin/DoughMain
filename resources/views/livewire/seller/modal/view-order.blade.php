@@ -57,22 +57,22 @@
                         </thead>
                         <tbody >
                             @foreach ($selectedOrder->orderItems as $item)
-                            @if ($item && $item->product)
-                                <tr>
-                                    <td class="p-2">
-                                        <img src="{{ asset('storage/' . $item->product->product_image) }}" alt="product image" class="w-auto h-12 object-cover m-auto" />
-                                    </td>
-                                    <td class="p-2">{{ $item->product->product_name }}</td>
-                                    <td class="p-2">{{ $item->product->category->category_name ?? 'No category' }}</td>
-                                    <td class="p-2">{{ $item->quantity }}</td>
-                                    <td class="p-2">{{ $item->product->product_price }}</td>
-                                    <td class="p-2 text-right">{{ $item->price }}</td>
-                                </tr>
-                            @else
-                                <tr>
-                                    <td colspan="6" class="text-center text-red-500 italic">Missing product data</td>
-                                </tr>
-                            @endif
+                                @if ($item && $item->product)
+                                    <tr>
+                                        <td class="p-2">
+                                            <img src="{{ asset('storage/' . $item->product->product_image) }}" alt="product image" class="w-auto h-12 object-cover m-auto" />
+                                        </td>
+                                        <td class="p-2">{{ $item->product->product_name }}</td>
+                                        <td class="p-2">{{ $item->product->category->category_name ?? 'No category' }}</td>
+                                        <td class="p-2">{{ $item->quantity }}</td>
+                                        <td class="p-2">{{ $item->product->product_price }}</td>
+                                        <td class="p-2 text-right">{{ number_format($item->quantity * $item->product->product_price, 2) }}</td>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <td colspan="6" class="text-center text-red-500 ">Missing product data</td>
+                                    </tr>
+                                @endif
                             @endforeach
 
                             <tr>
@@ -140,6 +140,8 @@
                     @livewire('seller.modal.order-completion', ['orderId' => $selectedOrder->id], key($selectedOrder->id))
                 @elseif(strtolower($selectedOrder->status) == 'pending')
                     @livewire('seller.modal.approve-pending-order-confirmation', ['orderId' => $selectedOrder->id], key($selectedOrder->id))
+                @elseif(strtolower($selectedOrder->status) == 'completed')
+                    @livewire('seller.modal.view-customer-review', ['orderId' => $selectedOrder->id], key($selectedOrder->id))
                 @endif
                 </span>
             </div>
