@@ -15,8 +15,6 @@
     });
 "
 >
-
-
     <!-- Product Button -->
     <button @click="
     open = true;
