@@ -12,57 +12,78 @@
         </h2>
 
         <!-- Cart Header -->
-        <div class="mt-4 bg-white p-3 rounded-lg grid grid-cols-4 text-sm font-semibold text-gray-600 border">
-            <span class="col-span-2">Unit Price</span>
-            <span>Quantity</span>
-            <span class="text-right">Total Price</span>
+        <div class="mt-4 bg-white p-3 rounded-lg overflow-x-auto border">
+            <table class="min-w-full text-sm text-black-600">
+                <thead class="bg-transparent font-semibold">
+                    <tr>
+                        <th class="px-4 py-2 text-left w-1/5">Items</th>
+                        <th class="px-4 py-2 text-left w-1/5">Unit Price</th>
+                        <th class="px-4 py-2 text-left w-1/5">Quantity</th>
+                        <th class="px-4 py-2 text-right w-1/4">Amount</th>
+                    </tr>
+                </thead>
+                
+            </table>
         </div>
-        <!-- Loop through cart items -->
-        <div x-data="cartComponent()" class="space-y-4">
-            @if($groupedItems->isEmpty())
-                <p>Your cart is empty.</p>
-            @else
-                    @foreach($groupedItems as $group)
-                        <div class="bg-white p-4 border rounded-lg mt-6">
-                            <!-- Shop Info -->
-                            <div class="flex items-center mb-3">
-                                <input type="checkbox" class="mr-2"
-                                    @change="toggleSelectAll($event, {{ $group['items']->pluck('id') }})">
-                                <div class="flex items-center space-x-2">
-                                    {{-- 
-                                    @if($group['shop']->shop_logo)
-                                        <img src="{{ asset('storage/' . $group['shop']->shop_logo) }}" alt="{{ $group['shop']->shop_name }}" class="w-8 h-8 rounded-full object-cover">
-                                    @endif
-                                    --}}
-                                    <span class="text-lg font-semibold text-brown-700">
-                                        {{ $group['shop']->shop_name }}
-                                    </span>
-                                </div>
-                            </div>
+<!-- Loop through cart items -->
+<div x-data="cartComponent()" class="space-y-4">
+    @if($groupedItems->isEmpty())
+        <p>Your cart is empty.</p>
+    @else
+        @foreach($groupedItems as $group)
+            <div class="bg-white p-4 border rounded-lg mt-6">
+                <!-- Shop Info -->
+                <div class="flex items-center mb-3">
+                    <input type="checkbox" class="mr-2"
+                        @change="toggleSelectAll($event, {{ $group['items']->pluck('id') }})">
+                    <div class="flex items-center space-x-2">
+                        {{-- Check if shop exists before trying to display the logo and shop name --}}
+                        @if ($group['shop'])
+                            {{-- 
+                            @if($group['shop']->shop_logo)
+                                <img src="{{ asset('storage/' . $group['shop']->shop_logo) }}" alt="{{ $group['shop']->shop_name }}" class="w-8 h-8 rounded-full object-cover">
+                            @endif
+                            --}}
+                            <span class="text-lg font-semibold text-brown-700">
+                                {{ $group['shop']->shop_name }}
+                            </span>
+                        @else
+                            <span class="text-red-600">Unknown Shop</span>
+                        @endif
+                    </div>
+                </div>
 
-                            <!-- Cart Items Under This Shop -->
-                            @foreach ($group['items'] as $item)
-                                <div class="flex items-center justify-between border-t pt-3">
-                                    <div class="flex items-center space-x-3">
-                                        <input type="checkbox" 
-                                            class="mr-2"
-                                            :checked="isSelected({{ $item->id }})"
-                                            @change="toggleItem({{ $item->id }})">
-                                        <img src="{{ asset('storage/' . $item->product->product_image) }}" class="w-12 h-12 rounded-lg object-cover" alt="{{ $item->product->product_name }}">
-                                        <span class="text-gray-700">{{ $item->product->product_name }}</span>
-                                    </div>
-                                    <span class="text-gray-700">{{ $item->product->product_price }}</span>
+                <!-- Cart Items Under This Shop -->
+@foreach ($group['items'] as $item)
+    <div class="flex items-center justify-between border-t pt-3" wire:key="cart-item-{{ $item->id }}">
 
-                                    <div class="flex items-center">
-                                        <button class="px-2 py-1 bg-gray-300 text-gray-700 rounded-l-lg" wire:click.prevent="decreaseQuantity({{ $item->id }})">-</button>
-                                        <input type="text" value="{{ $item->quantity }}" class="w-12 text-center border" readonly>
-                                        <button class="px-2 py-1 bg-gray-300 text-gray-700 rounded-r-lg" wire:click.prevent="increaseQuantity({{ $item->id }})">+</button>
-                                    </div>
+        <div class="flex items-center space-x-3">
+            <input type="checkbox" 
+                   class="mr-2"
+                   :checked="isSelected({{ $item->id }})"
+                   @change="toggleItem({{ $item->id }})">
+            <img src="{{ asset('storage/' . $item->product->product_image) }}" class="w-12 h-12 rounded-lg object-cover" alt="{{ $item->product->product_name }}">
+            <span class="text-gray-700">{{ $item->product->product_name }}</span>
+        </div>
 
-                                    <span class="text-gray-700 font-semibold">{{ $item->sub_total }}</span>
-                                    <button type="button" class="text-red-500" wire:click="deleteItem({{ $item->id }})">Delete</button>
-                                </div>
-                            @endforeach
+        <span class="text-gray-700">{{ $item->product->product_price }}</span>
+
+        <div x-data="{ quantity: {{ $item->quantity }} }" class="flex items-center border rounded">
+            <button @click="quantity = Math.max(1, quantity - 1)" class="px-3 py-1 text-gray-800 rounded-l">−</button>
+            <input type="number" x-model="quantity" min="1" class="w-16 p-1 text-center border-none">
+            <button @click="quantity++" class="px-3 py-1 text-gray-800 rounded-r">+</button>
+        </div>
+
+        <span class="text-gray-700 font-semibold">{{ $item->sub_total }}</span>
+
+        <!-- Trigger Delete Modal by Passing the cartItem ID -->
+        @livewire('user.modal.delete-selected-item', ['cartItemId' => $item->id], key($item->id))
+
+    </div>
+@endforeach
+
+
+
 
                             <!-- Shop Subtotal -->
                             <div class="text-right mt-3 text-sm font-semibold text-brown-800">

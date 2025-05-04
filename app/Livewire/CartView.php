@@ -14,43 +14,34 @@ class CartView extends Component
     public $cartItems = [];
     //Shows the cart and items in the cart
     public function render()
-    {
+{
+    $user = Auth::user();
 
-        $user = Auth::user();
-
-        $cartItems = $user->cart
+    $cartItems = $user->cart
         ? $user->cart->cart_items()->with('product.shop')->get()
         : collect();
 
-        // Group by shop ID
-        $grouped = $cartItems->groupBy(fn($cart_item) => $cart_item->product->shop->id);
+    // Group by shop ID, but ensure that product and shop are not null
+    $grouped = $cartItems->filter(function ($cart_item) {
+        return $cart_item->product && $cart_item->product->shop;
+    })->groupBy(fn($cart_item) => $cart_item->product->shop->id);
 
-        // Restructure for blade ease
-        $groupedItems = $grouped->map(function ($cart_items) {
-            $shop = $cart_items->first()->product->shop;
-            return [
-                'shop' => $shop,
-                'items' => $cart_items,
-                'total' => $cart_items->sum(fn($item) => $item->product->product_price * $item->quantity),
-            ];
-        });
+    // Restructure for blade ease, ensure the shop is not null
+    $groupedItems = $grouped->map(function ($cart_items) {
+        $shop = $cart_items->first()->product->shop ?? null; // Ensure shop exists
+        return [
+            'shop' => $shop,
+            'items' => $cart_items,
+            'total' => $cart_items->sum(fn($item) => $item->product->product_price * $item->quantity),
+        ];
+    });
 
-        return view('livewire.cart-view', [
-            'groupedItems' => $groupedItems,
-            'cartItems' => $cartItems
-        ]);
-    }
+    return view('livewire.cart-view', [
+        'groupedItems' => $groupedItems,
+        'cartItems' => $cartItems
+    ]);
+}
 
-    public function deleteItem($id)
-    {
-        $item = CartItem::find($id);
-
-        if ($item && $item->cart->user_id === Auth::id()) {
-            $item->delete();
-        }
-
-        $this->emitSelf('refreshComponent');
-    }
 
     public function deleteItems($ids)
     {
