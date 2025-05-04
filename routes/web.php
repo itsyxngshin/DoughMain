@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\DoughMainComp;
+use Inertia\Inertia; // Import the Inertia facade
 use App\Http\Livewire\Counter;
 use App\Http\Livewire\Posts;
 use App\Http\Controllers\AuthController;
@@ -90,6 +91,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('userlogout');
     Route::prefix('user')->group(function () {
+       Route::get('/cart', Homepage::class)->name('user.cart');
        Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
        Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
        Route::post('/profile/update', [ProfileController::class, 'edit'])->name('profile.update');

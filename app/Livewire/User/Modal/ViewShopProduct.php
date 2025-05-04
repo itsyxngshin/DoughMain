@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Cart;
 use App\Models\CartItem;
+use Illuminate\Support\Facades\Auth;
 
 class ViewShopProduct extends Component
 {
@@ -40,7 +41,7 @@ class ViewShopProduct extends Component
         $subTotal = $price * $quantity;
     
         // Get the user's current cart (assumes the user is logged in)
-        $cartId = auth()->user()->cart->id ?? 1;  // Or use a default cart ID if the user doesn't have a cart
+        $cartId = Auth::user()->cart->id ?? 1;  // Or use a default cart ID if the user doesn't have a cart
     
         // Insert the new cart item into the database
         CartItem::create([

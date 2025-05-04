@@ -6,6 +6,7 @@ namespace App\Livewire\User\Modal;
 use Livewire\Component;
 use App\Models\Product;
 use App\Models\CartItem;
+use Illuminate\Support\Facades\Auth;
 
 class ViewProductFromHomepage extends Component
 {
@@ -24,7 +25,7 @@ class ViewProductFromHomepage extends Component
     $price = $product->product_price;
     $subTotal = $price * $quantity;
 
-    $cartId = auth()->user()->cart->id ?? 1;
+    $cartId = Auth::user()->cart->id ?? 1;
 
     CartItem::create([
         'cart_id' => $cartId,
