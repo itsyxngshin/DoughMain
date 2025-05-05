@@ -29,13 +29,16 @@ class CartView extends Component
 
     // Restructure for blade ease, ensure the shop is not null
     $groupedItems = $grouped->map(function ($cart_items) {
-        $shop = $cart_items->first()->product->shop ?? null; // Ensure shop exists
+        $shop = $cart_items->first()->product->shop ?? null;
         return [
             'shop' => $shop,
             'items' => $cart_items,
-            'total' => $cart_items->sum(fn($item) => $item->product->product_price * $item->quantity),
+            'total' => $cart_items->sum(function ($item) {
+                return $item->product ? $item->product->product_price * $item->quantity : 0;
+            }),
         ];
     });
+    
 
     return view('livewire.cart-view', [
         'groupedItems' => $groupedItems,

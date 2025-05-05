@@ -4,29 +4,33 @@ namespace App\Livewire\User;
 use Livewire\Component;
 use App\Models\Product;
 use App\Models\Shop;
+use App\Models\Category;
 use Illuminate\Support\Facades\Log;
 
 class SearchProducts extends Component
-{  // The search term
-    public $query;
-    public $products;
-    public $shops;
+{  
+    public $query = '';
+    public $products = [];
+    public $shops = [];
+    public $categories = [];
 
-    public function mount()
-    {
-        $this->query = '';
-        $this->products = [];
-        $this->shops = [];
-    }
     public function updatedQuery()
-{
-    $this->products = Product::with(['category', 'shop'])
-        ->where('product_name', 'like', '%' . $this->query . '%')
-        ->get();
+    {
+        if (strlen($this->query) >= 2) {
+            $this->shops = Shop::where('shop_name', 'like', '%' . $this->query . '%')->get();
 
-    $this->shops = Shop::where('shop_name', 'like', '%' . $this->query . '%')->get();
+            $this->products = Product::with(['shop', 'category'])
+                ->where('product_name', 'like', '%' . $this->query . '%')
+                ->orWhere('product_description', 'like', '%' . $this->query . '%')
+                ->get();
 
-}
+            $this->categories = Category::where('category_name', 'like', '%' . $this->query . '%')->get();
+        } else {
+            $this->shops = [];
+            $this->products = [];
+            $this->categories = [];
+        }
+    }
 
 
 

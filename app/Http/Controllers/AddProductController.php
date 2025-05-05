@@ -43,13 +43,14 @@ class AddProductController extends Controller
             'product_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        // Get the shop managed by the currently logged-in user
+        $shop = Shop::where('manage_id', auth()->id())->firstOrFail();
+        $shop_id = $shop->id;
+
         $imagePath = null;
         if ($request->hasFile('product_image')) {
             $imagePath = $request->file('product_image')->store('products', 'public');
         }
-
-        $shop_id = 2; // Replace with 
-       // Auth::user()->shop_id; //when ready
 
         $product = Product::create([
             'category_id' => $request->category_id,
@@ -80,7 +81,6 @@ class AddProductController extends Controller
         $product->update(['stock_id' => $stock->id]);
 
         return redirect()->route('productmanagement')->with('success', 'Product successfully added.');
-
 
     } catch (\Exception $e) {
         \Log::error('Store failed: ' . $e->getMessage());

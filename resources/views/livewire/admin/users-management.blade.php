@@ -9,16 +9,7 @@
         <h1 class="px-12 pt-6 font-bold text-[#51331b] text-3xl">Users</h1>
         
         <div class="flex items-center h-[50px] px-12 space-between gap-10 mt-2">
-            <!-- Dropdown for Items per Page -->
-            <div class=" flex gap-2 items-center px-6">
-                <select name="contents" class="border border-[#51331b] px-2 py-1 rounded-md flex">
-                    <option value="1">5</option>
-                    <option value="2" selected>10</option>
-                    <option value="3">15</option>
-                    <option value="4">20</option>
-                </select>
-                <p class="text-sm text-gray-500">contents per page</p>
-            </div>
+            
 
             <!-- Search Bar -->
             <div class=" flex">

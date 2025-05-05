@@ -219,7 +219,7 @@
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1 ml-0 transition-all duration-300" id="mainContent">
+        <div class="flex-1 ml-0 transition-all h-screen duration-300" id="mainContent">
             @yield('content')
         </div>
     </div>

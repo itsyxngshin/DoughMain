@@ -30,14 +30,11 @@
             
             <!-- Price & Quantity -->
             <p class="mt-2 "><strong>Joined Since: </strong><span class="text-right">{{ $user->created_at }}</span> </p>
-            <p class="">
-                <strong>Total Orders:</strong>
-                {{ $user->orders->where('status', 'completed')->count() }}
-            </p>
-            <p class="mb-5">
-                <strong>Total Order Amount:</strong>
-                ₱{{ number_format($user->orders->where('status', 'completed')->sum('total_amount'), 2) }}
-            </p>
+            <p><strong>Total Orders:</strong> {{ $user->completed_orders_count }}</p>
+
+
+
+            
 
 
           

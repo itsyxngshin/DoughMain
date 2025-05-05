@@ -113,10 +113,11 @@
             </div>
 
             @php
-                $grandTotal = collect($cartItems)->sum(function($item) {
-                    return $item->product->product_price * $item->quantity;
-                });
-            @endphp
+    $grandTotal = collect($cartItems)->sum(function($item) {
+        return $item->product ? $item->product->product_price * $item->quantity : 0;
+    });
+@endphp
+
 
 
             <!-- Select All & Checkout -->

@@ -19,6 +19,8 @@ class ProductManagement extends Component
 
     public function mount()
     {
+       
+
         // Get the shop managed by the currently logged-in user
         $shop = Shop::where('manage_id', auth()->id())->firstOrFail();
         $this->shopId = $shop->id;
@@ -28,7 +30,9 @@ class ProductManagement extends Component
         // Fetch products for this shop
         $this->products = Product::with(['category', 'stock', 'stockMovements', 'shop'])
             ->where('shop_id', $this->shopId)
-            ->get();
+            ->get(); 
+        
+            logger("Fetched Shop ID: " . $this->shopId);
     }
 
     public function selectProduct($productId)
@@ -50,6 +54,10 @@ class ProductManagement extends Component
             $query->where('category_id', $this->selectedCategory);
         })
         ->get();
+
+        logger("Rendering products for shop_id: " . $this->shopId);
+logger("Product count: " . Product::where('shop_id', $this->shopId)->count());
+
 
         return view('livewire.seller.product-management', [
             'products' => $products,

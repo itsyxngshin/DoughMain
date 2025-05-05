@@ -8,13 +8,29 @@ use App\Models\Category;
 
 class HomepageProductFilter extends Component
 {
-    public $categories;
     public $selectedCategories = [];
+    public $sort = 'relevance';
+    public $rating = null;
 
-    public function mount()
-    {
-        $this->categories = Category::all();
+    public function getFilteredProductsProperty()
+{
+    $query = Product::query();
+
+    if (!empty($this->selectedCategories)) {
+        $query->whereIn('category_id', $this->selectedCategories);
     }
+
+    if ($this->rating) {
+        $query->where('average_rating', '>=', $this->rating);
+    }
+
+    if ($this->sort === 'distance') {
+        // Add distance-based sorting logic here
+    }
+
+    return $query->get();
+}
+
 
     public function render()
     {

@@ -102,6 +102,12 @@ class User extends Authenticatable
     function sessions(){
         return $this->hasMany(Session::class, 'user_id', 'id');
     }
+    
+    public function getCompletedOrdersCountAttribute()
+{
+    return $this->orders()->where('status', 'completed')->count();
+}
+
 
     public function getFullNameAttribute()
     {

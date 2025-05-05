@@ -16,6 +16,7 @@
         });
     "
 >
+<div>
     <!-- Product Grid -->
     <h3 class="text-xl font-semibold mt-8 text-center">{{ $category->category_name }}</h3>
     <p class="text-gray-600 mb-4 text-center">{{ $category->description }}</p>
@@ -47,13 +48,15 @@
         </div>
     @endif
 
+</div>
+    
     <!-- Modal -->
     <div 
         x-show="open" 
         x-cloak 
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+        class="fixed inset-0 w-full bg-black bg-opacity-50 flex items-center justify-center z-50"
     >
-        <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative">
+        <div class="bg-white sticky p-6 rounded-lg shadow-lg w-96 relative">
             <button 
                 @click="open = false" 
                 class="absolute top-2 right-2 text-gray-500 hover:text-red-500"

@@ -1,8 +1,11 @@
 @extends('components.layouts.navbar')
 
 @section('content')
+<div class="w-full h-screen">
 <div class="max-w-6xl mx-auto py-10 px-4">
-    <h2 class="text-3xl font-bold mb-8 flex items-center text-brown-800">
+    
+
+<h2 class="text-3xl font-bold mb-8 flex items-center text-brown-800">
         <svg class="w-7 h-7 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M3 3h18v18H3V3z" />
@@ -10,11 +13,11 @@
         My Orders
     </h2>
 
-    <section class="space-y-6 px-4 py-6 max-w-4xl mx-auto">
+    
     <h2 class="text-xl font-bold text-gray-800 mb-4">My Orders</h2>
 
     @forelse($orders as $order)
-        <article class="bg-white shadow rounded-lg">
+        <article class="bg-white shadow rounded-lg mb-3">
             <!-- Header -->
             <header class="flex justify-between items-center px-6 py-4 border-b text-sm text-gray-600">
                 <div>
@@ -40,7 +43,10 @@
                     <img src="{{ asset('storage/' . $item->product->product_image) }}" alt="{{ $item->product->product_name }}" class="w-12 h-12 rounded object-cover">
                     <span class="font-medium text-gray-800">{{ $item->product->product_name }}</span>
                 </div>
-                <div class="w-1/5 text-center text-gray-700">₱{{ number_format($item->product->product_price, 2) }}</div>
+                <div class="w-1/5 text-right text-gray-500">
+    ₱{{ number_format($item->quantity * $item->product->product_price, 2) }}
+</div>
+
                 <div class="w-1/5 text-center text-gray-700">{{ $item->quantity }}</div>
                 <div class="w-1/5 text-right text-gray-500 ">₱{{ number_format($item->subtotal, 2) }}</div>
             </div>
@@ -66,7 +72,9 @@
     @empty
         <p class="text-center text-gray-500">You have no orders yet.</p>
     @endforelse
-</section>
 
+
+</div>
+   
 </div>
 @endsection
