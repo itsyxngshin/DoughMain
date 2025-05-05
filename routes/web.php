@@ -24,6 +24,7 @@ use App\Livewire\User\ProductByCategory;
 use App\Http\Controllers\CartController;
 // Ensure the Cart class exists in the specified namespace
 use App\Livewire\CartView;
+use App\Livewire\PaymentChannel;
 use App\Livewire\User\Checkout;
 use App\Livewire\User\Orders;
 
@@ -101,9 +102,14 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     //CHECKOUT
     Route::post('/add-to-cart', [CartController::class, 'addToCart']);
 
+    //PAYMENT CHANNEL
+    
+
     //BASIC LOG-OUT
     Route::post('/logout', [AuthController::class, 'logout'])->name('userlogout');
     Route::prefix('user')->group(function () {
+        Route::get('/payment', [PaymentChannel::class, ])->name('user.payments');
+        Route::get('/payment/submit', [PaymentChannel::class, ])->name('payment. submit');
         Route::get('/myorders', Orders::class)->name('my.orders');
         //RENDER CART PAGE
        Route::get('/cart', [CartView::class, 'render'])->name('user.cart');

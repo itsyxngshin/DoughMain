@@ -46,16 +46,28 @@ class Checkout extends Component
     public function placeOrder()
     {
         // Create the order
-        $order = Order::create([
+        // Group items by shop_id
+        $itemsByShop = collect($this->cartItems)->groupBy('product.shop_id');
+
+        // Create an order for each shop
+        foreach ($itemsByShop as $shopId => $items) {
+            // Calculate the total amount for this shop's items
+            $shopTotal = collect($items)->sum(function ($item) {
+            return $item['product']['product_price'] * $item['quantity'];
+            });
+
+            // Create the order
+            $order = Order::create([
             'user_id' => Auth::id(),
-            'total_amount' => $this->orderTotal,
-            'status' => 'pending',
+            'shop_id' => $shopId,
+            'total_amount' => $shopTotal + $this->shippingFee,
+            'status' => 'Pending',
             'shipping_address' => Auth::user()->location->address,
             'contact_number' => Auth::user()->phone_number
-        ]);
+            ]);
 
-        // Create order items
-        foreach ($this->cartItems as $item) {
+            // Create order items for this shop
+            foreach ($items as $item) {
             OrderItem::create([
                 'order_id' => $order->id,
                 'product_id' => $item['product']['id'],
@@ -63,6 +75,7 @@ class Checkout extends Component
                 'price' => $item['product']['product_price'],
                 'subtotal' => $item['product']['product_price'] * $item['quantity']
             ]);
+            }
         }
 
         // Clear the cart items
@@ -71,9 +84,10 @@ class Checkout extends Component
         // Clear session
         session()->forget('selected_cart_items');
 
-        // Redirect to order confirmation
-        return redirect()->route('user.orders.show', $order->id)
-            ->with('success', 'Order placed successfully!');
+        // Redirect to orders page
+        return redirect()->route('homepage')
+            ->with('success', 'Orders placed successfully!');
+
     }
 
     public function render()
