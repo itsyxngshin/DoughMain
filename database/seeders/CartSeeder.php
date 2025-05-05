@@ -16,6 +16,7 @@ class CartSeeder extends Seeder
         $carts = [
         ['user_id' => '2',],
         ['user_id' => '5',],
+        ['user_id' => '6',],
         ];
         
         DB::table('carts')->insert($carts);
