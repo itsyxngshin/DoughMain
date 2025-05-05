@@ -53,17 +53,7 @@ class User extends Authenticatable
         ];
     }
 
-    protected static function booted()
-    {
-        // Automatically create a cart for the user when they are created
-    static::created(function ($user) {
-        if ($user->role->name === 'user') {
-            Cart::create([
-                'user_id' => $user->id,
-            ]);
-        }
-    });
-    }
+    
 
     function password_reset_token()
     {
@@ -107,4 +97,5 @@ class User extends Authenticatable
     {
         return $this->first_name . ' ' . $this->last_name;
     }
+
 }

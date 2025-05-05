@@ -13,7 +13,10 @@
             <p>Are you sure you want to delete this product?</p>
             <div class="mt-4 flex justify-end gap-2">
                 <button @click="open = false" class="bg-gray-300 px-4 py-2 rounded">Cancel</button>
-                <button wire:click="deleteCartItem"  @click="open = false; setTimeout(() => { window.location.href = '{{ route('user.cart') }}'; }, 500);" class="bg-red-500 text-white px-4 py-2 rounded">Delete Product</button>
+                <button wire:click="deleteCartItem"  
+                @click="open = false; setTimeout(() => { window.location.href = '{{ route('user.cart') }}'; }, 500);" 
+                class="bg-red-500 text-white px-4 py-2 rounded">
+                Delete Product</button>
             </div>
         </div>
     </div>

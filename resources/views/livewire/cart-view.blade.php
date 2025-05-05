@@ -27,7 +27,7 @@
         </div>
 
         <!-- Loop through cart items -->
-        <div wire:ignore x-data="cartComponent()" x-init="init()" class="space-y-4">
+        <div x-data="cartComponent()" x-init="init()" class="space-y-4">
             @if($groupedItems->isEmpty())
                 <p>Your cart is empty.</p>
             @else
@@ -71,10 +71,10 @@
 
                                 <span class="text-gray-700">{{ $item->product->product_price }}</span>
 
-                                <div x-data="{ quantity: {{ $item->quantity }} }" class="flex items-center border rounded">
-                                    <button @click="quantity = Math.max(1, quantity - 1)" class="px-3 py-1 text-gray-800 rounded-l">−</button>
-                                    <input type="number" x-model="quantity" min="1" class="w-16 p-1 text-center border-none">
-                                    <button @click="quantity++" class="px-3 py-1 text-gray-800 rounded-r">+</button>
+                                <div wire:key="cart-item-{{ $item->id }}" x-data="cartQuantity({{ $item->quantity }}, {{ $item->id }})" class="flex items-center border rounded">
+                                    <button @click="decrease" class="px-3 py-1 text-gray-800 rounded-l">−</button>
+                                    <input type="number" x-model="quantity" @change="update" min="1" class="w-16 p-1 text-center border-none">
+                                    <button @click="increase" class="px-3 py-1 text-gray-800 rounded-r">+</button>
                                 </div>
 
                                 <span class="text-gray-700 font-semibold">{{ $item->sub_total }}</span>
@@ -94,13 +94,10 @@
                             </div>
                         </div>
                     @endforeach
-                            <!-- Delete Selected Button -->
                             
-                            <button type="button"
-                            @click="$wire.deleteItems(selected)"
-                            class="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600">
-                            Delete Selected Items
-                        </button>
+                            <!-- Delete Selected Button -->
+                            {{--@livewire('user.modal.delete-multiple-items') --}} 
+                            
 
             @endif
             <!-- Shipping Promo -->
@@ -180,12 +177,41 @@
         modal.classList.toggle('hidden', !show);
     }
 
+    function cartQuantity(initialQuantity, cartItemId) {
+        return {
+            quantity: initialQuantity,
+            cartItemId: cartItemId,
+            increase() {
+                this.quantity++;
+                this.update();
+            },
+            decrease() {
+                if (this.quantity > 1) {
+                    this.quantity--;
+                    this.update();
+                }
+            },
+            async update() {
+                try {
+                    // Use Livewire.emit for global events or call the Livewire method directly
+                    await Livewire.dispatch('updateQuantity', { 
+                        cartItemId: this.cartItemId, 
+                        quantity: this.quantity 
+                    });
+                } catch (error) {
+                    console.error('Error updating quantity:', error);
+                }
+            }
+        }
+    }
+
 
     function cartComponent() {
         return {
             selected: [],
             init() {
                 // Initialize with any previously selected items if needed
+                // You might want to load from localStorage or Livewire
             },
             toggleItem(id) {
                 if (this.selected.includes(id)) {
@@ -193,8 +219,7 @@
                 } else {
                     this.selected.push(id);
                 }
-                // Update Livewire component
-                this.$wire.selectedItems = this.selected;
+                this.updateLivewireSelected();
             },
             isSelected(id) {
                 return this.selected.includes(id);
@@ -205,8 +230,11 @@
                 } else {
                     this.selected = this.selected.filter(id => !ids.includes(id));
                 }
-                // Update Livewire component
-                this.$wire.selectedItems = this.selected;
+                this.updateLivewireSelected();
+            },
+            updateLivewireSelected() {
+                // Use Livewire.emit or Livewire.dispatch to update the backend
+                Livewire.emit('updateSelectedItems', this.selected);
             }
         };
     }

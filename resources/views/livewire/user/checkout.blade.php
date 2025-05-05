@@ -33,7 +33,13 @@
                 <div>
                     <p><strong>{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</strong> </p>
                     <p><span class="text-gray-600">{{ Auth::user()->phone_number}}</span></p>
-                    <p>{{ Auth::user()->location->city. ', ' .  Auth::user()->location->province }}</p>
+                    <p>
+                        @if(Auth::user()->location)
+                            {{ Auth::user()->location->city }}, {{ Auth::user()->location->province }}
+                        @else
+                            <span class="text-red-500">Address not set</span>
+                        @endif
+                    </p>
                 </div>
                 <div class="text-xs space-x-2">
                     <span class="bg-yellow-300 text-[#1E1E1E] px-2 py-0.5 rounded">Default</span>

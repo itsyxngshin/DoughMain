@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string('profile_photo')->nullable(true);
             $table->string('first_name');
             $table->string('last_name');
-            $table->foreignId('user_status_id');
-            $table->foreignId('role_id');
+            $table->foreignId('user_status_id')->default(1); 
+            $table->foreignId('role_id')->default(1); // 1 = customer, 2 = seller, 3 = admin
             $table->string('nationality')->nullable()->default('Filipino');
-            $table->foreignId('location_id')->index();
+            $table->foreignId('location_id')->nullable();
             # $table->timestamp('email_verified_at')->nullable();
             # $table->string('password');
             $table->rememberToken();
