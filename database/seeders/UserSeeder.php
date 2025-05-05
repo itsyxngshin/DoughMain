@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'profile_photo' => '1000071957-01.jpg',
             'role_id' => 3,
             'user_status_id' => 1,
-            'location_id' => 0,
+            'location_id' => 5,
             'nationality' => 'Filipino',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
@@ -90,6 +90,22 @@ class UserSeeder extends Seeder
             'nationality' => 'Canadian',
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString(),
+        ],
+
+        [
+            'first_name' => 'Marian',
+            'last_name' => 'Rivera',
+            'username' => 'marianrivera',
+            'email' => 'marianrivera@gmail.com',
+            'password' => bcrypt('marianrivera'),
+            'phone_number' => '+639876543897',
+            'profile_photo' => 'profile_photo_06.jpg',
+            'role_id' => 1,
+            'user_status_id' => 1,
+            'location_id' => 3,
+            'nationality' => 'Filipino',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ],
     ];
 

@@ -321,6 +321,12 @@
     });
     });
 
+    document.addEventListener('alpine:init', () => {
+        Alpine.store('cart', {
+            selectedItems: [],
+        });
+    });
+
     </script>
     @livewireScripts
 </body>

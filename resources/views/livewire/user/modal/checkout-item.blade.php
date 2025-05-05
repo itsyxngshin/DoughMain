@@ -1,4 +1,6 @@
-<div x-data="{ showModal: @entangle('show').defer }">
+<div x-data="{ 
+ selected: [],
+showModal: @entangle('show').defer }">
     <div 
         x-show="showModal" 
         x-cloak 
@@ -6,7 +8,7 @@
     >
         <div class="bg-white p-8 rounded-lg shadow-lg text-center relative w-[90%] max-w-md">
             <button 
-                @click="showModal = false" 
+                @click="$wire.set('selectedItems', selected); showModal = true"
                 class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-xl"
             >
                 &times;
