@@ -13,7 +13,7 @@ class Review extends Model
         'product_id',
         'order_id',
         'shop_id',
-        'ratings',
+        'rating',
         'review_text',
         'review_date',
     ];

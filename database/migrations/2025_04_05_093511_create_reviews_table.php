@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('shop_id')->constrained('shops')->onDelete('cascade');
             $table->text('review_text');
             $table->string('review_image')->nullable(); #if upload of image is possible
-            $table->integer('rating')->default(0);
+            $table->integer('rating')->nullable();
             $table->timestamps();
         });
     }

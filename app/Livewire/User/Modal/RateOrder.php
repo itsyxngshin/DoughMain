@@ -10,44 +10,49 @@ class RateOrder extends Component
 {
     public $orderId;
     public $productId;
-    public $rating = 0;
+    public $rating; // Rating no longer defaults to 0.
     public $review_text;
     public $shopId;
     public $reviews;
-public $hasReview = false;
+    public $hasReview = false;
 
-public function mount($orderId)
-{
-    $order = Order::with('orderItems.product.shop')->findOrFail($orderId);
-    $this->orderId = $orderId;
-    $this->productId = $order->orderItems->first()?->product_id;
-    $this->shopId = $order->orderItems->first()?->product->shop_id;
+    public function mount($orderId)
+    {
+        $order = Order::with('orderItems.product.shop')->findOrFail($orderId);
+        $this->orderId = $orderId;
+        $this->productId = $order->orderItems->first()?->product_id;
+        $this->shopId = $order->orderItems->first()?->product->shop_id;
 
-    // Fetch the reviews for this order by the authenticated user
-    $this->reviews = Review::where('order_id', $this->orderId)
-                            ->where('user_id', auth()->id())
-                            ->get();
+        // Fetch the reviews for this order by the authenticated user
+        $this->reviews = Review::where('order_id', $this->orderId)
+                                ->where('user_id', auth()->id())
+                                ->get();
 
-    // Check if the user already reviewed the order
-    $this->hasReview = $this->reviews->count() > 0;
-}
-
-
+        if ($this->reviews->count() > 0) {
+            $this->hasReview = true;
+            $existingReview = $this->reviews->first();
+            $this->rating = $existingReview->rating; // Set the rating to the existing review value
+            $this->review_text = $existingReview->review_text;
+        } else {
+            $this->rating = null; // Initialize rating to null when there's no existing review
+        }
+    }
 
     public function submitReview()
     {
-        // Check again if the review exists
+        // Prevent re-submission if the review already exists
         if ($this->hasReview) {
             session()->flash('message', 'You have already reviewed this order.');
             return;
         }
 
+        // Validation of the rating and review text
         $this->validate([
             'rating' => 'required|integer|min:1|max:5',
             'review_text' => 'required|string|min:5',
         ]);
 
-        // Create the review if it doesn't already exist
+        // Create a new review
         Review::create([
             'user_id' => auth()->id(),
             'order_id' => $this->orderId,
