@@ -17,20 +17,22 @@ class Checkout extends Component
 
     public function mount()
     {
+        // Retrieve selected item IDs from the session
         $selectedIds = session('selected_cart_items', []);
-        // Debug session data
-        logger()->debug('Retrieved from session:', ['ids' => $selectedIds]);
+
+        // Load cart items (with product info)
         $this->cartItems = CartItem::with('product')
             ->whereIn('id', $selectedIds)
             ->whereHas('cart', fn($q) => $q->where('user_id', Auth::id()))
             ->get()
             ->toArray();
 
+        // Redirect if no items are selected
         if (empty($this->cartItems)) {
-            logger()->warning('Empty cart items redirecting to cart');
-            return redirect()->route('user.cart')->with('error', 'No items selected for checkout');
+            return redirect()->route('user.cart')->with('error', 'No items selected for checkout.');
         }
 
+        // Calculate order total
         $this->calculateOrderTotal();
     }
 
@@ -79,7 +81,7 @@ class Checkout extends Component
         return view('livewire.user.checkout', [
             'cartItems' => $this->cartItems,
             'orderTotal' => $this->orderTotal
-        ]);
+        ])->layout('components.layouts.navbar');
         
     }
 }

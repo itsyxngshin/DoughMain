@@ -67,7 +67,7 @@
         </form>
 
         <!-- Seller Registration Form -->
-        <form id="sellerForm" class="space-y-4 hidden" method="POST" action="{{ route('register') }}">
+        <form id="sellerForm" class="space-y-4 hidden" method="POST" action="{{ route('shopRegister') }}">
             @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>

@@ -2,12 +2,13 @@
 
 @section('content')
 <div class="max-w-5xl mx-auto p-6">
+    {{--
     <div class="debug-info bg-yellow-50 p-4 mb-4 rounded" wire:ignore>
         <h4 class="font-bold">Debug Information:</h4>
         <p>Cart Items Count: {{ count($cartItems) }}</p>
         <pre>{{ json_encode($cartItems, JSON_PRETTY_PRINT) }}</pre>
     </div>
-
+    --}}
     <div class="bg-white p-8 rounded-lg shadow-lg">
         <!-- Checkout Title -->
         <h2 class="text-2xl font-bold text-[#1E1E1E] flex items-center mb-4">

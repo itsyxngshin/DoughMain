@@ -99,10 +99,6 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     //SHOP PRODUCT LISTINGS
     Route::get('/shops/{id}/products', ProductListingForShops::class)->name('shop.products');
     //CHECKOUT
-    Route::get('/checkout', Checkout::class)
-    ->middleware(['auth', 'checkout.items'])
-    ->name('user.checkout');
-    //ADD TO CART
     Route::post('/add-to-cart', [CartController::class, 'addToCart']);
 
     //BASIC LOG-OUT
@@ -114,7 +110,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
        Route::delete('/cart/{id}', [CartView::class, 'removeItem'])->name('cart.remove');
        Route::delete('/cart/remove/selected', [CartView::class, 'removeSelected'])->name('cart.remove.selected');
        //SEND TO CHECKOUT PAGE
-       Route::get('/checkout', [Checkout::class, 'render'])->name('user.checkout');
+       Route::get('/checkout', Checkout::class)->name('user.checkout');
        //RENDER PROFILE PAGE
        Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
        Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');

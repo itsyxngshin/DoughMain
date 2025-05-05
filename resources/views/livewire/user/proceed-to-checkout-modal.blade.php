@@ -51,6 +51,7 @@
                 <!-- Confirm -->
                 <button 
                     wire:click="proceed"
+                    @click="$wire.showModal = false"
                     class="px-4 py-2 bg-[#4A2E0F] text-white rounded-md hover:bg-[#3c2410]">
                     Yes
                 </button>

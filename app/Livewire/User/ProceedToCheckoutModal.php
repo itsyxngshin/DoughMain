@@ -37,34 +37,15 @@ class ProceedToCheckoutModal extends Component
     public function proceed()
     {
         // Add debug output
-        logger()->debug('Selected items before processing:', ['items' => $this->selectedItems]);
-        if (empty($this->selectedItems)) {
-            $this->dispatch('notify-error', message: 'Please select at least one item');
-            return;
-        }
-    
-        // Ensure we have a flat array of IDs
-        $selectedIds = Arr::flatten($this->selectedItems);
-    
-        // Validate the IDs are numeric
-        $selectedIds = array_filter($selectedIds, 'is_numeric');
-    
-        if (empty($selectedIds)) {
-            $this->dispatch('notify-error', message: 'Invalid items selected');
-            return;
-        }
-        // Debug the final IDs being stored
-        logger()->debug('IDs being stored in session:', ['ids' => $selectedIds]);
-        // Store in session
-        session([
-            'selected_cart_items' => $selectedIds,
-            'checkout_items' => CartItem::with('product')
-                ->whereIn('id', $selectedIds)
-                ->get()
-                ->toArray()
-        ]);
-    
-        return redirect()->route('user.checkout');
+        
+        // Get the IDs of selected items (assuming $this->selectedItems is already validated)
+        $selectedIds = collect($this->selectedItems)->pluck('id')->toArray();
+        logger()->debug('Selected items before processing:', ['selected_cart_items' => $selectedIds]);
+        // Store in session (to be retrieved in the Checkout component)
+        session(['selected_cart_items' => $selectedIds]);
+
+        // Redirect to checkout
+        return redirect()->route('user.checkout'); 
     }
 
     public function render()

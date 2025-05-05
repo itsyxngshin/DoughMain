@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Shop;
 use App\Models\Role;
@@ -21,24 +22,41 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        $validatedData = $request->validate([
+            'username' => 'required|string|unique:users',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'phone_number' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:8',
+            'nationality' => 'required|string',
+        ]);
+
         Log::info($request->all());
 
-        $user = new User();
-        $user->username = $request->input('username');
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->phone_number = $request->phone_number;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->nationality = $request->nationality;
-        $user->location_id = 0;
-        $user->role_id = 1;
-        $user->user_status_id = 1;
-        $user->save();
-
-        $cart = new Cart();
-        $cart->user_id = $user->id;
-        $cart->save();
+        DB::transaction(function () use ($validatedData) {
+            // Create user
+            $user = User::create([
+                'username' => $validatedData['username'],
+                'first_name' => $validatedData['first_name'],
+                'last_name' => $validatedData['last_name'],
+                'phone_number' => $validatedData['phone_number'],
+                'email' => $validatedData['email'],
+                'password' => Hash::make($validatedData['password']),
+                'nationality' => $validatedData['nationality'],
+                'location_id' => 0, // Consider making this nullable or setting a default location
+                'role_id' => 1, // Consider using constants or enums for role IDs
+                'user_status_id' => 1, // Consider using constants or enums for status IDs
+            ]);
+    
+            // Create cart for the user
+            Cart::create([
+                'user_id' => $user->id,
+                // Add any other default cart attributes if needed
+            ]);
+    
+            Log::info('New user registered with cart', ['user_id' => $user->id]);
+        });
 
         return view('livewire.auth.login')->with('success', 'Register successfully');
     }
@@ -61,24 +79,39 @@ class AuthController extends Controller
     ]);
 
     // Create the User
-    $user = new User();
-    $user->username = $request->username;
-    $user->first_name = $request->first_name;
-    $user->last_name = $request->last_name;
-    $user->phone_number = $request->phone_number;
-    $user->email = $request->email;
-    $user->password = Hash::make($request->password);
-    $user->nationality = $request->nationality;
-    $user->location_id = 1;
-    $user->role_id = 2; // assume 2 = Shop Owner
-    $user->user_status_id = 1; // assume 1 = Active
-    $user->save();
+    DB::transaction(function () use ($validated) {
+        // Create user
+        $user = User::create([
+            'username' => $validated['username'],
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'phone_number' => $validated['phone_number'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'nationality' => $validated['nationality'],
+            'location_id' => 0, // Consider default location
+            'role_id' => 2, // Typically 2 for shop owners
+            'user_status_id' => 1, // Active status
+        ]);
 
-    // Create the Shop linked to the User
-    $shop = new Shop();
-    $shop->manage_id= $user->id;
-    $shop->shop_name = $request->shop_name;
-    $shop->save();
+        // Create shop
+        $shop = Shop::create([
+            'manage_id' => $user->id,
+            'shop_name' => $validated['shop_name'],
+            // Add other default shop fields as needed
+        ]);
+
+        // Create cart for the user
+        Cart::create([
+            'user_id' => $user->id,
+        ]);
+
+        Log::info('New shop owner registered', [
+            'user_id' => $user->id,
+            'shop_id' => $shop->id
+        ]);
+    });
+    
 
     return view('livewire.auth.login')->with('success', 'Registered successfully as a shop');
 }
