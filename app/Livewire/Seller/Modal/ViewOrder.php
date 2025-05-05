@@ -11,7 +11,7 @@ use App\Models\Product;
 class ViewOrder extends Component
 {
     public $selectedOrder;
-
+    
     // Renamed method to avoid conflict
     public function loadOrder($orderId)
     {

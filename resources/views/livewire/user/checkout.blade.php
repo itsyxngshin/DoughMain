@@ -2,6 +2,13 @@
 
 @section('content')
 <div class="max-w-5xl mx-auto p-6">
+    {{--
+    <div class="debug-info bg-yellow-50 p-4 mb-4 rounded" wire:ignore>
+        <h4 class="font-bold">Debug Information:</h4>
+        <p>Cart Items Count: {{ count($cartItems) }}</p>
+        <pre>{{ json_encode($cartItems, JSON_PRETTY_PRINT) }}</pre>
+    </div>
+    --}}
     <div class="bg-white p-8 rounded-lg shadow-lg">
         <!-- Checkout Title -->
         <h2 class="text-2xl font-bold text-[#1E1E1E] flex items-center mb-4">
@@ -24,8 +31,9 @@
             </div>
             <div class="flex justify-between text-sm">
                 <div>
-                    <p><strong>John Doe</strong> <span class="text-gray-600">(+63) 913687493</span></p>
-                    <p>Address here</p>
+                    <p><strong>{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</strong> </p>
+                    <p><span class="text-gray-600">{{ Auth::user()->phone_number}}</span></p>
+                    <p>{{ Auth::user()->location->city. ', ' .  Auth::user()->location->province }}</p>
                 </div>
                 <div class="text-xs space-x-2">
                     <span class="bg-yellow-300 text-[#1E1E1E] px-2 py-0.5 rounded">Default</span>
@@ -45,58 +53,56 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="border-t">
-                    <td class="p-3">Pandesal</td>
-                    <td class="p-3">₱ 5.00</td>
-                    <td class="p-3">20</td>
-                    <td class="p-3">₱ 100.00</td>
-                </tr>
-                @if ($cartItems && $cartItems->isNotEmpty())
-                    @foreach ($cartItems as $item)
-                        <div>
-                            <tr class="border-t">
-                                <td class="p-3">{{ $item->product->product_name }}</td>
-                                <td class="p-3">₱ {{ number_format($item->product->product_price, 2) }}</td>
-                                <td class="p-3">{{ $item->quantity }}</td>
-                                <td class="p-3">₱ {{ number_format($item->product->product_price * $item->quantity, 2) }}</td>
-                            </tr>
-                        </div>
-                    @endforeach
-                @else
-                    <p>Your cart is empty.</p>
-                @endif
+                @forelse ($cartItems as $item)
+                    <tr class="border-t">
+                        <td class="p-3 flex items-center">
+                            <img src="{{ asset('storage/'.$item['product']['product_image']) }}" 
+                                class="w-12 h-12 rounded mr-3 object-cover">
+                            {{ $item['product']['product_name'] }}
+                        </td>
+                        <td class="p-3">₱{{ number_format($item['product']['product_price'], 2) }}</td>
+                        <td class="p-3">{{ $item['quantity'] }}</td>
+                        <td class="p-3">₱{{ number_format($item['product']['product_price'] * $item['quantity'], 2) }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" class="p-3 text-center text-gray-500">
+                            No items found in your cart
+                        </td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
-
+        
         <!-- Summary Footer -->
         <div class="flex justify-between items-center p-4 border rounded-lg bg-white">
-            <div class="text-sm text-gray-600">Item</div>
+            <div class="text-sm text-gray-600">{{ count($cartItems) }} item(s)</div>
+
             <div class="text-right text-sm">
-                <a href="#" class="text-yellow-500 font-semibold">CHANGE</a>
                 <p class="mt-2">
                     Items Subtotal:
+                    {{-- 
                     <span class="text-[#1E1E1E] font-semibold">
-                        ₱ {{ number_format($cartItems->sum(fn ($item) => $item->product->product_price * $item->quantity), 2) }}
+                       ₱{{ number_format($orderTotal - $shippingFee, 2) }}
                     </span>
+                    --}}
                 </p>
-                <p>Shipping Subtotal: <span class="text-[#1E1E1E] font-semibold">₱ -</span></p>
+                {{--
+                <p>Shipping Fee: <span class="text-[#1E1E1E] font-semibold">₱{{ number_format($shippingFee, 2) }}</span></p>
+                --}}
                 <p class="text-lg mt-1 font-bold text-[#1E1E1E]">
-                    Total ({{ $cartItems->sum('quantity') }} item{{ $cartItems->sum('quantity') > 1 ? 's' : '' }}):
-                    ₱ {{ number_format($cartItems->sum(fn ($item) => $item->product->product_price * $item->quantity), 2) }}
+                    Total: ₱{{ number_format($orderTotal, 2) }}
                 </p>
             </div>
         </div>
 
         <!-- Buttons -->
         <div class="mt-6 flex justify-end space-x-3">
-            <button class="px-4 py-2 border border-gray-400 rounded-lg">Cancel</button>
-            <button class="px-6 py-2 bg-[#1E1E1E] text-white rounded-lg font-semibold hover:bg-black">Place Order</button>
-            {{--
-            <button wire:click="redirectToPaymongo"
+            <a href="{{ route('user.cart') }}" class="px-4 py-2 border border-gray-400 rounded-lg">Cancel</a>
+            <button wire:click="placeOrder" 
                 class="px-6 py-2 bg-[#1E1E1E] text-white rounded-lg font-semibold hover:bg-black">
                 Place Order
             </button>
-            --}}
         </div>
 
         <!-- Notice -->

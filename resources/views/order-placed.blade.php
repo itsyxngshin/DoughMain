@@ -24,7 +24,7 @@
 
         <hr class="my-6 border-t border-gray-300">
 
-        <p class="text-sm text-gray-600 mb-6">Go to My Purchases for more info.</p>
+        <p class="text-sm text-gray-600 mb-6">Go to My Orders for more info.</p>
 
         <!-- Buttons -->
         <div class="flex justify-center space-x-4">
@@ -35,7 +35,7 @@
             </a>
             <a href="#">
                 <button class="px-6 py-2 border bg-[#4A2E0F] text-[#4A2E0F] rounded-md hover:bg-[#3a240f]">
-                    My Purchases
+                    My Orders
                 </button>
             </a>
         </div>

@@ -11,6 +11,12 @@ class CheckoutItem extends Component
     public $show = false;
     public $selectedItems = [];
 
+public function mount()
+{
+    // Initialize selectedItems to an empty array or with default values
+    $this->selectedItems = $this->selectedItems ?? [];
+}
+
     #[On('setSelectedItems')]
     public function setSelectedItems($items)
     {

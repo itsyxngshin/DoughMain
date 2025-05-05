@@ -18,7 +18,7 @@
                 <div class="flex border-b-1 border-gray-400 items-center p-6 py-2 gap-5 w-full">
                     <div class="w-full items-center flex gap-3">
                         <img src="" alt="" class="rounded-full w-[30px] h-[30px]">
-                        <p class="font-bold text-xl">Bakery Name</p>
+                        <p class="font-bold text-xl">{{$selectedOrder->shop->shop_name}}</p>
                     </div>
                     <div class="border rounded border-[#FBBC04] w-[40%] justify-end
                         @if(strtolower($selectedOrder->status) == 'pending') border-yellow-500

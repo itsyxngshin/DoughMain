@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->foreignId('user_id');
-            $table->foreignId('shop_id');
+            $table->foreignId('user_id')->nullable();
+            $table->foreignId('shop_id')->nullable();
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
             $table->string('region');

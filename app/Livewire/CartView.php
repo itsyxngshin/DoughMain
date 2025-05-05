@@ -13,6 +13,7 @@ use App\Models\CartItem;
 class CartView extends Component
 {
     public $cartItems = [];
+    
     //Shows the cart and items in the cart
     public function render()
 {

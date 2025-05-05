@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'profile_photo' => '1000071957-01.jpg',
             'role_id' => 3,
             'user_status_id' => 1,
-            'location_id' => 0,
+            'location_id' => 5,
             'nationality' => 'Filipino',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
