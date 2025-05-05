@@ -1,15 +1,17 @@
 @extends('components.layouts.navbar')
 
 @section('content')
-<div class="flex flex-col md:flex-row pt-20">
+<div class="flex flex-col items-center w-full px-4 md:px-8 pt-12">
 
     
 
     <!-- Main Content -->
     <main class="w-full max-w-screen-xl p-8 overflow-y-auto" style="max-height: calc(100vh - 3rem);">
 
-        @livewire('user.search-products')
-        @livewire('user.modal.view-product-from-search')
+            @livewire('user.search-products')
+            @livewire('user.modal.view-product-from-search')
+        
+        
 
         <!-- Slideshow Section -->
         <section class="mb-12">
@@ -174,23 +176,16 @@
                     @endforeach
                 </div>
             @else
-                <!-- Products Section -->
-<h2 class="text-2xl font-bold text-[#51331B] text-center">Products</h2>
-<div class="flex overflow-x-auto space-x-6 pb-4 justify-center">
-    @foreach ($products as $product)
-        <div class="w-64 mb-6 flex-none">
-            <div class="relative bg-cover bg-center rounded-lg shadow-lg flex items-end pl-2 h-32 transition-transform transform hover:scale-105 duration-300"
-                style="background-image: url('{{ asset('storage/' . $product->product_photo) }}');">
-                <a href="#" wire:click.prevent="$emit('openModal', 'user.modal.view-product-from-homepage', {{ json_encode(['productId' => $product->id]) }})">
-                    <div class="absolute inset-0 bg-gradient-to-t from-[#51331B]/70 to-transparent rounded-lg"></div>
-                    <h3 class="absolute bottom-2 left-5 text-white font-semibold z-10">
-                        {{ $product->product_name }}
-                    </h3>
-                </a>
+            
+                            <!-- Products Section -->
+            <h2 class="text-2xl font-bold text-[#51331B] text-center">Products</h2>
+            <div class="flex overflow-x-auto space-x-6 pb-4 justify-center">
+                @foreach ($products as $product)
+                    <div class="w-64 mb-6 flex-none">
+                        @livewire('user.modal.view-product-from-homepage', ['productId' => $product->id], key($product->id))
+                    </div>
+                @endforeach
             </div>
-        </div>
-    @endforeach
-</div>
 
 
                 <!-- Categories Section -->

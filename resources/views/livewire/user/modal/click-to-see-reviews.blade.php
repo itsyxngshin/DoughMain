@@ -30,7 +30,7 @@
 
     <!-- Modal -->
     <div x-show="open" x-cloak class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-[32rem] max-h-[90vh] overflow-y-auto">
+        <div class="bg-white sticky p-6 rounded-lg shadow-lg w-[32rem] max-h-[90vh] overflow-y-auto">
             <!-- Close Button -->
             <div class="relative w-full">
                 <button @click="open = false"

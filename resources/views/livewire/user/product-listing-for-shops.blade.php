@@ -2,23 +2,13 @@
 
 @section('content')
 
-<div class="w-full mx-5"  >
-  <div class="w-full mx-auto py-10 px-4">
+<div class="w-full px-5 "  >
+  <div class="w-full mx-auto mt-10 overflow-y-auto py-10 px-4">
 
         <!-- Search Bar -->
-        <div class="sticky top-1 py-2 z-50 ml-3 mb-5 mt-3">
-            <div class="w-[700px] mx-auto relative">
-            <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" 
-                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                    d="M21 21l-4.35-4.35m2.85-5.65a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
-            <input type="text" id="searchInput" 
-                placeholder="Search products, categories..." 
-                class="w-full p-2.5 pl-10 border border-gray-300 rounded-full focus:outline-none 
-                        focus:ring-2 focus:ring-yellow-500 transition-all duration-200">
-        </div>
-        </div>
+        
+        @livewire('user.search-products')
+            @livewire('user.modal.view-product-from-search')
 
         <!-- Bakery Banner with Review Section -->
         <div class="relative ">

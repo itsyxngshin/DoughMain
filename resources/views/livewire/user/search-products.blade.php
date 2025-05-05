@@ -1,4 +1,4 @@
-<div x-data="{ show: false }" class="sticky top-1 py-2 z-50 mb-4" @click.away="show = false">
+<div x-data="{ show: false }" class="sticky justify-center flex top-1 py-2 z-50 mb-4" @click.away="show = false">
     <div class="relative ml-0 w-[700px]">
         <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#6E4B3B]" 
             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -11,7 +11,7 @@
                @focus="show = true"
                placeholder="Search products, categories..." 
                class="w-full p-2.5 pl-10 border border-[#ffffff] rounded-full focus:outline-none 
-                      focus:ring-2 focus:ring-[#D39B6A] transition-all duration-200">
+                      focus:ring-2 focus:ring-[#D39B6A] shadow-lg transition-all duration-200">
 
         <div x-show="show" x-transition
              class="absolute w-full bg-white mt-2 rounded-lg shadow-lg z-50 border border-gray-200 max-h-96 overflow-y-auto">

@@ -2,10 +2,10 @@
 
 @section('content')
 <div class="w-full h-screen">
-    <div class="max-w-6xl h-screen mx-auto py-10 px-4">
+    <div class="max-w-6xl mt-16 h-screen mx-auto py-10 px-4">
             
 
-        <h2 class="text-3xl font-bold mb-8 flex items-center text-brown-800">
+        <h2 class="text-3xl font-bold mb-8 flex items-center text-[#51331b]">
                 <svg class="w-7 h-7 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M3 3h18v18H3V3z" />
@@ -13,8 +13,6 @@
                 My Orders
             </h2>
 
-            
-            <h2 class="text-xl font-bold text-gray-800 mb-4">My Orders</h2>
 
             @forelse($orders as $order)
                 <article class="bg-white shadow rounded-lg mb-3">

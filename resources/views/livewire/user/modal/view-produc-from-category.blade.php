@@ -16,7 +16,7 @@
 >
 
     <!-- Product Loop -->
-    <div class="grid md:grid-cols-3 gap-6">
+    <div class="grid sticky md:grid-cols-3 gap-6">
         @foreach ($product as $product)
             <!-- Product Button Trigger -->
             <button @click="
