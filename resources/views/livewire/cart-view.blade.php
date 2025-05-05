@@ -1,8 +1,8 @@
 @extends('components.layouts.navbar')
 
 @section('content')
-<div class="min-h-screen flex justify-center items-start mt-8">
-    <div class="w-full max-w-6xl bg-white shadow-lg rounded-lg p-6">
+<div class="pt-28 px-4 min-h-screen bg-gray-50"> <!-- Adjusted padding and background for contrast -->
+    <div class="container mx-auto max-w-6xl bg-white shadow-lg rounded-lg p-6">
         <!-- Title -->
         <h2 class="text-2xl font-bold text-brown-700 flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="mr-2" fill="currentColor">
@@ -12,18 +12,10 @@
         </h2>
 
         <!-- Cart Header -->
-        <div class="mt-4 bg-white p-3 rounded-lg overflow-x-auto border">
-            <table class="min-w-full text-sm text-black-600">
-                <thead class="bg-transparent font-semibold">
-                    <tr>
-                        <th class="px-4 py-2 text-left w-1/5">Items</th>
-                        <th class="px-4 py-2 text-left w-1/5">Unit Price</th>
-                        <th class="px-4 py-2 text-left w-1/5">Quantity</th>
-                        <th class="px-4 py-2 text-right w-1/4">Amount</th>
-                    </tr>
-                </thead>
-                
-            </table>
+        <div class="mt-4 bg-white p-3 rounded-lg grid grid-cols-2 sm:grid-cols-4 text-sm font-semibold text-gray-600 border">
+            <span class="col-span-2">Unit Price</span>
+            <span>Quantity</span>
+            <span class="text-right">Total Price</span>
         </div>
 
         <!-- Loop through cart items -->
@@ -101,20 +93,14 @@
 
             @endif
             <!-- Shipping Promo -->
-            <div class="flex items-center text-sm text-gray-600 mt-3">
+            <div class="flex items-center text-sm text-gray-600 mt-3 flex-wrap">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="mr-2">
                     <path d="M2 5h12v10H2z"/>
                 </svg>
                 <span>50% off shipping with min order of ₱299</span>
                 <a href="#" class="text-blue-500 ml-2">Learn more</a>
             </div>
-
-            @php
-                $grandTotal = collect($cartItems)->sum(function($item) {
-                    return $item->product->product_price * $item->quantity;
-                });
-            @endphp
-
+        </div>
 
             <!-- Select All & Checkout -->
             <div class="flex items-center justify-between bg-white p-3 rounded-lg mt-4 border">
@@ -150,15 +136,14 @@
 <!-- Modal -->
 {{--
 <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-    <div class="bg-white p-8 rounded-lg shadow-lg text-center relative">
+    <div class="bg-white p-8 rounded-lg shadow-lg text-center relative w-11/12 max-w-md">
         <button onclick="toggleModal(false)" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-xl">&times;</button>
         <h3 class="text-2xl font-bold text-[#4A2E0F] mb-6">Proceed to Checkout?</h3>
         <div class="flex justify-center gap-4">
-            
             <button onclick="toggleModal(false)" class="px-4 py-2 border border-[#4A2E0F] text-[#4A2E0F] rounded-md hover:bg-gray-100">
                 No
             </button>
-            <a href="{{ route('user.checkout') }}">
+            <a href="{{ route('checkout.page') }}">
                 <button class="px-4 py-2 bg-[#4A2E0F] text-white rounded-md hover:bg-[#3c2410]">
                     Yes
                 </button>
@@ -172,7 +157,6 @@
 <!-- Modal Script -->
 <script>
     function toggleModal(show) {
-        // Show or hide the modal based on the 'show' parameter for checkout
         const modal = document.getElementById('checkoutModal');
         modal.classList.toggle('hidden', !show);
     }
@@ -241,4 +225,3 @@
 
 </script>
 @endsection
-
