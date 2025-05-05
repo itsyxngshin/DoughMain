@@ -151,6 +151,7 @@
 
 
 <!-- Modal -->
+{{--
 <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
     <div class="bg-white p-8 rounded-lg shadow-lg text-center relative">
         <button onclick="toggleModal(false)" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-xl">&times;</button>
@@ -169,6 +170,8 @@
     </div>
 </div>
 
+--}}
+
 <!-- Modal Script -->
 <script>
     function toggleModal(show) {
@@ -181,12 +184,17 @@
     function cartComponent() {
         return {
             selected: [],
+            init() {
+                // Initialize with any previously selected items if needed
+            },
             toggleItem(id) {
                 if (this.selected.includes(id)) {
                     this.selected = this.selected.filter(item => item !== id);
                 } else {
                     this.selected.push(id);
                 }
+                // Update Livewire component
+                this.$wire.selectedItems = this.selected;
             },
             isSelected(id) {
                 return this.selected.includes(id);
@@ -197,6 +205,8 @@
                 } else {
                     this.selected = this.selected.filter(id => !ids.includes(id));
                 }
+                // Update Livewire component
+                this.$wire.selectedItems = this.selected;
             }
         };
     }

@@ -98,10 +98,12 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 
     //SHOP PRODUCT LISTINGS
     Route::get('/shops/{id}/products', ProductListingForShops::class)->name('shop.products');
-
+    //CHECKOUT
+    Route::get('/checkout', Checkout::class)
+    ->middleware(['auth', 'checkout.items'])
+    ->name('user.checkout');
     //ADD TO CART
     Route::post('/add-to-cart', [CartController::class, 'addToCart']);
-    Route::get('/checkout', [CheckoutController::class, 'index'])->name('user.checkout'); 
 
     //BASIC LOG-OUT
     Route::post('/logout', [AuthController::class, 'logout'])->name('userlogout');

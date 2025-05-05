@@ -13,6 +13,7 @@ use App\Models\CartItem;
 class CartView extends Component
 {
     public $cartItems = [];
+    
     //Shows the cart and items in the cart
     public function render()
 {
@@ -44,19 +45,16 @@ class CartView extends Component
 }
 
 
-public function deleteItems($selected)
-{
-    foreach ($selected as $id) {
-        $item = CartItem::find($id);
-        if ($item) {
-            $item->delete();
-        }
+    public function deleteItems($ids)
+    {
+        CartItem::whereIn('id', $ids)
+            ->whereHas('cart', function ($query) {
+                $query->where('user_id', Auth::id());
+            })
+            ->delete();
+
+        $this->emitSelf('refreshComponent');
     }
-
-    // Optionally refresh data
-    $this->dispatch('cart-updated'); // or call $this->mount()
-}
-
 
     public function increaseQuantity($id)
     {

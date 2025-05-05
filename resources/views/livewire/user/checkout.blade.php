@@ -24,8 +24,9 @@
             </div>
             <div class="flex justify-between text-sm">
                 <div>
-                    <p><strong>John Doe</strong> <span class="text-gray-600">(+63) 913687493</span></p>
-                    <p>Address here</p>
+                    <p><strong>{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</strong> </p>
+                    <p><span class="text-gray-600">{{ Auth::user()->phone_number}}</span></p>
+                    <p>{{ Auth::user()->location->city. ', ' .  Auth::user()->location->province }}</p>
                 </div>
                 <div class="text-xs space-x-2">
                     <span class="bg-yellow-300 text-[#1E1E1E] px-2 py-0.5 rounded">Default</span>
@@ -45,43 +46,42 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($cartItems && $cartItems->isNotEmpty())
-                    @foreach ($cartItems as $item)
-                        <div>
-                            <tr class="border-t">
-                                <td class="p-3">{{ $item->product->product_name }}</td>
-                                <td class="p-3">₱ {{ number_format($item->product->product_price, 2) }}</td>
-                                <td class="p-3">{{ $item->quantity }}</td>
-                                <td class="p-3">₱ {{ number_format($item->product->product_price * $item->quantity, 2) }}</td>
-                            </tr>
-                        </div>
-                    @endforeach
-                @else
-                    <p>Your cart is empty.</p>
-                @endif
+                @forelse ($cartItems as $item)
+                    <tr class="border-t">
+                        <td class="p-3 flex items-center">
+                            <img src="{{ asset('storage/'.$item['product']['product_image']) }}" 
+                                class="w-12 h-12 rounded mr-3 object-cover">
+                            {{ $item['product']['product_name'] }}
+                        </td>
+                        <td class="p-3">₱{{ number_format($item['product']['product_price'], 2) }}</td>
+                        <td class="p-3">{{ $item['quantity'] }}</td>
+                        <td class="p-3">₱{{ number_format($item['product']['product_price'] * $item['quantity'], 2) }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" class="p-3 text-center text-gray-500">
+                            No items found in your cart
+                        </td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
-
+        
         <!-- Summary Footer -->
         <div class="flex justify-between items-center p-4 border rounded-lg bg-white">
-            <div class="text-sm text-gray-600">Item</div>
+            <div class="text-sm text-gray-600">{{ count($cartItems) }} item(s)</div>
+
             <div class="text-right text-sm">
-                <a href="#" class="text-yellow-500 font-semibold">CHANGE</a>
-                <p class="mt-2">
                 <p class="mt-2">
                     Items Subtotal:
                     <span class="text-[#1E1E1E] font-semibold">
-                        ₱ {{ $cartItems && $cartItems->isNotEmpty() ? number_format($cartItems->sum(fn ($item) => $item->product->product_price * $item->quantity), 2) : '0.00' }}
+                        ₱{{ number_format($orderTotal, 2) }}
                     </span>
                 </p>
-
                 <p>Shipping Subtotal: <span class="text-[#1E1E1E] font-semibold">₱ -</span></p>
-
                 <p class="text-lg mt-1 font-bold text-[#1E1E1E]">
-                    Total ({{ $cartItems && $cartItems->isNotEmpty() ? $cartItems->sum('quantity') : 0 }} item{{ $cartItems && $cartItems->isNotEmpty() && $cartItems->sum('quantity') > 1 ? 's' : '' }}):
-                    ₱ {{ $cartItems && $cartItems->isNotEmpty() ? number_format($cartItems->sum(fn ($item) => $item->product->product_price * $item->quantity), 2) : '0.00' }}
+                    Total: ₱{{ number_format($orderTotal, 2) }}
                 </p>
-
             </div>
         </div>
 
