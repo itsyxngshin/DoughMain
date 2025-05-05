@@ -1,8 +1,8 @@
 @extends('components.layouts.navbar')
 
 @section('content')
-<div class="min-h-screen flex justify-center items-start mt-8">
-    <div class="w-full max-w-6xl bg-white shadow-lg rounded-lg p-6">
+<div class="pt-28 px-4 min-h-screen bg-gray-50"> <!-- Adjusted padding and background for contrast -->
+    <div class="container mx-auto max-w-6xl bg-white shadow-lg rounded-lg p-6">
         <!-- Title -->
         <h2 class="text-2xl font-bold text-brown-700 flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="mr-2" fill="currentColor">
@@ -12,141 +12,81 @@
         </h2>
 
         <!-- Cart Header -->
-        <div class="mt-4 bg-white p-3 rounded-lg overflow-x-auto border">
-            <table class="min-w-full text-sm text-black-600">
-                <thead class="bg-transparent font-semibold">
-                    <tr>
-                        <th class="px-4 py-2 text-left w-1/5">Items</th>
-                        <th class="px-4 py-2 text-left w-1/5">Unit Price</th>
-                        <th class="px-4 py-2 text-left w-1/5">Quantity</th>
-                        <th class="px-4 py-2 text-right w-1/4">Amount</th>
-                    </tr>
-                </thead>
-                
-            </table>
+        <div class="mt-4 bg-white p-3 rounded-lg grid grid-cols-2 sm:grid-cols-4 text-sm font-semibold text-gray-600 border">
+            <span class="col-span-2">Unit Price</span>
+            <span>Quantity</span>
+            <span class="text-right">Total Price</span>
         </div>
-<!-- Loop through cart items -->
-<div x-data="cartComponent()" class="space-y-4">
-    @if($groupedItems->isEmpty())
-        <p>Your cart is empty.</p>
-    @else
-        @foreach($groupedItems as $group)
-            <div class="bg-white p-4 border rounded-lg mt-6">
-                <!-- Shop Info -->
-                <div class="flex items-center mb-3">
-                    <input type="checkbox" class="mr-2"
-                        @change="toggleSelectAll($event, {{ $group['items']->pluck('id') }})">
-                    <div class="flex items-center space-x-2">
-                        {{-- Check if shop exists before trying to display the logo and shop name --}}
-                        @if ($group['shop'])
-                            {{-- 
-                            @if($group['shop']->shop_logo)
-                                <img src="{{ asset('storage/' . $group['shop']->shop_logo) }}" alt="{{ $group['shop']->shop_name }}" class="w-8 h-8 rounded-full object-cover">
-                            @endif
-                            --}}
-                            <span class="text-lg font-semibold text-brown-700">
-                                {{ $group['shop']->shop_name }}
-                            </span>
-                        @else
-                            <span class="text-red-600">Unknown Shop</span>
-                        @endif
-                    </div>
+
+        <!-- Cart Item -->
+        <div class="bg-white p-4 border rounded-lg mt-3">
+            <!-- Shop Name -->
+            <div class="flex items-center mb-2">
+                <input type="checkbox" class="mr-2">
+                <span class="text-lg font-semibold text-brown-700 flex items-center">
+                    BJ Bakery
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="ml-1">
+                        <path d="M2 2h12v12H2z"/>
+                    </svg>
+                </span>
+            </div>
+
+            <!-- Item Row -->
+            <div class="flex flex-col sm:flex-row items-center sm:justify-between border-t pt-3 gap-4">
+                <div class="flex items-center space-x-3">
+                    <input type="checkbox" class="mr-2">
+                    <img src="{{ asset('storage/pandesal.png') }}" class="w-12 h-12 rounded-lg object-cover" alt="Pandesal">
+                    <span class="text-gray-700">Pandesal</span>
+                </div>
+                <span class="text-gray-700">₱ 5.00</span>
+
+                <!-- Quantity -->
+                <div class="flex items-center">
+                    <button class="px-2 py-1 bg-gray-300 text-gray-700 rounded-l-lg">-</button>
+                    <input type="text" value="20" class="w-12 text-center border">
+                    <button class="px-2 py-1 bg-gray-300 text-gray-700 rounded-r-lg">+</button>
                 </div>
 
-                <!-- Cart Items Under This Shop -->
-@foreach ($group['items'] as $item)
-    <div class="flex items-center justify-between border-t pt-3" wire:key="cart-item-{{ $item->id }}">
+                <span class="text-gray-700 font-semibold">₱ 100.00</span>
+                <button class="text-red-500">Delete</button>
+            </div>
 
-        <div class="flex items-center space-x-3">
-            <input type="checkbox" 
-                   class="mr-2"
-                   :checked="isSelected({{ $item->id }})"
-                   @change="toggleItem({{ $item->id }})">
-            <img src="{{ asset('storage/' . $item->product->product_image) }}" class="w-12 h-12 rounded-lg object-cover" alt="{{ $item->product->product_name }}">
-            <span class="text-gray-700">{{ $item->product->product_name }}</span>
-        </div>
-
-        <span class="text-gray-700">{{ $item->product->product_price }}</span>
-
-        <div x-data="{ quantity: {{ $item->quantity }} }" class="flex items-center border rounded">
-            <button @click="quantity = Math.max(1, quantity - 1)" class="px-3 py-1 text-gray-800 rounded-l">−</button>
-            <input type="number" x-model="quantity" min="1" class="w-16 p-1 text-center border-none">
-            <button @click="quantity++" class="px-3 py-1 text-gray-800 rounded-r">+</button>
-        </div>
-
-        <span class="text-gray-700 font-semibold">{{ $item->sub_total }}</span>
-
-        <!-- Trigger Delete Modal by Passing the cartItem ID -->
-        @livewire('user.modal.delete-selected-item', ['cartItemId' => $item->id], key($item->id))
-
-    </div>
-@endforeach
-
-
-
-
-                            <!-- Shop Subtotal -->
-                            <div class="text-right mt-3 text-sm font-semibold text-brown-800">
-                                Subtotal for {{ $group['shop']->shop_name }}: ₱{{ number_format($group['total'], 2) }}
-                            </div>
-                        </div>
-                    @endforeach
-                            <!-- Delete Selected Button -->
-                            
-                    <div class="text-right mt-4">
-                        <button type="button" @click="$wire.deleteItems(selected)" class="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600">Delete Selected Items</button>
-                    </div>
-            @endif
             <!-- Shipping Promo -->
-            <div class="flex items-center text-sm text-gray-600 mt-3">
+            <div class="flex items-center text-sm text-gray-600 mt-3 flex-wrap">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="mr-2">
                     <path d="M2 5h12v10H2z"/>
                 </svg>
                 <span>50% off shipping with min order of ₱299</span>
                 <a href="#" class="text-blue-500 ml-2">Learn more</a>
             </div>
-
-            @php
-                $grandTotal = collect($cartItems)->sum(function($item) {
-                    return $item->product->product_price * $item->quantity;
-                });
-            @endphp
-
-
-            <!-- Select All & Checkout -->
-            <div class="flex items-center justify-between bg-white p-3 rounded-lg mt-4 border">
-                <div class="flex items-center">
-                    <input type="checkbox" class="mr-2"
-                    :checked="selected.length === {{ collect($cartItems)->count() }}"
-                    @change="toggleSelectAll($event, {{ collect($cartItems)->pluck('id')->toJson() }})">
-                    
-                    <span>Select All  ({{ collect($cartItems)->count() }})</span>
-                </div>
-                <div class="text-lg font-semibold">
-                    Total ({{ collect($cartItems)->count() }}): <span class="text-brown-700">₱{{ number_format($grandTotal, 2) }}</span>
-                </div>
-                <button onclick="toggleModal(true)" class="px-6 py-2 bg-[#1E1E1E] text-white font-semibold rounded-lg shadow-md hover:bg-black">
-                    Check Out
-                </button>
-            </div>
         </div>
-    </div>
+
+        <!-- Select All & Checkout -->
+        <div class="flex flex-col sm:flex-row items-center justify-between bg-white p-3 rounded-lg mt-4 border gap-4">
+            <div class="flex items-center">
+                <input type="checkbox" class="mr-2">
+                <span>Select All (1)</span>
+            </div>
+            <div class="text-lg font-semibold">
+                Total (1 item): <span class="text-brown-700">₱100</span>
+            </div>
+            <button onclick="toggleModal(true)" class="px-6 py-2 bg-[#1E1E1E] text-white font-semibold rounded-lg shadow-md hover:bg-black">
+                Check Out
+            </button>
+        </div>
     </div>
 </div>
 
-
-
 <!-- Modal -->
 <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-    <div class="bg-white p-8 rounded-lg shadow-lg text-center relative">
+    <div class="bg-white p-8 rounded-lg shadow-lg text-center relative w-11/12 max-w-md">
         <button onclick="toggleModal(false)" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-xl">&times;</button>
         <h3 class="text-2xl font-bold text-[#4A2E0F] mb-6">Proceed to Checkout?</h3>
         <div class="flex justify-center gap-4">
-            
             <button onclick="toggleModal(false)" class="px-4 py-2 border border-[#4A2E0F] text-[#4A2E0F] rounded-md hover:bg-gray-100">
                 No
             </button>
-            <a href="{{ route('user.checkout') }}">
+            <a href="{{ route('checkout.page') }}">
                 <button class="px-4 py-2 bg-[#4A2E0F] text-white rounded-md hover:bg-[#3c2410]">
                     Yes
                 </button>
@@ -158,37 +98,8 @@
 <!-- Modal Script -->
 <script>
     function toggleModal(show) {
-        // Show or hide the modal based on the 'show' parameter for checkout
         const modal = document.getElementById('checkoutModal');
         modal.classList.toggle('hidden', !show);
     }
-
-    function cartComponent() {
-    return {
-        selected: [],
-        toggleSelectAll(event, shopItems) {
-            const check = event.target.checked;
-            shopItems.forEach(id => {
-                if (check && !this.selected.includes(id)) {
-                    this.selected.push(id);
-                } else if (!check) {
-                    this.selected = this.selected.filter(i => i !== id);
-                }
-            });
-        },
-        isSelected(id) {
-            return this.selected.includes(id);
-        },
-        toggleItem(id) {
-            if (this.selected.includes(id)) {
-                this.selected = this.selected.filter(i => i !== id);
-            } 
-            else {
-                this.selected.push(id);
-                }
-            }
-        };
-    }
 </script>
 @endsection
-
