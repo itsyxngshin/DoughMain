@@ -27,7 +27,7 @@
         </div>
 
         <!-- Loop through cart items -->
-        <div x-data="cartComponent()" class="space-y-4">
+        <div wire:ignore x-data="cartComponent()" x-init="init()" class="space-y-4">
             @if($groupedItems->isEmpty())
                 <p>Your cart is empty.</p>
             @else

@@ -6,56 +6,31 @@ use Livewire\Component;
 use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
+use App\Models\Order;
+use App\Models\OrderItem;
 
 class Checkout extends Component
 {
     public $cartItems = [];
     public $orderTotal = 0;
+    public $shippingFee = 0; // You can add shipping calculation later
 
     public function mount()
-{
-    $selectedIds = session('selected_cart_items', []);
-    
-    // Ensure we have a flat array
-    $selectedIds = Arr::flatten($selectedIds);
-    
-    $this->cartItems = CartItem::with('product')
-        ->whereIn('id', $selectedIds)
-        ->whereHas('cart', fn($q) => $q->where('user_id', Auth::id()))
-        ->get()
-        ->toArray();
-    if (empty($this->cartItems)) {
-        if (empty($this->cartItems)) {
-            session()->forget(['selected_cart_items', 'checkout_items']);
-            return redirect()->route('user.cart')->with('error', 'Your checkout session expired');
-        }
-
-    $this->calculateOrderTotal();
-    }
-}
-
-    public function loadCartItems()
     {
-        // Get selected item IDs from session
         $selectedIds = session('selected_cart_items', []);
-        
-        if (empty($selectedIds)) {
-            session()->flash('error', 'No items selected for checkout');
-            return redirect()->route('user.cart');
-        }
-
-        // Load items with product relationship
-        $items = CartItem::with('product')
+        // Debug session data
+        logger()->debug('Retrieved from session:', ['ids' => $selectedIds]);
+        $this->cartItems = CartItem::with('product')
             ->whereIn('id', $selectedIds)
             ->whereHas('cart', fn($q) => $q->where('user_id', Auth::id()))
-            ->get();
+            ->get()
+            ->toArray();
 
-        if ($items->isEmpty()) {
-            session()->flash('error', 'Invalid items selected');
-            return redirect()->route('user.cart');
+        if (empty($this->cartItems)) {
+            logger()->warning('Empty cart items redirecting to cart');
+            return redirect()->route('user.cart')->with('error', 'No items selected for checkout');
         }
 
-        $this->cartItems = $items;
         $this->calculateOrderTotal();
     }
 
@@ -63,7 +38,40 @@ class Checkout extends Component
     {
         $this->orderTotal = collect($this->cartItems)->sum(function($item) {
             return $item['product']['product_price'] * $item['quantity'];
-        });
+        }) + $this->shippingFee;
+    }
+
+    public function placeOrder()
+    {
+        // Create the order
+        $order = Order::create([
+            'user_id' => Auth::id(),
+            'total_amount' => $this->orderTotal,
+            'status' => 'pending',
+            'shipping_address' => Auth::user()->location->address,
+            'contact_number' => Auth::user()->phone_number
+        ]);
+
+        // Create order items
+        foreach ($this->cartItems as $item) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $item['product']['id'],
+                'quantity' => $item['quantity'],
+                'price' => $item['product']['product_price'],
+                'subtotal' => $item['product']['product_price'] * $item['quantity']
+            ]);
+        }
+
+        // Clear the cart items
+        CartItem::whereIn('id', collect($this->cartItems)->pluck('id'))->delete();
+
+        // Clear session
+        session()->forget('selected_cart_items');
+
+        // Redirect to order confirmation
+        return redirect()->route('user.orders.show', $order->id)
+            ->with('success', 'Order placed successfully!');
     }
 
     public function render()
@@ -72,5 +80,6 @@ class Checkout extends Component
             'cartItems' => $this->cartItems,
             'orderTotal' => $this->orderTotal
         ]);
+        
     }
 }

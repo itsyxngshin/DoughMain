@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use App\Models\Shop;
 use App\Models\Role;
+use App\Models\Cart; // Add this line to import the Cart model
 
 class AuthController extends Controller
 {
@@ -32,8 +33,12 @@ class AuthController extends Controller
         $user->nationality = $request->nationality;
         $user->location_id = 0;
         $user->role_id = 1;
-        $user->status_id = 1;
+        $user->user_status_id = 1;
         $user->save();
+
+        $cart = new Cart();
+        $cart->user_id = $user->id;
+        $cart->save();
 
         return view('livewire.auth.login')->with('success', 'Register successfully');
     }
@@ -64,9 +69,9 @@ class AuthController extends Controller
     $user->email = $request->email;
     $user->password = Hash::make($request->password);
     $user->nationality = $request->nationality;
-    $user->location_id = 0;
+    $user->location_id = 1;
     $user->role_id = 2; // assume 2 = Shop Owner
-    $user->status_id = 1; // assume 1 = Active
+    $user->user_status_id = 1; // assume 1 = Active
     $user->save();
 
     // Create the Shop linked to the User

@@ -6,7 +6,7 @@ use Livewire\Component;
 use App\Models\Cart;
 use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Arr;
 class ProceedToCheckoutModal extends Component
 {
     public $selectedItems = [];
@@ -36,13 +36,15 @@ class ProceedToCheckoutModal extends Component
     // Renamed from proceedToCheckout to proceed (or keep name and fix typo)
     public function proceed()
     {
+        // Add debug output
+        logger()->debug('Selected items before processing:', ['items' => $this->selectedItems]);
         if (empty($this->selectedItems)) {
             $this->dispatch('notify-error', message: 'Please select at least one item');
             return;
         }
     
         // Ensure we have a flat array of IDs
-        $selectedIds = $this->flattenArray($this->selectedItems);
+        $selectedIds = Arr::flatten($this->selectedItems);
     
         // Validate the IDs are numeric
         $selectedIds = array_filter($selectedIds, 'is_numeric');
@@ -51,7 +53,8 @@ class ProceedToCheckoutModal extends Component
             $this->dispatch('notify-error', message: 'Invalid items selected');
             return;
         }
-    
+        // Debug the final IDs being stored
+        logger()->debug('IDs being stored in session:', ['ids' => $selectedIds]);
         // Store in session
         session([
             'selected_cart_items' => $selectedIds,

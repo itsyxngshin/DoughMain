@@ -2,6 +2,12 @@
 
 @section('content')
 <div class="max-w-5xl mx-auto p-6">
+    <div class="debug-info bg-yellow-50 p-4 mb-4 rounded" wire:ignore>
+        <h4 class="font-bold">Debug Information:</h4>
+        <p>Cart Items Count: {{ count($cartItems) }}</p>
+        <pre>{{ json_encode($cartItems, JSON_PRETTY_PRINT) }}</pre>
+    </div>
+
     <div class="bg-white p-8 rounded-lg shadow-lg">
         <!-- Checkout Title -->
         <h2 class="text-2xl font-bold text-[#1E1E1E] flex items-center mb-4">
@@ -74,11 +80,15 @@
             <div class="text-right text-sm">
                 <p class="mt-2">
                     Items Subtotal:
+                    {{-- 
                     <span class="text-[#1E1E1E] font-semibold">
-                        ₱{{ number_format($orderTotal, 2) }}
+                       ₱{{ number_format($orderTotal - $shippingFee, 2) }}
                     </span>
+                    --}}
                 </p>
-                <p>Shipping Subtotal: <span class="text-[#1E1E1E] font-semibold">₱ -</span></p>
+                {{--
+                <p>Shipping Fee: <span class="text-[#1E1E1E] font-semibold">₱{{ number_format($shippingFee, 2) }}</span></p>
+                --}}
                 <p class="text-lg mt-1 font-bold text-[#1E1E1E]">
                     Total: ₱{{ number_format($orderTotal, 2) }}
                 </p>
@@ -87,14 +97,11 @@
 
         <!-- Buttons -->
         <div class="mt-6 flex justify-end space-x-3">
-            <button class="px-4 py-2 border border-gray-400 rounded-lg">Cancel</button>
-            <button class="px-6 py-2 bg-[#1E1E1E] text-white rounded-lg font-semibold hover:bg-black">Place Order</button>
-            {{--
-            <button wire:click="redirectToPaymongo"
+            <a href="{{ route('user.cart') }}" class="px-4 py-2 border border-gray-400 rounded-lg">Cancel</a>
+            <button wire:click="placeOrder" 
                 class="px-6 py-2 bg-[#1E1E1E] text-white rounded-lg font-semibold hover:bg-black">
                 Place Order
             </button>
-            --}}
         </div>
 
         <!-- Notice -->
