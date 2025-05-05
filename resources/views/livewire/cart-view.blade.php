@@ -1,8 +1,8 @@
 @extends('components.layouts.navbar')
 
 @section('content')
-<div class="pt-28 px-4 min-h-screen bg-gray-50"> <!-- Adjusted padding and background for contrast -->
-    <div class="container mx-auto max-w-6xl bg-white shadow-lg rounded-lg p-6">
+<div class="min-h-screen flex justify-center items-start mt-8">
+    <div class="w-full max-w-6xl bg-white shadow-lg rounded-lg p-6">
         <!-- Title -->
         <h2 class="text-2xl font-bold text-brown-700 flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="mr-2" fill="currentColor">
@@ -12,14 +12,22 @@
         </h2>
 
         <!-- Cart Header -->
-        <div class="mt-4 bg-white p-3 rounded-lg grid grid-cols-2 sm:grid-cols-4 text-sm font-semibold text-gray-600 border">
-            <span class="col-span-2">Unit Price</span>
-            <span>Quantity</span>
-            <span class="text-right">Total Price</span>
+        <div class="mt-4 bg-white p-3 rounded-lg overflow-x-auto border">
+            <table class="min-w-full text-sm text-black-600">
+                <thead class="bg-transparent font-semibold">
+                    <tr>
+                        <th class="px-4 py-2 text-left w-1/5">Items</th>
+                        <th class="px-4 py-2 text-left w-1/5">Unit Price</th>
+                        <th class="px-4 py-2 text-left w-1/5">Quantity</th>
+                        <th class="px-4 py-2 text-right w-1/4">Amount</th>
+                    </tr>
+                </thead>
+                
+            </table>
         </div>
 
         <!-- Loop through cart items -->
-        <div wire:ignore x-data="cartComponent()" x-init="init()" class="space-y-4">
+        <div x-data="cartComponent()" x-init="init()" class="space-y-4">
             @if($groupedItems->isEmpty())
                 <p>Your cart is empty.</p>
             @else
@@ -63,10 +71,10 @@
 
                                 <span class="text-gray-700">{{ $item->product->product_price }}</span>
 
-                                <div x-data="{ quantity: {{ $item->quantity }} }" class="flex items-center border rounded">
-                                    <button @click="quantity = Math.max(1, quantity - 1)" class="px-3 py-1 text-gray-800 rounded-l">−</button>
-                                    <input type="number" x-model="quantity" min="1" class="w-16 p-1 text-center border-none">
-                                    <button @click="quantity++" class="px-3 py-1 text-gray-800 rounded-r">+</button>
+                                <div wire:key="cart-item-{{ $item->id }}" x-data="cartQuantity({{ $item->quantity }}, {{ $item->id }})" class="flex items-center border rounded">
+                                    <button @click="decrease" class="px-3 py-1 text-gray-800 rounded-l">−</button>
+                                    <input type="number" x-model="quantity" @change="update" min="1" class="w-16 p-1 text-center border-none">
+                                    <button @click="increase" class="px-3 py-1 text-gray-800 rounded-r">+</button>
                                 </div>
 
                                 <span class="text-gray-700 font-semibold">{{ $item->sub_total }}</span>
@@ -86,17 +94,14 @@
                             </div>
                         </div>
                     @endforeach
-                            <!-- Delete Selected Button -->
                             
-                            <button type="button"
-                            @click="$wire.deleteItems(selected)"
-                            class="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600">
-                            Delete Selected Items
-                        </button>
+                            <!-- Delete Selected Button -->
+                            {{--@livewire('user.modal.delete-multiple-items') --}} 
+                            
 
             @endif
             <!-- Shipping Promo -->
-            <div class="flex items-center text-sm text-gray-600 mt-3 flex-wrap">
+            <div class="flex items-center text-sm text-gray-600 mt-3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="mr-2">
                     <path d="M2 5h12v10H2z"/>
                 </svg>
@@ -105,11 +110,10 @@
             </div>
 
             @php
-    $grandTotal = collect($cartItems)->sum(function($item) {
-        return $item->product ? $item->product->product_price * $item->quantity : 0;
-    });
-@endphp
-
+                $grandTotal = collect($cartItems)->sum(function($item) {
+                    return $item->product->product_price * $item->quantity;
+                });
+            @endphp
 
 
             <!-- Select All & Checkout -->
@@ -146,14 +150,15 @@
 <!-- Modal -->
 {{--
 <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-    <div class="bg-white p-8 rounded-lg shadow-lg text-center relative w-11/12 max-w-md">
+    <div class="bg-white p-8 rounded-lg shadow-lg text-center relative">
         <button onclick="toggleModal(false)" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-xl">&times;</button>
         <h3 class="text-2xl font-bold text-[#4A2E0F] mb-6">Proceed to Checkout?</h3>
         <div class="flex justify-center gap-4">
+            
             <button onclick="toggleModal(false)" class="px-4 py-2 border border-[#4A2E0F] text-[#4A2E0F] rounded-md hover:bg-gray-100">
                 No
             </button>
-            <a href="{{ route('checkout.page') }}">
+            <a href="{{ route('user.checkout') }}">
                 <button class="px-4 py-2 bg-[#4A2E0F] text-white rounded-md hover:bg-[#3c2410]">
                     Yes
                 </button>
@@ -167,8 +172,32 @@
 <!-- Modal Script -->
 <script>
     function toggleModal(show) {
+        // Show or hide the modal based on the 'show' parameter for checkout
         const modal = document.getElementById('checkoutModal');
         modal.classList.toggle('hidden', !show);
+    }
+
+    function cartQuantity(initialQuantity, cartItemId) {
+        return {
+            quantity: initialQuantity,
+            increase() {
+                this.quantity++;
+                this.update();
+            },
+            decrease() {
+                if (this.quantity > 1) {
+                    this.quantity--;
+                    this.update();
+                }
+            },
+            update() {
+                if (typeof $wire !== 'undefined') {
+                    $wire.updateQuantity(cartItemId, this.quantity);
+                } else {
+                    console.error('Livewire $wire is undefined.');
+                }
+            }
+        }
     }
 
 

@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\RedirectResponse;
 use App\Models\CartItem;
 
@@ -16,7 +17,7 @@ class CartView extends Component
     
     //Shows the cart and items in the cart
     public function render()
-{
+    {
     $user = Auth::user();
 
     $cartItems = $user->cart
@@ -45,9 +46,7 @@ class CartView extends Component
         'groupedItems' => $groupedItems,
         'cartItems' => $cartItems
     ]);
-}
-
-
+    }
     public function deleteItems($ids)
     {
         CartItem::whereIn('id', $ids)
@@ -59,32 +58,26 @@ class CartView extends Component
         $this->emitSelf('refreshComponent');
     }
 
-    public function increaseQuantity($id)
+    public function updateQuantity($cartItemId, $newQuantity)
     {
-        $item = CartItem::find($id);
-
-        if ($item && $item->cart->user_id === Auth::id()) {
-            $item->quantity += 1;
-            $item->save();
-        }
-
-        $this->emitSelf('refreshComponent');
+    $cartItem = CartItem::find($cartItemId);
+    if (!$cartItem) {
+        logger()->debug('Selected items before processing:', ['cartItemId' => $cartItemId]);
+        return;
     }
 
-    public function decreaseQuantity($id)
-    {
-        $item = CartItem::find($id);
+    if ($cartItem->cart->user_id !== Auth::id()) {
+        logger()->debug('Selected items before processing:', [
+            'cartItemId' => $cartItemId,
+            'userId' => Auth::id(),
+        ]);
+        return;
+    }
 
-        if ($item && $item->cart->user_id === Auth::id()) {
-            if ($item->quantity > 1) {
-                $item->quantity -= 1;
-                $item->save();
-            } else {
-                $item->delete(); // Optionally delete when quantity reaches 0 or 1
-            }
+    if ($cartItem && $cartItem->cart->user_id === Auth::id()) {
+        $cartItem->quantity = max(1, (int) $newQuantity);
+        $cartItem->save();
         }
-
-        $this->emitSelf('refreshComponent');
     }
     public function proceedToCheckout($selectedIds): RedirectResponse
     {
