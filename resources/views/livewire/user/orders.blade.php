@@ -53,7 +53,7 @@
                     <!-- Footer -->
         <footer class="px-6 py-4 border-t flex justify-between items-center text-sm text-gray-700">
             <div>
-                <span class="font-medium">Payment Method:</span> {{ $order->payment_method }}
+                <span class="font-medium">Payment Method:</span> {{-- $order->payment_method --}}
             </div>
             <div class="flex items-center space-x-4">
                 <span class="font-bold text-gray-900">Total: ₱{{ number_format($order->total_amount, 2) }}</span>

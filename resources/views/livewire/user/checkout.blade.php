@@ -73,9 +73,9 @@
                                     class="w-12 h-12 rounded mr-3 object-cover">
                                 <div>
                                     <div>{{ $item['product']['product_name'] }}</div>
-                                    <div class="text-xs text-gray-500">₱{{ number_format($item['product']['product_price'], 2) }} each</div>
                                 </div>
                             </td>
+                            <td class="p-3">₱{{ number_format($item['product']['product_price'], 2) }}</div>
                             <td class="p-3">{{ $item['quantity'] }}</td>
                             <td class="p-3">₱{{ number_format($item['product']['product_price'] * $item['quantity'], 2) }}</td>
                         </tr>
@@ -121,7 +121,7 @@
                 class="px-6 py-2 bg-[#1E1E1E] text-white rounded-lg font-semibold hover:bg-black">
                 Place Order
             </button>
-            @livewire('user.modal.place-order')
+            
         </div>
 
         <!-- Notice -->
@@ -129,5 +129,6 @@
             *Ensure you have carefully read and agreed to the terms and conditions before finalizing your order.
         </p>
     </div>
+    @livewire('user.modal.place-order')
 </div>
 @endsection

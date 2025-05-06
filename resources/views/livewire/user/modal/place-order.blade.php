@@ -3,12 +3,13 @@
         showModal: @entangle('show').defer 
     }"
     @open-modal.window="showModal = true"
->
+    {{--x-effect="document.body.classList.toggle('overflow-hidden', showModal)"
+--}}>
     <!-- Modal -->
     <div 
         x-show="showModal" 
         x-cloak 
-        class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+        class="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center"
     >
         <div class="bg-white p-8 rounded-lg shadow-lg text-center relative w-[90%] max-w-md">
             <!-- Close Button -->
