@@ -31,7 +31,7 @@
                 <div class="searchable-item bg-transparent hover:bg-gray-200 p-5 shadow-lg rounded-lg text-center transition-transform transform hover:scale-105 duration-300">
                     <img src="{{ asset('storage/' . $product->product_image) }}" 
                          alt="{{ $product->product_name }}" 
-                         class="w-40 mx-auto w-56 h-56 overflow-hidden">
+                         class=" mx-auto w-56 h-56 object-cover overflow-hidden">
                     
                     
                     <h4 class="font-semibold">{{ $product->product_name }}</h4>
@@ -56,7 +56,7 @@
             >✕</button>
 
             <!-- Product Info -->
-            <img :src="product.img" class="w-40 mx-auto mb-3">
+            <img :src="product.img" class="w-56 h-56 object-cover mx-auto mb-3">
             <h2 class="text-xl font-bold text-center" x-text="product.name"></h2>
             <p class="text-gray-600 text-center" x-text="product.desc"></p>
             <p class="text-gray-800 font-bold text-center" x-text="product.price"></p>

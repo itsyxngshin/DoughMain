@@ -27,7 +27,7 @@
 ">
 
         <div class="relative transition-transform transform hover:scale-105 duration-300 w-60 h-60 overflow-hidden">
-            <img src="{{ asset('storage/products/' . $product->product_image) }}" 
+            <img src="{{ asset('storage/' . $product->product_image) }}" 
                 alt="{{ $product->product_name }}" 
                 class="rounded-lg w-full h-full object-cover transition-transform transform hover:scale-110 duration-300">
             
@@ -55,7 +55,7 @@
             >✕</button>
 
             <!-- Product Info -->
-            <img :src="product.img" class="w-40 mx-auto mb-3">
+            <img :src="product.img" class="w-56 h-56 object-cover overflow-hidden mx-auto mb-3">
             <h2 class="text-xl font-bold text-center" x-text="product.name"></h2>
             <p class="text-gray-600 text-center" x-text="product.desc"></p>
             <p class="text-gray-800 font-bold text-center" x-text="product.price"></p>

@@ -32,13 +32,16 @@
                     <a href="#" @click.prevent="product = {
                             id: {{ $product->id }},
                             name: '{{ $product->product_name }}',
-                            img: '{{ asset('storage/products/' . $product->product_image) }}',
+                            img: '{{ asset('storage/' . $product->product_image) }}',
                             desc: '{{ $product->product_description }}',
                             price: '{{ $product->product_price }}',
                             quantity: 1
                         }; 
                         open = true;">
-                        <img src="{{ asset('storage/' . $product->product_image) }}" alt="{{ $product->product_name }}" class="w-40 mx-auto w-56 h-56 overflow-hidden">
+                        <div class="mx-auto w-56 h-56 overflow-hidden">
+                            <img src="{{ asset('storage/' . $product->product_image) }}" alt="{{ $product->product_name }}" class="mx-auto w-full h-full object-cover " >
+                        </div>
+                        
                     </a>
                     <h4 class="font-semibold">{{ $product->product_name }}</h4>
                     <p class="text-gray-500">{{ $product->product_description }}</p>

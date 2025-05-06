@@ -22,6 +22,8 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        Log::info($request->all());
+
         $validatedData = $request->validate([
             'username' => 'required|string|unique:users',
             'first_name' => 'required|string',
@@ -32,7 +34,7 @@ class AuthController extends Controller
             'nationality' => 'required|string',
         ]);
 
-        Log::info($request->all());
+        
 
         DB::transaction(function () use ($validatedData) {
             // Create user

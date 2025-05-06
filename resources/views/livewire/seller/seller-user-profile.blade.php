@@ -1,8 +1,8 @@
 @extends('components.layouts.navbar')
 
 @section('content')
-<div class="pt-24 px-4 h-screen flex justify-center overflow-hidden bg-gray-50">
-    <div class="scrollable-container bg-white shadow-lg rounded-2xl p-8 w-full max-w-4xl mb-10 max-h-screen overflow-y-auto">
+<div class="h-screen flex pt-20 justify-center overflow-hidden bg-gray-50">
+    <div class="scrollable-container mt-3 bg-white shadow-lg rounded p-8 w-full max-w-4xl mb-10 max-h-screen overflow-y-auto">
 
         <!-- Title -->
         <h2 class="text-3xl font-bold text-gray-800">Shop Manager</h2>
@@ -21,7 +21,7 @@
                     <label for="shopLogo" class="font-semibold">Upload Bakery Cover</label><br>
                     <div 
                         x-bind:class="dragging ? 'bg-gray-200' : 'bg-gray-50'"
-                        class="relative m-auto my-3 flex items-center justify-center rounded w-56 h-56 border-2 border-dashed border-gray-300 p-4 cursor-pointer"
+                        class=" m-auto my-3 flex items-center justify-center rounded w-56 h-56 border-2 border-dashed border-gray-300 p-4 cursor-pointer"
                         @click="$refs.fileInput.click()"
                         @dragover.prevent="dragging = true"
                         @dragleave.prevent="dragging = false"
@@ -42,7 +42,7 @@
 
                         <!-- Default Upload Content -->
                         <template x-if="!imagePreview">
-                            <div class="relative w-full h-full flex items-center justify-center text-center">
+                            <div class=" w-full h-full flex items-center justify-center text-center">
                                 @if ($shop->shopLogo && $shop->shopLogo->logo_path)
                                     <img src="{{ asset('storage/' . $shop->shopLogo->logo_path) }}"
                                         class="w-56 h-56 object-cover max-w-full max-h-full">
@@ -109,27 +109,27 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Region</label>
-                        <input type="text" value="{{ $shop->location->region ?? '' }}" value="{{$shop->location->region}}" name="region" class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400" id="region" >
+                        <input type="text" value="{{ $shop->location->region ?? '-' }}" name="region" class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400" id="region" >
                         
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Province</label>
-                        <input type="text" name="province" value="{{$shop->location->province}}" class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400" id="province" >
+                        <input type="text" name="province" value="{{$shop->location->province ?? '-'}}" class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400" id="province" >
                         
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">City/Municipality</label>
-                        <input type="text" name="city" value="{{$shop->location->city}}" class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400" id="city" >
+                        <input type="text" name="city" value="{{$shop->location->city ?? '-'}}" class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400" id="city" >
                             
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Barangay</label>
-                        <input type="text" name="barangay" value="{{$shop->location->barangay}}" class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400" id="barangay" >
+                        <input type="text" name="barangay" value="{{$shop->location->barangay ?? '-' }}" class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400" id="barangay" >
                        
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">House/Building/Street (optional)</label>
-                        <input type="text" value="{{$shop->location->street}}" class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400" name="street" id="street">
+                        <input type="text" value="{{$shop->location->street ?? '-'}}" class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400" name="street" id="street">
                     </div>
 
 

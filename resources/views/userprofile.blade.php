@@ -1,8 +1,8 @@
 @extends('components.layouts.navbar')
 
 @section('content')
-<div class="pt-24 px-4 h-screen flex justify-center bg-gray-100 overflow-hidden">
-    <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl mb-10 h-full"> <!-- Ensure full height -->
+<div class="h-screen flex pt-20 justify-center overflow-hidden bg-gray-50">
+<div class="scrollable-container mt-3 bg-white shadow-lg rounded p-8 w-full max-w-4xl mb-10 max-h-screen overflow-y-auto">
         <!-- Title -->
         <h2 class="text-3xl font-bold text-gray-800">Profile</h2>
         <p class="text-gray-600 mb-4">Manage your account</p>
@@ -90,7 +90,7 @@
                         <input type="password" name="current_password" id="current_password"
                                class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
                         <button type="button" onclick="togglePassword('current_password')" class="absolute top-9 right-3 text-gray-500">
-                            <img src="{{ asset('img/eye-icon.svg') }}" alt="Show">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"/></svg>
                         </button>
                     </div>
                     <div class="relative">
@@ -98,7 +98,7 @@
                         <input type="password" name="new_password" id="new_password"
                                class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
                         <button type="button" onclick="togglePassword('new_password')" class="absolute top-9 right-3 text-gray-500">
-                            <img src="{{ asset('img/eye-icon.svg') }}" alt="Show">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"/></svg>
                         </button>
                     </div>
                 </div>

@@ -12,7 +12,7 @@
 
         <!-- Bakery Banner with Review Section -->
         <div class="relative ">
-            <img src="{{ asset('storage/shop_logos/' . $bakery->shopLogo->logo_path) }}" alt="Bakery Display" class="w-full h-80 object-cover rounded-lg shadow-md">
+            <img src="{{ asset('storage/' . $bakery->shopLogo->logo_path) }}" alt="Bakery Display" class="w-full h-80 object-cover rounded-lg shadow-md">
             <div class="absolute inset-0 bg-black bg-opacity-30 rounded-lg"></div>
             <h1 class="absolute top-10 left-10 text-white text-4xl font-bold">{{ $bakery->shop_name}}</h1>
 

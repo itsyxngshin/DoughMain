@@ -180,8 +180,8 @@
                             <!-- Products Section -->
             <h2 class="text-2xl font-bold text-[#51331B] text-center">Products</h2>
             <div class="flex overflow-x-auto space-x-6 pb-4 justify-center">
-                @foreach ($products as $product)
-                    <div class="w-64 mb-6 flex-none">
+                @foreach ($products->take(10) as $product)
+                    <div class="w-64 mb-6 items-center flex-none">
                         @livewire('user.modal.view-product-from-homepage', ['productId' => $product->id], key($product->id))
                     </div>
                 @endforeach
@@ -190,9 +190,9 @@
 
                 <!-- Categories Section -->
                 <h2 class="text-2xl font-bold text-[#51331B] text-center">Categories</h2>
-                <div class="flex overflow-x-auto space-x-6 pb-4 justify-center">
+                <div class="flex space-x-6 pb-4 justify-center">
                     @foreach ($categories as $category)
-                        <div class="w-64 mb-6 flex-none">
+                        <div class="w-56 mb-6 flex-none">
                             <div class="relative bg-cover bg-center rounded-lg shadow-lg flex items-end pl-2 h-32 transition-transform transform hover:scale-105 duration-300"
                                 style="background-image: url('{{ asset('storage/category_photo/' . $category->category_photo) }}');">
                                 <a href="{{ route('category', ['id' => $category->id]) }}">
@@ -213,7 +213,7 @@
                         @if ($bakery->shopLogo)
                             <div class="w-64 mb-6 flex-none relative transition-transform transform hover:scale-105 duration-300">
                                 <a href="{{ route('shop.products', ['id' => $bakery->id]) }}">
-                                    <img src="{{ asset('storage/shop_logos/' . $bakery->shopLogo->logo_path) }}" class="rounded-lg w-full h-56 object-cover transition-transform transform hover:scale-110 duration-300">
+                                    <img src="{{ asset('storage/' . $bakery->shopLogo->logo_path) }}" class="rounded-lg w-full h-56 object-cover transition-transform transform hover:scale-110 duration-300">
                                     <div class="absolute inset-0 bg-gradient-to-t from-[#51331B]/70 to-transparent rounded-lg"></div> 
                                     <h3 class="absolute bottom-2 left-5 text-white font-semibold z-10">
                                         {{ $bakery->shop_name }}

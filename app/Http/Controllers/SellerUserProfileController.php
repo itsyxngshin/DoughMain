@@ -27,10 +27,10 @@ class SellerUserProfileController extends Controller
                 'last_name' => 'required|string|max:255', // last_name is required
                 'email' => 'required|email', // email is required
                 'phone_number' => 'required|string|max:20', // phone_number is required
-                'region' => 'required|string', // region is required
-                'province' => 'required|string', // province is required
-                'city' => 'required|string', // city is required
-                'barangay' => 'required|string', // barangay is required
+                'region' => 'nullable|string', // region is required
+                'province' => 'nullable|string', // province is required
+                'city' => 'nullable|string', // city is required
+                'barangay' => 'nullable|string', // barangay is required
                 'street' => 'nullable|string', // street is nullable
                 'current_password' => 'nullable|string', // current_password is nullable
                 'new_password' => 'nullable|string|min:8|confirmed', // new_password is nullable
