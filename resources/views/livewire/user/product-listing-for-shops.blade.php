@@ -1,63 +1,91 @@
 @extends('components.layouts.navbar')
 
 @section('content')
+<div class="flex flex-col items-center w-full px-4 md:px-8 pt-10">
 
-<div class="w-full px-5 "  >
-  <div class="w-full mx-auto mt-10 overflow-y-auto py-10 px-4">
+<style>
+    @media screen and (max-width: 768px) {
+        .h-80 {
+            height: 60vh;
+        }
 
-        <!-- Search Bar -->
-        
-        @livewire('user.search-products')
-            @livewire('user.modal.view-product-from-search')
+        .text-4xl {
+            font-size: 2.25rem;
+        }
 
-        <!-- Bakery Banner with Review Section -->
-        <div class="relative ">
-            <img src="{{ asset('storage/shop_logos/' . $bakery->shopLogo->logo_path) }}" alt="Bakery Display" class="w-full h-80 object-cover rounded-lg shadow-md">
-            <div class="absolute inset-0 bg-black bg-opacity-30 rounded-lg"></div>
-            <h1 class="absolute top-10 left-10 text-white text-4xl font-bold">{{ $bakery->shop_name}}</h1>
+        .px-5 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
 
-            <!-- Review Section with Transparent Background -->
-             <div>
-                
-             </div>
-            @livewire('user.modal.click-to-see-reviews', ['shopId' => $bakery->id])
+        .text-center {
+            text-align: center;
+        }
 
+        .text-xl {
+            font-size: 1.125rem;
+        }
+
+        .overflow-x-auto {
+            overflow-x: auto;
+        }
+
+        .w-64 {
+            width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .text-4xl {
+            font-size: 2rem;
+        }
+
+        .h-80 {
+            height: 50vh;
+        }
+
+        .text-xl {
+            font-size: 1rem;
+        }
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    .overflow-x-auto {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>
+
+<div class="w-full max-w-screen-xl overflow-y-auto">
+    @if($bakery->shopLogo)
+        <img src="{{ asset('storage/shop_logos/' . $bakery->shopLogo->logo_path) }}" alt="Bakery Display"
+            class="w-full h-80 sm:h-96 object-cover rounded-lg shadow-md">
+    @endif
+
+    <h1 class="text-center text-4xl sm:text-5xl font-semibold mt-10 italic">{{ $bakery->shop_name }}</h1>
+    <p class="text-gray-600 mb-4 mt-4 text-center text-lg sm:text-xl">{{ $bakery->shop_description }}</p>
+
+    <div class="w-full">
+        @foreach($categories as $category)
+            @php
+                $hasProducts = $bakery->products()
+                    ->where('category_id', $category->id)
+                    ->exists();
+            @endphp
+
+            @if($hasProducts)
+                @livewire('user.modal.view-shop-product', ['shopId' => $bakery->id, 'categoryId' => $category->id], key($bakery->id . '-' . $category->id))
+                <div class="my-10 text-center">
+                    <span class="inline-block text-gray-400 text-xl tracking-widest">&#10022;&#10022;&#10022;</span>
                 </div>
-
-                    <h1 class="text-center text-4xl font-semibold mt-10 italic">{{$bakery->shop_name}}</h1>
-                    <p class="text-gray-600 mb-4 mt-4 text-center">{{$bakery->shop_description}}</p>
-                    <div class="relative my-12">
-                <div class="border-t border-gray-300"></div>
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <span class="bg-white px-4 text-gray-500 text-sm tracking-wide uppercase">Our Selection</span>
-                </div>
-            </div>
-
-            <div class=" w-full">
-                @foreach($categories as $category)
-                    @php
-                        // Check if the bakery has products in the selected category
-                        $hasProducts = $bakery->products()
-                            ->where('category_id', $category->id)
-                            ->exists();
-                    @endphp
-
-                    @if($hasProducts)
-                        <!-- Only render Livewire component if the bakery has products in the selected category -->
-                        @livewire('user.modal.view-shop-product', ['shopId' => $bakery->id, 'categoryId' => $category->id], key($bakery->id . '-' . $category->id))
-                        <div class="my-10 text-center">
-                            <span class="inline-block text-gray-400 text-xl tracking-widest">&#10022;&#10022;&#10022;</span>
-                        </div>
-                    @endif
-                @endforeach
-            </div>
-        </div>
-
-    
+            @endif
+        @endforeach
+    </div>
 </div>
-
-
-
+</div>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     // Search Functionality
@@ -82,5 +110,4 @@ document.addEventListener("DOMContentLoaded", function () {
     
 });
 </script>
-
 @endsection

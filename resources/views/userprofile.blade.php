@@ -1,54 +1,34 @@
 @extends('components.layouts.navbar')
 
 @section('content')
-<div class="pt-24 px-4 h-screen flex justify-center bg-gray-100 overflow-hidden">
-    <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl mb-10 h-full"> <!-- Ensure full height -->
-        <!-- Title -->
-        <h2 class="text-3xl font-bold text-gray-800">Profile</h2>
-        <p class="text-gray-600 mb-4">Manage your account</p>
+<div class="pt-10 px-4 min-h-screen flex justify-center bg-gray-100">
+    <div class="bg-white shadow-lg rounded-lg p-10 w-full max-w-5xl mb-8"> <!-- Reduced margin-bottom here -->
+        <h2 class="text-3xl font-bold text-gray-800 mb-2">User Profile</h2>
+        <p class="text-gray-600 mb-6">Your account details</p>
         <hr class="mb-6">
 
-        <!-- Profile Form -->
-        <form id="profile-form" method="POST" action="{{ route('profile.update') }}" class="space-y-6">
-            @csrf
-            @method('PUT')
-
-            <div class="flex flex-col sm:flex-row items-center space-y-6 sm:space-y-0 sm:space-x-6">
+        <div class="space-y-6">
+            <div class="flex flex-col lg:flex-row items-center space-y-6 lg:space-y-0 lg:space-x-8">
                 <!-- Profile Picture -->
-                <div class="flex flex-col items-center">
-                    <div class="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center">
-                        <span class="text-gray-500">Image</span>
-                    </div>
-                    @can('admin') <!-- Replace 'admin' with the role or permission you want to check -->
-                        <button type="button" class="mt-2 px-4 py-1 bg-orange-300 text-white rounded-lg text-sm">Upload</button>
-                        <p class="text-xs text-gray-500 mt-1">File size: max 1MB, JPEG, PNG</p>
-                    @endcan
+                <div class="w-28 h-28 rounded-full bg-gray-300 flex items-center justify-center">
+                    <span class="text-gray-500">Image</span>
                 </div>
 
                 <!-- User Info -->
                 <div class="flex-1 space-y-4 w-full">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">First Name</label>
-                        <input type="text" name="first_name" value="{{ isset($user) ? $user->first_name: '' }}"
-                               class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
+                        <label class="block text-sm font-medium text-gray-700">Full Name</label>
+                        <p class="mt-1 text-gray-900">{{ isset($user) ? $user->first_name . ' ' . $user->last_name : 'N/A' }}</p>
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Last Name</label>
-                        <input type="text" name="last_name" value="{{ isset($user) ? $user->last_name: '' }}"
-                               class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Email</label>
-                            <input type="email" name="email" value="{{ isset($user) ? $user->email : '' }}"
-                                   class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
+                            <p class="mt-1 text-gray-900">{{ isset($user) ? $user->email : 'N/A' }}</p>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Phone Number</label>
-                            <input type="tel" name="phone" value="{{ isset($user) ? $user->phone_number : '' }}"
-                                   class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
+                            <label class="block text-sm font-medium text-gray-700">Phone</label>
+                            <p class="mt-1 text-gray-900">{{ isset($user) ? $user->phone_number : 'N/A' }}</p>
                         </div>
                     </div>
                 </div>
@@ -56,77 +36,35 @@
 
             <!-- Address Section -->
             <div>
-                <h3 class="text-lg font-semibold text-gray-700">Address (saved for delivery)</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+                <h3 class="text-lg font-semibold text-gray-700">Address</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">House/Building & Street</label>
-                        <input type="text" name="address" value="{{ isset($user) ? $user->address : '' }}"
-                               class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
+                        <label class="block text-sm font-medium text-gray-700">House/Street</label>
+                        <p class="mt-1 text-gray-900">{{ isset($user) ? $user->address : 'N/A' }}</p>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Barangay</label>
-                        <input type="text" name="barangay" value="{{ isset($user) ? $user->barangay : '' }}"
-                               class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
+                        <p class="mt-1 text-gray-900">{{ isset($user) ? $user->barangay : 'N/A' }}</p>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">City/Municipality</label>
-                        <input type="text" name="city" value="{{ isset($user) ? $user->city : '' }}"
-                               class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
+                        <label class="block text-sm font-medium text-gray-700">City</label>
+                        <p class="mt-1 text-gray-900">{{ isset($user) ? $user->city : 'N/A' }}</p>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Province</label>
-                        <input type="text" name="province" value="{{ isset($user) ? $user->province : '' }}"
-                               class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
+                        <p class="mt-1 text-gray-900">{{ isset($user) ? $user->province : 'N/A' }}</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Change Password Section -->
-            <div>
-                <h3 class="text-lg font-semibold text-gray-700">Change Password</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
-                    <div class="relative">
-                        <label class="block text-sm font-medium text-gray-700">Current Password</label>
-                        <input type="password" name="current_password" id="current_password"
-                               class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
-                        <button type="button" onclick="togglePassword('current_password')" class="absolute top-9 right-3 text-gray-500">
-                            <img src="{{ asset('img/eye-icon.svg') }}" alt="Show">
-                        </button>
-                    </div>
-                    <div class="relative">
-                        <label class="block text-sm font-medium text-gray-700">New Password</label>
-                        <input type="password" name="new_password" id="new_password"
-                               class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
-                        <button type="button" onclick="togglePassword('new_password')" class="absolute top-9 right-3 text-gray-500">
-                            <img src="{{ asset('img/eye-icon.svg') }}" alt="Show">
-                        </button>
-                    </div>
-                </div>
+            <!-- Edit Profile Button -->
+            <div class="flex justify-end mt-6">
+                <a href="{{ route('profile.edit') }}"
+                   class="px-10 py-3 bg-[#4A2E0F] text-white font-semibold rounded-lg shadow-md hover:bg-[#24190d]">
+                    Edit Profile
+                </a>
             </div>
-
-            <!-- Save Button -->
-            <div class="flex justify-end">
-                <button type="submit"
-                        class="px-6 py-2 bg-orange-400 text-white font-semibold rounded-lg shadow-md hover:bg-orange-500">
-                    Save
-                </button>
-            </div>
-        </form>
-
-        <!-- Success Message -->
-        @if(session('success'))
-            <div class="mt-4 p-3 bg-green-100 text-green-700 rounded-lg">
-                {{ session('success') }}
-            </div>
-        @endif
+        </div>
     </div>
 </div>
-
-<!-- Password Toggle Script -->
-<script>
-    function togglePassword(id) {
-        let input = document.getElementById(id);
-        input.type = input.type === "password" ? "text" : "password";
-    }
-</script>
 @endsection
