@@ -1,7 +1,7 @@
 @extends('components.layouts.seller')
 
 @section('content')
-<div> {{-- ✅ This is the required single root element --}}
+<div class="p-6 pt-20 mt-3" > {{-- ✅ This is the required single root element --}}
     <div x-data="{ search: '', selectedCategory: '' }"  class="top-0 left-0 w-full h-auto bg-white shadow-lg bg-cover bg-center bg-no-repeat items-center px-0">
         <div class="top-0 left-0 w-full h-[60px] bg-white border-b border-gray-200 bg-cover bg-center bg-no-repeat flex items-center px-6 rounded-t-xl">
             <h1 class="text-[#51331b] font-bold text-2xl px-3">{{ $shop->shop_name }}</h1>
@@ -10,34 +10,14 @@
         <h1 class="px-12 pt-6 font-bold text-[#51331b] text-3xl">Products</h1>
 
         <div class="flex items-center h-[50px] px-12 space-between gap-10 mt-2">
-            <!-- Dropdown for Items per Page -->
-            <div class="flex gap-2 items-center px-6">
-                <select name="contents" class="border border-[#51331b] px-2 py-1 rounded-md flex">
-                    <option value="1">5</option>
-                    <option value="2" selected>10</option>
-                    <option value="3">15</option>
-                    <option value="4">20</option>
-                </select>
-                <p class="text-sm text-gray-500">contents per page</p>
-            </div>
+            
 
             <!-- Search Bar -->
             <div class="flex">
-                <input type="text" x-model="search" placeholder="Search" class="pl-3 pr-3 py-1 text-sm border border-[#51331b] rounded-md">
+                <input type="text" x-model="search" placeholder="Search products..." class="pl-3 pr-3 py-1 text-sm border border-[#51331b] rounded-md">
             </div>
 
-            <!-- Dropdown for Categories -->
-             <div>
-                <div class="flex gap-2 items-center">
-                    <p class="text-sm text-gray-500">Category</p>
-                    <select name="category_id" class="border border-[#51331b] px-2 py-1 rounded-md flex" x-model="selectedCategory" >
-                        <option value="" selected>All</option>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-             </div>
+            
             
 
             <!-- Add Product Button -->

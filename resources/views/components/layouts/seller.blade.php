@@ -116,7 +116,7 @@
             </div>
 
             <!-- Main Content -->
-            <div class="flex-1 ml-64">
+            <div class="flex-1 m-auto ml-64">
                 @yield('content')
             </div>
         </div>

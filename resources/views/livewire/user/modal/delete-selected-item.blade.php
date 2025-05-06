@@ -9,13 +9,13 @@
 
       <!-- Modal -->
     <div x-show="open" x-cloak wire:ignore.self class="fixed inset-0 bg-gray-500 bg-opacity-50 z-40 flex items-center justify-center">
-        <div class="bg-white p-5 rounded shadow-md w-1/3 z-50">
+        <div class="bg-white p-8 rounded-lg shadow-lg text-center relative w-[90%] max-w-md">
             <p>Are you sure you want to delete this product?</p>
-            <div class="mt-4 flex justify-end gap-2">
-                <button @click="open = false" class="bg-gray-300 px-4 py-2 rounded">Cancel</button>
+            <div class="mt-4 flex justify-center gap-2">
+                <button @click="open = false" class="px-4 py-2 border border-[#4A2E0F] text-[#4A2E0F] rounded-md hover:bg-gray-100">Cancel</button>
                 <button wire:click="deleteCartItem"  
                 @click="open = false; setTimeout(() => { window.location.href = '{{ route('user.cart') }}'; }, 500);" 
-                class="bg-red-500 text-white px-4 py-2 rounded">
+                class="px-4 py-2 bg-[#4A2E0F] text-white rounded-md hover:bg-[#3c2410]">
                 Delete Product</button>
             </div>
         </div>

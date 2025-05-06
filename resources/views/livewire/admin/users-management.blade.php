@@ -31,6 +31,7 @@
                                 <th class="p-2 font-semibold">User ID</th>
                                 <th class="p-2 font-semibold">Username</th>
                                 <th class="p-2 font-semibold">Full Name</th>
+                                <th class="p-2 font-semibold">Role</th>
                                 <th class="p-2 font-semibold">Started since</th>
                                 <th class="p-2 font-semibold"> </th>
                             </tr>
@@ -51,6 +52,7 @@
                                 <td class="p-2">{{$user->id}}</td>
                                 <td class="p-2">{{$user->username}}</td>
                                 <td class="p-2">{{$user->first_name}} {{$user->last_name}}</td>
+                                <td class="p-2">{{$user->role->role_name}}</td>
                                 <td class="p-2">{{$user->created_at}}</td>
                                 <td class="p-2">
                                 @livewire('admin.modal.view-user', ['userId' => $user->id], key($user->id))

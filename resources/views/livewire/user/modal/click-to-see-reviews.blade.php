@@ -22,7 +22,7 @@
 
             <span class="font-semibold text-[#51331b] ml-2">{{ $averageRating }}/5</span>
         </div>
-        <p class="text-black text-xs">Click to see reviews</p>
+        <p class="text-yellow-500 text-xs">Click to see reviews</p>
     </div>
 </button>
 

@@ -150,6 +150,23 @@
   }
   
     </style>
+    <style>
+        .scrollable-container::-webkit-scrollbar {
+        width: 6px;
+        }
+        .scrollable-container::-webkit-scrollbar-thumb {
+        background-color:rgba(193, 193, 193, 0); /* Tailwind's orange-500 */
+        border-radius: 10px;
+        }
+        .scrollable-container::-webkit-scrollbar-track {
+        background-color:rgba(243, 244, 246, 0); /* Tailwind's gray-100 */
+        }
+
+        .scrollable-container {
+        scrollbar-width: thin;
+        scrollbar-color:rgba(218, 216, 216, 0.39) #f3f4f6;
+        }
+        </style>
     @livewireStyles
 </head>
 
