@@ -1,8 +1,8 @@
 @extends('components.layouts.navbar')
 
 @section('content')
-<div class="min-h-screen flex justify-center items-start mt-8">
-    <div class="w-full max-w-6xl bg-white shadow-lg rounded-lg p-6">
+<div class="min-h-screen flex justify-center items-start pt-12 px-2">
+    <div class="w-full max-w-6xl mt-10 bg-white shadow-lg rounded-lg p-3">
         <!-- Title -->
         <h2 class="text-2xl font-bold text-brown-700 flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="mr-2" fill="currentColor">

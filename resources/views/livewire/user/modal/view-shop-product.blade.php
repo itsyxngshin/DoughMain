@@ -32,7 +32,7 @@
                     <a href="#" @click.prevent="product = {
                             id: {{ $product->id }},
                             name: '{{ $product->product_name }}',
-                            img: '{{ asset('storage/' . $product->product_image) }}',
+                            img: '{{ asset('storage/products/' . $product->product_image) }}',
                             desc: '{{ $product->product_description }}',
                             price: '{{ $product->product_price }}',
                             quantity: 1

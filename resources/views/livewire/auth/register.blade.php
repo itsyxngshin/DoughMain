@@ -115,7 +115,7 @@
             </div>
             <div>
                 <label class="block text-gray-700 font-medium">Confirm Password</label>
-                <input type="password" name="confirm-password" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Confirm your password" required>
+                <input type="password" name="password_confirmation" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Confirm your password" required>
             </div>
             <button type="submit" class="w-full bg-gray-800 text-white py-2 rounded-md hover:bg-gray-700">Register as Seller</button>
         </form>

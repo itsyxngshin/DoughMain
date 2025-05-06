@@ -27,7 +27,7 @@
 ">
 
         <div class="relative transition-transform transform hover:scale-105 duration-300 w-60 h-60 overflow-hidden">
-            <img src="{{ asset('storage/' . $product->product_image) }}" 
+            <img src="{{ asset('storage/products/' . $product->product_image) }}" 
                 alt="{{ $product->product_name }}" 
                 class="rounded-lg w-full h-full object-cover transition-transform transform hover:scale-110 duration-300">
             

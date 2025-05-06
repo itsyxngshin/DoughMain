@@ -18,9 +18,9 @@
             <div class="relative w-full max-w-full h-64 sm:h-80 md:h-96 rounded-lg overflow-hidden shadow-lg">
                 <div id="slideshow" class="relative h-full">
                     <!-- Slides -->
-                    <div class="absolute inset-0 opacity-100 transition-opacity duration-700 ease-in-out" data-slide="0" style="background-image: url('https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center;"></div>
-                    <div class="absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out" data-slide="1" style="background-image: url('https://images.pexels.com/photos/414648/pexels-photo-414648.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center;"></div>
-                    <div class="absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out" data-slide="2" style="background-image: url('https://images.pexels.com/photos/461430/pexels-photo-461430.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center;"></div>
+                    <div class="absolute inset-0 opacity-100 transition-opacity duration-700 ease-in-out" data-slide="0" style="background-image: url('/storage/bakery1.jpg'); background-size: cover; background-position: center;"></div>
+                    <div class="absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out" data-slide="1" style="background-image: url('/storage/bakery3.jpg'); background-size: cover; background-position: center;"></div>
+                    <div class="absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out" data-slide="2" style="background-image: url('/storage/bakery4.jpg'); background-size: cover; background-position: center;"></div>
 
                     <!-- Overlay -->
                     <div class="absolute inset-0 bg-[#51331B]/50 flex flex-col justify-center items-center text-white px-4">
@@ -194,7 +194,7 @@
                     @foreach ($categories as $category)
                         <div class="w-64 mb-6 flex-none">
                             <div class="relative bg-cover bg-center rounded-lg shadow-lg flex items-end pl-2 h-32 transition-transform transform hover:scale-105 duration-300"
-                                style="background-image: url('{{ asset('storage/' . $category->category_photo) }}');">
+                                style="background-image: url('{{ asset('storage/category_photo/' . $category->category_photo) }}');">
                                 <a href="{{ route('category', ['id' => $category->id]) }}">
                                     <div class="absolute inset-0 bg-gradient-to-t from-[#51331B]/70 to-transparent rounded-lg"></div>
                                     <h3 class="absolute bottom-2 left-5 text-white font-semibold z-10">

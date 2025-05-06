@@ -1,8 +1,8 @@
 @extends('components.layouts.navbar')
 
 @section('content')
-<div class="w-full h-screen">
-    <div class="max-w-6xl mt-16 h-screen mx-auto py-10 px-4">
+<div class="w-full h-screen p-6">
+    <div class="max-w-6xl mt-10 h-screen mx-auto py-10 px-4">
             
 
         <h2 class="text-3xl font-bold mb-8 flex items-center text-[#51331b]">

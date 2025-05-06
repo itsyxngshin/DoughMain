@@ -8,12 +8,14 @@ class Location extends Model
 {
     protected $table = 'locations';
     protected $fillable = [
-        'location_name',
-        'address',
+        'region',
         'city',
-        'state',
-        'zip_code',
-        'country',
+        'province',
+        'barangay',
+        'street',
+        'landmark',
+        'longitude',
+        'latitude',
     ];
 
     public function user()
@@ -21,8 +23,9 @@ class Location extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
     public function shop()
-    {
-        return $this->belongsTo(Shop::class, 'shop_id', 'id');
-    }
+{
+    return $this->hasOne(Shop::class, 'shop_address_id');
+}
+
 
 }

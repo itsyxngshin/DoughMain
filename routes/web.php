@@ -46,6 +46,8 @@ use App\Livewire\Seller\Chat;
 use App\Livewire\Seller\Dashboard;
 use App\Livewire\Seller\OrderManagement;
 use App\Livewire\Seller\UpdateProduct;
+use App\Livewire\Seller\SellerUserProfile;
+use App\Http\Controllers\SellerUserProfileController;
 use App\Http\Controllers\AddProductController;
 use App\Http\Controllers\UpdateProductController;
 
@@ -148,10 +150,19 @@ Route::middleware(['auth', 'role:seller'])->group(function () {
             Route::put('/products/{id}', [UpdateProductController::class, 'update'])->name('products.update');
         // ORDER MANAGEMENT
         Route::get('seller/orders', OrderManagement::class)->name('ordermanagement');
-        // CHAT FOR SELLERS
+        /* CHAT FOR SELLERS
         Route::get('/chat', function () {
             return view('livewire.seller.chat'); 
-        })->name('sellerchat');
+        })->name('sellerchat'); */
+
+        // USER PROFILE FOR SELLERS
+        Route::get('/SellerProfile', SellerUserProfile::class)->name('sellerprofile');
+        Route::put('/shop/{id}', [SellerUserProfileController::class, 'update'])->name('shop.update');
+
+
+
+        
+        //Route::get('/sellerprofile', SellerUserProfileController::class)->name('sellerprofile.update');
 
         // LOGOUT FOR SELLER
         Route::post('/logout', [AuthController::class, 'logout'])->name('sellerlogout');

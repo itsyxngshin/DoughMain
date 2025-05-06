@@ -98,8 +98,11 @@ class AuthController extends Controller
         $shop = Shop::create([
             'manage_id' => $user->id,
             'shop_name' => $validated['shop_name'],
+            'shop_address_id' => $user->location_id,
             // Add other default shop fields as needed
         ]);
+
+        
 
         // Create cart for the user
         Cart::create([

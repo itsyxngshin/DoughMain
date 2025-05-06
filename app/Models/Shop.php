@@ -9,10 +9,10 @@ class Shop extends Model
     protected $table = 'shops';
     protected $fillable = [
         'shop_name',
-        'location',
+        'shop_address_id',
         'manage_id',
-        'contact_number',
-        'email_address',
+        'shop_logo_id',
+        'shop_description',
     ];
 
     /*public function owner()
@@ -40,6 +40,16 @@ class Shop extends Model
     {
         return $this->hasMany(Payment::class);
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'manage_id'); // 'manage_id' references the 'id' in the 'users' table
+    }
+    public function location()
+{
+    return $this->belongsTo(Location::class, 'shop_address_id');  // Make sure it's using the correct foreign key
+}
+
+
     
     
 }
