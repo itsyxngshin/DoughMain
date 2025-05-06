@@ -95,7 +95,7 @@ class Checkout extends Component
         return view('livewire.user.checkout', [
             'cartItems' => $this->cartItems,
             'orderTotal' => $this->orderTotal
-        ])->with('layout', 'components.layouts.navbar');
+        ])->layout('components.layouts.navbar');
         
     }
 }
