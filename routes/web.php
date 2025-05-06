@@ -69,10 +69,6 @@ use App\Livewire\Admin\AdminChat;
 use App\Http\Controllers\Auth\ForgotPasswordController; // <--- Added this line
 
 
-
-
-
-
 Route::middleware('guest')->group(function () {
     // Show the login form
     Route::get('/register', [AuthController::class, 'registerView'])->name('register');
@@ -110,8 +106,8 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     //BASIC LOG-OUT
     Route::post('/logout', [AuthController::class, 'logout'])->name('userlogout');
     Route::prefix('user')->group(function () {
-        Route::get('/payment', [PaymentChannel::class, ])->name('user.payments');
-        Route::get('/payment/submit', [PaymentChannel::class, ])->name('payment. submit');
+        Route::get('/payment', [PaymentChannel::class, 'render'])->name('user.payments');
+        Route::get('/payment/submit', [PaymentChannel::class, ])->name('payment.submit');
         Route::get('/myorders', Orders::class)->name('my.orders');
         //RENDER CART PAGE
        Route::get('/cart', [CartView::class, 'render'])->name('user.cart');

@@ -23,6 +23,7 @@ class AccessMiddleware
         // Assuming you have a role relationship or column
         $user = Auth::user();
         
+        
         if ($user->role->role_name !== $role) {
             return abort(403, 'Unauthorized access.');
         }

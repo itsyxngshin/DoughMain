@@ -15,7 +15,7 @@
         </div>
 
         <!-- Form Starts -->
-        <form action="{{ route('payment.submit') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
+        <form action="{{-- route('payment.submit') --}}" method="POST" enctype="multipart/form-data" class="space-y-5">
             @csrf
 
             <!-- Reference Number -->
