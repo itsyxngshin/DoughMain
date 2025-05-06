@@ -19,7 +19,6 @@ class OrderSeeder extends Seeder
        $orders = [
         [
             'user_id' => 1, // Assuming user with ID 1 exists
-            'shop_id' => 1, // Assuming shop with ID 1 exists
             'total_amount' => 500.00,
             'status' => 'Pending',
             'payment_method' => 'Online Banking',
@@ -29,7 +28,6 @@ class OrderSeeder extends Seeder
         ],
         [
             'user_id' => 2,
-            'shop_id' => 2,
             'total_amount' => 200.00,
             'status' => 'Completed',
             'payment_method' => 'On-Pickup',
@@ -39,7 +37,6 @@ class OrderSeeder extends Seeder
         ],
         [
             'user_id' => 3,
-            'shop_id' => 3,
             'total_amount' => 150.00,
             'status' => 'Cancelled',
             'payment_method' => 'Online Banking',
@@ -49,7 +46,6 @@ class OrderSeeder extends Seeder
         ],
         [
             'user_id' => 1,
-            'shop_id' => 1,
             'total_amount' => 800.00,
             'status' => 'Out For Delivery',
             'payment_method' => 'On-Pickup',
@@ -59,7 +55,6 @@ class OrderSeeder extends Seeder
         ],
         [
             'user_id' => 2,
-            'shop_id' => 2,
             'total_amount' => 1200.00,
             'status' => 'Completed',
             'payment_method' => 'Online Banking',

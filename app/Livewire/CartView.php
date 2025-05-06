@@ -82,7 +82,8 @@ class CartView extends Component
     public function proceedToCheckout($selectedIds): RedirectResponse
     {
         // Validate the selected items belong to the user
-        $validIds = CartItem::whereIn('id', $selectedIds)
+        $validIds = CartItem::with('product.shop')
+            ->whereIn('id', $selectedIds)
             ->whereHas('cart', fn ($q) => $q->where('user_id', Auth::id()))
             ->pluck('id')
             ->toArray();

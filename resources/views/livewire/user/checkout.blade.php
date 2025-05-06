@@ -59,17 +59,27 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($cartItems as $item)
-                    <tr class="border-t">
-                        <td class="p-3 flex items-center">
-                            <img src="{{ asset('storage/'.$item['product']['product_image']) }}" 
-                                class="w-12 h-12 rounded mr-3 object-cover">
-                            {{ $item['product']['product_name'] }}
+                @forelse ($cartItems as $storeName => $items)
+                    <tr>
+                        <td colspan="4" class="bg-gray-100 p-3 font-bold text-[#4A2E0F]">
+                            {{ $storeName }}
                         </td>
-                        <td class="p-3">₱{{ number_format($item['product']['product_price'], 2) }}</td>
-                        <td class="p-3">{{ $item['quantity'] }}</td>
-                        <td class="p-3">₱{{ number_format($item['product']['product_price'] * $item['quantity'], 2) }}</td>
                     </tr>
+
+                    @foreach ($items as $item)
+                        <tr class="border-t">
+                            <td class="p-3 flex items-center">
+                                <img src="{{ asset('storage/'.$item['product']['product_image']) }}" 
+                                    class="w-12 h-12 rounded mr-3 object-cover">
+                                <div>
+                                    <div>{{ $item['product']['product_name'] }}</div>
+                                    <div class="text-xs text-gray-500">₱{{ number_format($item['product']['product_price'], 2) }} each</div>
+                                </div>
+                            </td>
+                            <td class="p-3">{{ $item['quantity'] }}</td>
+                            <td class="p-3">₱{{ number_format($item['product']['product_price'] * $item['quantity'], 2) }}</td>
+                        </tr>
+                    @endforeach
                 @empty
                     <tr>
                         <td colspan="4" class="p-3 text-center text-gray-500">
@@ -105,10 +115,13 @@
         <!-- Buttons -->
         <div class="mt-6 flex justify-end space-x-3">
             <a href="{{ route('user.cart') }}" class="px-4 py-2 border border-gray-400 rounded-lg">Cancel</a>
-            <button wire:click="placeOrder" 
+            <button 
+                x-data 
+                @click="$dispatch('open-modal')" 
                 class="px-6 py-2 bg-[#1E1E1E] text-white rounded-lg font-semibold hover:bg-black">
                 Place Order
             </button>
+            @livewire('user.modal.place-order')
         </div>
 
         <!-- Notice -->
