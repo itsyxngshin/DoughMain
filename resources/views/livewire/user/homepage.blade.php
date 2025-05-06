@@ -168,7 +168,8 @@
     </style>
 
     <!-- Main Content -->
-    <main class="w-full max-w-screen-xl p-8 overflow-y-auto" style="max-height: calc(100vh - 4rem);">
+    <main class="w-full max-w-screen-xl pl-3 pr-3">
+
         @livewire('user.search-products')
         @livewire('user.modal.view-product-from-search')
 
@@ -177,13 +178,20 @@
             <div class="relative w-full max-w-full h-64 sm:h-80 md:h-96 rounded-lg overflow-hidden shadow-lg">
                 <div id="slideshow" class="relative h-full">
                     <!-- Slides -->
-                    <div class="absolute inset-0 opacity-100 transition-opacity duration-700 ease-in-out" data-slide="0" style="background-image: url('https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center;"></div>
-                    <div class="absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out" data-slide="1" style="background-image: url('https://images.pexels.com/photos/414648/pexels-photo-414648.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center;"></div>
-                    <div class="absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out" data-slide="2" style="background-image: url('https://images.pexels.com/photos/461430/pexels-photo-461430.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center;"></div>
+                    <div class="absolute inset-0 opacity-100 transition-opacity duration-700 ease-in-out" data-slide="0"
+     style="background-image: url('https://images.pexels.com/photos/16382886/pexels-photo-16382886.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center;">
+</div>
+<div class="absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out" data-slide="1"
+     style="background-image: url('https://images.pexels.com/photos/3026809/pexels-photo-3026809.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center;">
+</div>
+<div class="absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out" data-slide="2"
+     style="background-image: url('https://images.pexels.com/photos/2696064/pexels-photo-2696064.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center;">
+</div>
+
 
                     <!-- Overlay -->
                     <div class="absolute inset-0 bg-[#51331B]/50 flex flex-col justify-center items-center text-white px-4">
-                        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 drop-shadow-lg">Featured Products</h2>
+                        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 drop-shadow-lg">Welcome!</h2>
                         <p class="text-lg sm:text-xl md:text-2xl drop-shadow-md max-w-2xl text-center px-4">Discover our exclusive collection of delicious pastries and baked goods.</p>
                     </div>
 
