@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ModeOfPayment;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,6 +17,7 @@ class DatabaseSeeder extends Seeder
     // Ensure necessary data is seeded in the right order
     $this->call([
         LocationSeeder::class,
+        ModeOfPaymentSeeder::class,
         RoleSeeder::class,
         UserStatusSeeder::class,
         UserSeeder::class,

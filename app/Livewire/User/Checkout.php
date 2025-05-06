@@ -21,12 +21,12 @@ class Checkout extends Component
         $selectedIds = session('selected_cart_items', []);
 
         // Load cart items (with product info)
-        $this->cartItems = CartItem::with('product')
+        $this->cartItems = CartItem::with('product.shop')
             ->whereIn('id', $selectedIds)
             ->whereHas('cart', fn($q) => $q->where('user_id', Auth::id()))
             ->get()
+            ->groupBy(fn($item) => optional($item->product->shop)->shop_name ?? 'Unknown Shop')
             ->toArray();
-
         // Redirect if no items are selected
         if (empty($this->cartItems)) {
             return redirect()->route('user.cart')->with('error', 'No items selected for checkout.');
@@ -38,9 +38,23 @@ class Checkout extends Component
 
     protected function calculateOrderTotal()
     {
-        $this->orderTotal = collect($this->cartItems)->sum(function($item) {
+        $this->orderTotal = collect($this->cartItems)->flatten(1)->sum(function($item) {
             return $item['product']['product_price'] * $item['quantity'];
         }) + $this->shippingFee;
+    }
+
+    public function placeOrderHere($selectedIds) 
+    {
+        // Add debug output
+        
+        // Get the IDs of selected items (assuming $this->selectedItems is already validated)
+        $selectedIds = collect($this->cartItems)->pluck('id')->toArray();
+        logger()->debug('Selected items before processing:', ['selected_cart_items' => $selectedIds]);
+        // Store in session (to be retrieved in the Checkout component)
+        session(['selected_cart_items' => $selectedIds]);
+
+        // Redirect to checkout
+        return redirect()->route('user.payments'); 
     }
 
     public function placeOrder()

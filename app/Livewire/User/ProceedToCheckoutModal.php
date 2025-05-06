@@ -17,7 +17,7 @@ class ProceedToCheckoutModal extends Component
     public function prepareCheckout($items)
     {
         // Validate items belong to current user
-        $this->selectedItems = CartItem::with('product:id,product_name') // Only load what you need
+        $this->selectedItems = CartItem::with('product.shop')
         ->whereIn('id', $items)
         ->whereHas('cart', fn($q) => $q->where('user_id', Auth::id()))
         ->get()
@@ -25,7 +25,9 @@ class ProceedToCheckoutModal extends Component
             return [
                 'id' => $item->id,
                 'name' => $item->product->product_name,
-                'qty' => $item->quantity
+                'qty' => $item->quantity,
+                'shop' => $item->product->shop->shop_name ?? 'N/A',
+
             ];
         })
         ->toArray();
@@ -40,10 +42,9 @@ class ProceedToCheckoutModal extends Component
         
         // Get the IDs of selected items (assuming $this->selectedItems is already validated)
         $selectedIds = collect($this->selectedItems)->pluck('id')->toArray();
-        logger()->debug('Selected items before processing:', ['selected_cart_items' => $selectedIds]);
         // Store in session (to be retrieved in the Checkout component)
         session(['selected_cart_items' => $selectedIds]);
-
+        //dd('Order placed with items:', $this->select); 
         // Redirect to checkout
         return redirect()->route('user.checkout'); 
     }

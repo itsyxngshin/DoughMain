@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->foreignId('order_id')->index();
-            $table->foreignId('product_id')->index();
+            $table->foreignId('order_id');
+            $table->foreignId('shop_id')->nullable();
+            $table->foreignId('product_id');
             # $table->foreignId('shop_id')->index();
             $table->integer('quantity');
             $table->decimal('price', 10, 2);

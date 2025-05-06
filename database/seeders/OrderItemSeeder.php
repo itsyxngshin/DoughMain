@@ -20,6 +20,7 @@ class OrderItemSeeder extends Seeder
             [
                 'order_id' => 1, // Assuming order with ID 1 exists
                 'product_id' => 1, // Assuming product with ID 1 exists
+                'shop_id' => 1, // Assuming shop with ID 1 exists
                 'quantity' => 2,
                 'price' => 100.00,
                 'subtotal' => 200.00,
@@ -27,6 +28,7 @@ class OrderItemSeeder extends Seeder
             [
                 'order_id' => 2,
                 'product_id' => 2,
+                'shop_id' => 2,
                 'quantity' => 1,
                 'price' => 200.00,
                 'subtotal' => 200.00,
@@ -34,6 +36,7 @@ class OrderItemSeeder extends Seeder
             [
                 'order_id' => 3,
                 'product_id' => 3,
+                'shop_id' => 3,
                 'quantity' => 3,
                 'price' => 50.00,
                 'subtotal' => 150.00,
@@ -41,6 +44,7 @@ class OrderItemSeeder extends Seeder
             [
                 'order_id' => 4,
                 'product_id' => 4,
+                'shop_id' => 1,
                 'quantity' => 4,
                 'price' => 200.00,
                 'subtotal' => 800.00,
@@ -48,6 +52,7 @@ class OrderItemSeeder extends Seeder
             [
                 'order_id' => 5,
                 'product_id' => 5,
+                'shop_id' => 2,
                 'quantity' => 5,
                 'price' => 240.00,
                 'subtotal' => 1200.00,

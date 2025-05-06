@@ -1,78 +1,84 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\User\Modal;
 
 use Livewire\Component;
-use App\Models\CartItem; // Ensure this is the correct namespace for CartItem
+use App\Models\ModeOfPayment;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Payment; // Ensure this is the correct namespace for Payment
-use App\Models\Order; // Ensure this is the correct namespace for Order
-use Livewire\WithFileUploads; // Import the WithFileUploads trait
-use App\Models\ModeOfPayment; // Ensure this is the correct namespace for ModeOfPayment
-use Illuminate\Support\Facades\DB; // Import the DB facade
-use App\Models\OrderItem; // Ensure this is the correct namespace for OrderItem
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Payment;
+use App\Models\Cart;
+use App\Models\CartItem;
+use Livewire\WithDispatchesBrowserEvents; 
+// Removed WithDispatchesBrowserEvents as it does not exist
 
-class PaymentChannel extends Component
-{      
+class OrderProcess extends Component
+{   
     public $cartItems = [];
     public $orderTotal = 0;
     public $paymentMethods = [];
     public $selectedPaymentMethod;
     public $reference;
     public $screenshot;
+    public $deliveryAddress;
     
     use WithFileUploads;
+    use WithDispatchesBrowserEvents;
 
     // ...
 
-    protected $rules = [
-        'selectedPaymentMethod' => 'required|exists:mode_of_payments,id',
-        'reference' => 'required|string|max:255',
-        'screenshot' => 'required|image|max:2048', // Max 2MB
-    ];
 
     // In your Livewire component
     public function submitPayment()
     {
         $this->validate([
-            'mode_of_payment_id' => 'required|exists:mode_of_payments,id',
-            'reference' => 'required|string',
-            'screenshot' => 'required|image|max:2048',
+            'selectedPaymentMethod' => 'required',
+            'reference' => 'required|string|max:255',
+            'screenshot' => 'nullable|image|max:2048',
         ]);
 
+        // Validate the screenshot
         DB::beginTransaction();
 
         try {
-            $screenshotPath = $this->screenshot->store('payments', 'public');
+            $screenshotPath = $this->screenshot 
+            ? $this->screenshot->store('screenshots', 'public') 
+            : null;
 
             $order = Order::create([
                 'user_id' => Auth::id(),
-                'total' => $this->calculateCartTotal(),
+                'total_amount' => $this->orderTotal,
+                'delivery_address' => $this->deliveryAddress,
+                'date_arrangement' => now()->toDateString(), // For date (Y-m-d format)
+                'time_arrangement' => now()->toTimeString(), // For time (H:i:s format)
                 'status' => 'Pending',
             ]);
 
             foreach ($this->cartItems as $item) {
                 OrderItem::create([
                     'order_id' => $order->id,
-                    'product_id' => $item['product_id'],
-                    'shop_id' => $item['product']['shop_id'],
-                    'quantity' => $item['quantity'],
-                    'price' => $item['product']['product_price'],
-                    'sub_total' => $item['sub_total'],
+                    'product_id' => $item->product_id,
+                    'shop_id' => optional($item->product)->shop_id, // Now this will work
+                    'quantity' => $item->quantity,
+                    'price' => $item->product->product_price,
+                    'sub_total' => $item->product->product_price * $item->quantity,
                 ]);
             }
 
             Payment::create([
                 'user_id' => Auth::id(),
                 'order_id' => $order->id,
-                'mode_of_payment_id' => $this->mode_of_payment_id,
+                'payment_method_id' => $this->selectedPaymentMethod,
                 'status' => 'completed',
                 'reference_number' => $this->reference,
                 'screenshot_path' => $screenshotPath,
                 'paid_at' => now(),
             ]);
 
-            Cart::where('user_id', Auth::id())->delete();
+            CartItem::whereHas('cart', fn($q) => $q->where('user_id', Auth::id()))->delete();
 
             DB::commit();
 
@@ -82,6 +88,7 @@ class PaymentChannel extends Component
         } 
         catch (\Exception $e) {
             DB::rollBack();
+            dd('Order processing failed', ['error' => $e->getMessage()]);
             $this->addError('general', 'Something went wrong. Please try again.');
         }
     }
@@ -95,8 +102,7 @@ class PaymentChannel extends Component
         $this->cartItems = CartItem::with('product.shop')
             ->whereIn('id', $selectedIds)
             ->whereHas('cart', fn($q) => $q->where('user_id', Auth::id()))
-            ->get()
-            ->toArray();
+            ->get();
 
         // Redirect if no items are selected
         if (empty($this->cartItems)) {
@@ -112,9 +118,6 @@ class PaymentChannel extends Component
     }
     public function render()
     {
-        return view('livewire.payment-channel', [
-            'cartItems' => $this->cartItems,
-            'orderTotal' => $this->orderTotal
-        ])->layout('components.layouts.navbar');
+        return view('livewire.user.modal.order-process');
     }
 }
