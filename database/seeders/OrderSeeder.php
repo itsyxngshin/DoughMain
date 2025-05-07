@@ -19,6 +19,7 @@ class OrderSeeder extends Seeder
        $orders = [
         [
             'user_id' => 1, // Assuming user with ID 1 exists
+            'shop_id' => 1, // Assuming shop with ID 1 exists
             'total_amount' => 500.00,
             'status' => 'Pending',
             'delivery_address' => '123 Main St, Cityville',
@@ -27,6 +28,7 @@ class OrderSeeder extends Seeder
         ],
         [
             'user_id' => 2,
+            'shop_id' => 2,
             'total_amount' => 200.00,
             'status' => 'Completed',
             'delivery_address' => '456 Oak Ave, Townsville',
@@ -35,6 +37,7 @@ class OrderSeeder extends Seeder
         ],
         [
             'user_id' => 3,
+            'shop_id' => 3,
             'total_amount' => 150.00,
             'status' => 'Cancelled',
             'delivery_address' => '789 Pine Rd, Villageville',
@@ -43,6 +46,7 @@ class OrderSeeder extends Seeder
         ],
         [
             'user_id' => 1,
+            'shop_id' => 1,
             'total_amount' => 800.00,
             'status' => 'Out For Delivery',
             'delivery_address' => '123 Main St, Cityville',
@@ -51,6 +55,7 @@ class OrderSeeder extends Seeder
         ],
         [
             'user_id' => 2,
+            'shop_id' => 2,
             'total_amount' => 1200.00,
             'status' => 'Completed',
             'delivery_address' => '456 Oak Ave, Townsville',

@@ -50,6 +50,7 @@ class OrderProcess extends Component
 
             $order = Order::create([
                 'user_id' => Auth::id(),
+                'shop_id' => $this->cartItems[0]->product->shop->id, // Access the shop ID of the first cart item
                 'total_amount' => $this->orderTotal,
                 'delivery_address' => $this->deliveryAddress,
                 'date_arrangement' => now()->toDateString(), // For date (Y-m-d format)
@@ -60,8 +61,7 @@ class OrderProcess extends Component
             foreach ($this->cartItems as $item) {
                 OrderItem::create([
                     'order_id' => $order->id,
-                    'product_id' => $item->product_id,
-                    'shop_id' => optional($item->product)->shop_id, // Now this will work
+                    'product_id' => $item->product_id, 
                     'quantity' => $item->quantity,
                     'price' => $item->product->product_price,
                     'sub_total' => $item->product->product_price * $item->quantity,
@@ -78,12 +78,15 @@ class OrderProcess extends Component
                 'paid_at' => now(),
             ]);
 
-            CartItem::whereHas('cart', fn($q) => $q->where('user_id', Auth::id()))->delete();
+            $cart = Cart::where('user_id', Auth::id())->first();
+            $cart?->cart_items()->delete(); // Deletes all items
+            $cart?->delete(); // Deletes the cart itself
+            Cart::create(['user_id' => Auth::id()]); // Optional: regenerate a fresh one
 
             DB::commit();
 
             // Emit event to browser
-            $this->dispatchBrowserEvent('payment-success');
+            $this->dispatch('payment-success');
 
         } 
         catch (\Exception $e) {
@@ -95,6 +98,8 @@ class OrderProcess extends Component
 
     public function mount()
     {
+        $user = Auth::user();
+        $this->deliveryAddress = $user->location->city . ', ' . $user->location->province;
         // Retrieve selected item IDs from the session
         $selectedIds = session('selected_cart_items', []);
 

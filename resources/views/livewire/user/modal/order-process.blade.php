@@ -32,7 +32,7 @@
         
         <div>
             <label class="block text-gray-700 font-semibold mb-1">Delivery Address</label>
-            <input wire:model.defer="deliveryAddress" type="text" class="w-full border border-gray-300 rounded-md px-4 py-2">
+            <input wire:model.defer="deliveryAddress" type="text" class="w-full border border-gray-300 rounded-md px-4 py-2" readonly>
             @error('deliveryAddress') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
         </div>
     

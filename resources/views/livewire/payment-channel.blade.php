@@ -50,12 +50,15 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    window.addEventListener('payment-success', () => {
+    Livewire.on('payment-success', () => {
         Swal.fire({
             icon: 'success',
             title: 'Payment Successful',
             text: 'Your order has been placed!',
             confirmButtonColor: '#4A2E0F',
+            timer: 6000, // ⏱️ stays for 3 seconds
+            timerProgressBar: true,
+            showConfirmButton: false, // no need for user to click
         }).then(() => {
             window.location.href = "{{ route('homepage') }}"; // Redirect after confirmation
         });
