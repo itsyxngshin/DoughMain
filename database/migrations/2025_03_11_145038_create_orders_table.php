@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->foreignId('user_id');
+            $table->foreignId('shop_id');
             $table->decimal('total_amount', 10, 2);
             $table->enum('status', ['Pending', 'On Process', 'Out For Delivery', 'Completed', 'On Pick-Up', 'Cancelled'])->default('Pending');
             $table->string('delivery_address');
