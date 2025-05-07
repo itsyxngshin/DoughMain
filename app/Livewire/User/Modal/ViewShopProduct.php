@@ -63,11 +63,10 @@ class ViewShopProduct extends Component
             'quantity' => $quantityToAdd,
             'sub_total' => $price * $quantityToAdd,
         ]);
+    
+        // Dispatch event to Alpine.js
+        $this->dispatch('cart-added-success');
     }
-
-    $this->dispatch('added-to-cart');
-}
-
     
 
 

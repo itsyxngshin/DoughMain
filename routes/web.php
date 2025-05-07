@@ -26,7 +26,8 @@ use App\Http\Controllers\CartController;
 use App\Livewire\CartView;
 use App\Livewire\PaymentChannel;
 use App\Livewire\User\Checkout;
-use App\Livewire\User\Orders;
+use App\Livewire\User\Orders; 
+use App\Livewire\ProfileForm;
 
 
 
@@ -116,9 +117,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
        //SEND TO CHECKOUT PAGE
        Route::get('/checkout', Checkout::class)->name('user.checkout');
        //RENDER PROFILE PAGE
-       Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
-       Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-       Route::post('/profile/update', [ProfileController::class, 'edit'])->name('profile.update');
+        Route::get('/profile', action: ProfileForm::class)->name('profile'); // for viewing
     
         // Product Management Page for Admin (Livewire)
        // Route::get('/products', AdminProductManagement::class)->name('admin.products');
@@ -247,11 +246,6 @@ Route::get('/', function () {
 Route::get('/products', function () {
     return view('products'); 
 });
-
-// Profile Routes
-Route::get('/userprofile', [ProfileController::class, 'show'])->name('profile.show');
-Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
 
 /* ADMIN
