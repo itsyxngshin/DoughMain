@@ -70,12 +70,7 @@
                                 </div>
 
                                 <span class="text-gray-700">{{ $item->product->product_price }}</span>
-
-                                <div wire:key="cart-item-{{ $item->id }}" x-data="cartQuantity({{ $item->quantity }}, {{ $item->id }})" class="flex items-center border rounded">
-                                    <button @click="decrease" class="px-3 py-1 text-gray-800 rounded-l">−</button>
-                                    <input type="number" x-model="quantity" @change="update" min="1" class="w-16 p-1 text-center border-none">
-                                    <button @click="increase" class="px-3 py-1 text-gray-800 rounded-r">+</button>
-                                </div>
+                                @livewire('user.modal.quantity-rev')
 
                                 <span class="text-gray-700 font-semibold">{{ $item->sub_total }}</span>
 
@@ -84,10 +79,6 @@
 
                             </div>
                         @endforeach
-
-
-
-
                             <!-- Shop Subtotal -->
                             <div class="text-right mt-3 text-sm font-semibold text-brown-800">
                                 Subtotal for {{ $group['shop']->shop_name }}: ₱{{ number_format($group['total'], 2) }}
@@ -97,8 +88,6 @@
                             
                             <!-- Delete Selected Button -->
                             {{--@livewire('user.modal.delete-multiple-items') --}} 
-                            
-
             @endif
             <!-- Shipping Promo -->
             <div class="flex items-center text-sm text-gray-600 mt-3">
