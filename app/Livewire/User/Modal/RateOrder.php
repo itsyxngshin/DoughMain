@@ -40,6 +40,7 @@ class RateOrder extends Component
 
     public function submitReview()
     {
+        
         // Prevent re-submission if the review already exists
         if ($this->hasReview) {
             session()->flash('message', 'You have already reviewed this order.');
@@ -64,6 +65,8 @@ class RateOrder extends Component
 
         session()->flash('message', 'Thank you for your review!');
         $this->dispatch('closeModal');
+
+        return redirect()->route('my.orders');
     }
 
     public function render()

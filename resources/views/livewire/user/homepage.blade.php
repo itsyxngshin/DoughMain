@@ -179,14 +179,14 @@
                 <div id="slideshow" class="relative h-full">
                     <!-- Slides -->
                     <div class="absolute inset-0 opacity-100 transition-opacity duration-700 ease-in-out" data-slide="0"
-     style="background-image: url('https://images.pexels.com/photos/16382886/pexels-photo-16382886.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center;">
-</div>
-<div class="absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out" data-slide="1"
-     style="background-image: url('https://images.pexels.com/photos/3026809/pexels-photo-3026809.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center;">
-</div>
-<div class="absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out" data-slide="2"
-     style="background-image: url('https://images.pexels.com/photos/2696064/pexels-photo-2696064.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); background-size: cover; background-position: center;">
-</div>
+                        style="background-image: url('{{ asset('storage/bakery1.jpg') }}'); background-size: cover; background-position: center;">
+                    </div>
+                    <div class="absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out" data-slide="1"
+                        style="background-image: url('{{ asset('storage/bakery3.jpg') }}'); background-size: cover; background-position: center;">
+                    </div>
+                    <div class="absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out" data-slide="2"
+                        style="background-image: url('{{ asset('storage/bakery4.jpg') }}'); background-size: cover; background-position: center;">
+                    </div>
 
 
                     <!-- Overlay -->
@@ -238,11 +238,11 @@
 
         <!-- Categories Section -->
 <h2 class="text-2xl font-bold text-[#51331B] text-center mt-0 mb-10">Categories</h2>
-<div class="flex overflow-x-auto space-x-6 pb-4 justify-center">
+<div class="flex space-x-8 pb-4 justify-center">
     @foreach ($categories as $category)
-        <div class="w-64 mb-6 flex-none">
+        <div class="w-56 mb-6 flex-none">
             <div class="relative bg-cover bg-center rounded-lg shadow-lg flex items-end pl-2 h-32 transition-transform transform hover:scale-105 duration-300"
-                style="background-image: url('{{ asset('storage/' . $category->category_photo) }}');">
+                style="background-image: url('{{ asset('storage/category_photo/' . $category->category_photo) }}');">
                 <a href="{{ route('category', ['id' => $category->id]) }}">
                     <div class="absolute inset-0 bg-gradient-to-t from-[#51331B]/70 to-transparent rounded-lg"></div>
                     <h3 class="absolute bottom-2 left-5 text-white font-semibold z-10">
@@ -262,7 +262,7 @@
             @if ($bakery->shopLogo)
                 <div class="w-64 mb-6 flex-none relative transition-transform transform hover:scale-105 duration-300">
                     <a href="{{ route('shop.products', ['id' => $bakery->id]) }}">
-                        <img src="{{ asset('storage/shop_logos/' . $bakery->shopLogo->logo_path) }}" class="rounded-lg w-full h-56 object-cover transition-transform transform hover:scale-110 duration-300">
+                        <img src="{{ asset('storage/' . $bakery->shopLogo->logo_path) }}" class="rounded-lg w-full h-56 object-cover transition-transform transform hover:scale-110 duration-300">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#51331B]/70 to-transparent rounded-lg"></div> 
                         <h3 class="absolute bottom-2 left-5 text-white font-semibold z-10">
                             {{ $bakery->shop_name }}

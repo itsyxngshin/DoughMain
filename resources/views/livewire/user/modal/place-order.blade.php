@@ -9,7 +9,7 @@
     <div 
         x-show="showModal" 
         x-cloak 
-        class="fixed inset-0 w-full bg-black bg-opacity-40 z-50 flex items-center justify-center"
+        class="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center"
     >
         <div class="bg-white p-8 rounded-lg shadow-lg text-center relative w-[90%] max-w-md">
             <!-- Close Button -->
