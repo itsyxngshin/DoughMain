@@ -9,8 +9,7 @@
 
     
     @livewireStyles
-    
-    <script src="//unpkg.com/alpinejs" defer></script> <!-- alpine for uploading images -->
+     <!-- alpine for uploading images -->
     
     <style>[x-cloak] { display: none !important; }</style>
     <style>
@@ -172,6 +171,7 @@
 </div>
 
 
+@livewireScripts
 
 </body>
 </html>

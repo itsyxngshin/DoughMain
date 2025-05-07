@@ -50,7 +50,7 @@ use App\Livewire\Seller\SellerUserProfile;
 use App\Http\Controllers\SellerUserProfileController;
 use App\Http\Controllers\AddProductController;
 use App\Http\Controllers\UpdateProductController;
-
+use App\Http\Controllers\Seller\OrderApprovalController;
 
 
 
@@ -146,6 +146,12 @@ Route::middleware(['auth', 'role:seller'])->group(function () {
             Route::put('/products/{id}', [UpdateProductController::class, 'update'])->name('products.update');
         // ORDER MANAGEMENT
         Route::get('seller/orders', OrderManagement::class)->name('ordermanagement');
+       // For viewing the order
+//Route::get('/seller/orders/{orderId}', [OrderApprovalController::class, 'show'])->name('seller.orders.show');
+
+// For approving the order
+//Route::post('/seller/orders/{order}/approve', [OrderApprovalController::class, 'approve'])->name('seller.orders.approve');
+
         /* CHAT FOR SELLERS
         Route::get('/chat', function () {
             return view('livewire.seller.chat'); 

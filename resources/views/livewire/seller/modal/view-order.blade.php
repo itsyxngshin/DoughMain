@@ -139,7 +139,7 @@
                 @elseif(strtolower($selectedOrder->status) == 'out for delivery')
                     @livewire('seller.modal.order-completion', ['orderId' => $selectedOrder->id], key($selectedOrder->id))
                 @elseif(strtolower($selectedOrder->status) == 'pending')
-                    @livewire('seller.modal.approve-pending-order-confirmation', ['orderId' => $selectedOrder->id], key($selectedOrder->id))
+                @livewire('seller.modal.approve-pending-order-confirmation', ['orderId' => $selectedOrder->id], key($selectedOrder->id))
                 @elseif(strtolower($selectedOrder->status) == 'completed')
                     @livewire('seller.modal.view-customer-review', ['orderId' => $selectedOrder->id], key($selectedOrder->id))
                 @endif

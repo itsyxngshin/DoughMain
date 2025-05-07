@@ -19,7 +19,7 @@ class Order extends Model
         'total_amount',
         'total_items',
         'delivery_address',
-        'order_status',
+        'status',
     ];
     public function user()
     {
