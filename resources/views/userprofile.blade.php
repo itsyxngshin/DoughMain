@@ -17,7 +17,7 @@
                 <!-- Profile Picture -->
                 <div class="flex flex-col items-center">
                     <div class="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center">
-                        <span class="text-gray-500">Image</span>
+                        <img src="{{ asset('storage/profile.jpg') }}" alt="" class="rounded-full w-full h-full">
                     </div>
                     @can('admin') <!-- Replace 'admin' with the role or permission you want to check -->
                         <button type="button" class="mt-2 px-4 py-1 bg-orange-300 text-white rounded-lg text-sm">Upload</button>
@@ -29,25 +29,25 @@
                 <div class="flex-1 space-y-4 w-full">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">First Name</label>
-                        <input type="text" name="first_name" value="{{ isset($user) ? $user->first_name: '' }}"
+                        <input type="text" name="first_name" value="{{ $user->first_name ?? '-' }}"
                                class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Last Name</label>
-                        <input type="text" name="last_name" value="{{ isset($user) ? $user->last_name: '' }}"
+                        <input type="text" name="last_name" value="{{ $user->last_name ?? '-' }}"
                                class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Email</label>
-                            <input type="email" name="email" value="{{ isset($user) ? $user->email : '' }}"
+                            <input type="email" name="email" value="{{ $user->email ?? '-'  }}"
                                    class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Phone Number</label>
-                            <input type="tel" name="phone" value="{{ isset($user) ? $user->phone_number : '' }}"
+                            <input type="tel" name="phone" value="{{ $user->phone_number ?? '-'  }}"
                                    class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
                         </div>
                     </div>
@@ -60,22 +60,32 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">House/Building & Street</label>
-                        <input type="text" name="address" value="{{ isset($user) ? $user->address : '' }}"
+                        <input type="text" name="street" value="{{ $user->location->street ?? '-' }}"
                                class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Barangay</label>
-                        <input type="text" name="barangay" value="{{ isset($user) ? $user->barangay : '' }}"
+                        <input type="text" name="barangay" value="{{ $user->location->barangay ?? '-' }}"
                                class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">City/Municipality</label>
-                        <input type="text" name="city" value="{{ isset($user) ? $user->city : '' }}"
+                        <input type="text" name="city" value="{{ $user->location->city ?? '-' }}"
                                class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Province</label>
-                        <input type="text" name="province" value="{{ isset($user) ? $user->province : '' }}"
+                        <input type="text" name="province" value="{{  $user->location->province ?? '-' }}"
+                               class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Region</label>
+                        <input type="text" name="region" value="{{ $user->location->region ?? '-'  }}"
+                               class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Landmark</label>
+                        <input type="text" name="landmark" value="{{ $user->location->landmark ?? '-'  }}"
                                class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
                     </div>
                 </div>

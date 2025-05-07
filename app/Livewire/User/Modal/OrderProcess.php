@@ -26,7 +26,7 @@ class OrderProcess extends Component
     public $deliveryAddress;
     
     use WithFileUploads;
-    use WithDispatchesBrowserEvents;
+   // use WithDispatchesBrowserEvents;
 
     // ...
 

@@ -49,6 +49,7 @@ class AuthController extends Controller
                 'location_id' => 0, // Consider making this nullable or setting a default location
                 'role_id' => 1, // Consider using constants or enums for role IDs
                 'user_status_id' => 1, // Consider using constants or enums for status IDs
+                
             ]);
     
             // Create cart for the user

@@ -31,29 +31,43 @@ class ViewShopProduct extends Component
     }
 
     public function addToCart($product)
-    {
-        // Get product data from the passed $product object
-        $productId = $product['id'];
-        $quantity = $product['quantity'];
-        $price = $product['price'];
+{
     
-        // Calculate subtotal
-        $subTotal = $price * $quantity;
-    
-        // Get the user's current cart (assumes the user is logged in)
-        $cartId = Auth::user()->cart->id ?? 1;  // Or use a default cart ID if the user doesn't have a cart
-    
-        // Insert the new cart item into the database
+    $productId = $product['id'];
+    $quantityToAdd = $product['quantity'];
+    $price = $product['price'];
+
+    $user = Auth::user();
+
+    if (!$user || !$user->cart) {
+        return;
+    }
+
+    $cartId = $user->cart->id;
+
+    // Check if item already exists
+    $existingItem = CartItem::where('cart_id', $cartId)
+        ->where('product_id', $productId)
+        ->first();
+
+    if ($existingItem) {
+        // Update quantity and subtotal
+        $existingItem->quantity += $quantityToAdd;
+        $existingItem->sub_total = $existingItem->quantity * $price;
+        $existingItem->save();
+    } else {
+        // Insert new item
         CartItem::create([
             'cart_id' => $cartId,
             'product_id' => $productId,
-            'quantity' => $quantity,
-            'sub_total' => $subTotal, // Add subtotal value here
+            'quantity' => $quantityToAdd,
+            'sub_total' => $price * $quantityToAdd,
         ]);
-    
-        // Dispatch event to Alpine.js
-        $this->dispatch('added-to-cart');
     }
+
+    $this->dispatch('added-to-cart');
+}
+
     
 
 

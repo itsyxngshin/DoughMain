@@ -1,7 +1,8 @@
 @extends('components.layouts.navbar')
 
 @section('content')
-<div class="max-w-5xl mx-auto p-6">
+<div class="w-full h-screen">
+   <div class="max-w-5xl mx-auto pt-20 p-6">
     {{--
     <div class="debug-info bg-yellow-50 p-4 mb-4 rounded" wire:ignore>
         <h4 class="font-bold">Debug Information:</h4>
@@ -43,7 +44,7 @@
                 </div>
                 <div class="text-xs space-x-2">
                     <span class="bg-yellow-300 text-[#1E1E1E] px-2 py-0.5 rounded">Default</span>
-                    <a href="#" class="text-blue-600">Change</a>
+                    <a href="{{ route('profile.show')}}" class="text-blue-600">Change</a>
                 </div>
             </div>
         </div>
@@ -130,5 +131,7 @@
         </p>
     </div>
     @livewire('user.modal.place-order')
+</div> 
 </div>
+
 @endsection
