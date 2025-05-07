@@ -112,4 +112,27 @@ class User extends Authenticatable
         return $this->first_name . ' ' . $this->last_name;
     }
 
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
+
+    // Chats where this user is user_one
+    public function chatsInitiated()
+    {
+        return $this->hasMany(Chat::class, 'user_one_id');
+    }
+
+    // Chats where this user is user_two
+    public function chatsReceived()
+    {
+        return $this->hasMany(Chat::class, 'user_two_id');
+    }
+
+    // Combined chats (optional helper)
+    public function chats()
+    {
+        return $this->chatsInitiated->merge($this->chatsReceived);
+    }
+
 }
