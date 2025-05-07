@@ -34,7 +34,7 @@ class ViewProductFromHomepage extends Component
         'sub_total' => $subTotal,
     ]);
 
-    $this->dispatch('successfully-added-to-cart');
+    $this->dispatch('cart-added-success');
 }
 
 

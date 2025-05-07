@@ -82,5 +82,22 @@ document.addEventListener("DOMContentLoaded", function () {
     
 });
 </script>
-
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    Livewire.on('cart-added-success', () => {
+        Swal.fire({
+            icon: 'success',
+            title: 'Added to cart!',
+            text: 'Explore more on our variety of baked goods',
+            confirmButtonColor: '#4A2E0F',
+            timer: 6000, // ⏱️ stays for 3 seconds
+            timerProgressBar: true,
+            showConfirmButton: false, // no need for user to click
+        }).then(() => {
+            window.location.href = "{{ route('homepage') }}"; // Redirect after confirmation
+        });
+    });
+</script>
+@endpush
 @endsection

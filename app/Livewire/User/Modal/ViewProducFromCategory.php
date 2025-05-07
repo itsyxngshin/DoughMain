@@ -43,7 +43,7 @@ class ViewProducFromCategory extends Component
         'sub_total' => $subTotal,
     ]);
 
-    $this->dispatch('successfully-added-to-cart');
+    $this->dispatch('cart-added-success');
 }
 
     public function render()

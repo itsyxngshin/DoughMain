@@ -232,4 +232,21 @@
     }
 
 </script>
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    Livewire.on('cartItemDeleted', () => {
+        Swal.fire({
+            icon: 'success',
+            title: 'Item removed from the cart',
+            confirmButtonColor: '#4A2E0F',
+            timer: 4000, // ⏱️ stays for 3 seconds
+            timerProgressBar: true,
+            showConfirmButton: false, // no need for user to click
+        }).then(() => {
+            window.location.href = "{{ route('homepage') }}"; // Redirect after confirmation
+        });
+    });
+</script>
+@endpush
 @endsection

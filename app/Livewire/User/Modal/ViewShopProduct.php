@@ -52,7 +52,7 @@ class ViewShopProduct extends Component
         ]);
     
         // Dispatch event to Alpine.js
-        $this->dispatch('added-to-cart');
+        $this->dispatch('cart-added-success');
     }
     
 
