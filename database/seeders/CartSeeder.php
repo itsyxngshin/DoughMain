@@ -13,6 +13,7 @@ class CartSeeder extends Seeder
      */
     public function run(): void
     {
+        /*
         $carts = [
         ['user_id' => '2',],
         ['user_id' => '5',],
@@ -20,5 +21,6 @@ class CartSeeder extends Seeder
         ];
         
         DB::table('carts')->insert($carts);
+        */
     }
 }

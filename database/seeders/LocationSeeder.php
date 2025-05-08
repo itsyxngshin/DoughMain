@@ -12,7 +12,7 @@ class LocationSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {
+    {/*
         $locations = [
             [
                 'user_id' => 1,
@@ -87,5 +87,6 @@ class LocationSeeder extends Seeder
         ];
 
         DB::table('locations')->insert($locations);
+        */
     }
 }

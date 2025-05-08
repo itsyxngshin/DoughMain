@@ -12,7 +12,7 @@ class ShopSeeder extends Seeder
 {
     public function run(): void
     {
-        $shops = [
+        /*$shops = [
             [
                 'manage_id' => 1,
                 'shop_name' => 'Bakery Delight',
@@ -61,6 +61,7 @@ class ShopSeeder extends Seeder
         ];
 
         DB::table('shops')->insert($shops);
+        */
     }
 }
 

@@ -25,7 +25,7 @@ class CategorySeeder extends Seeder
             ],
             [
                 'category_name' => 'Pies & Tarts',
-                'description' => 'Delicious pastries including croissants, danishes, and more.',
+                'description' => 'Delicious pies and tarts including apple pies, egg tarts, and more.',
                 'category_photo' => 'tart.jpg',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

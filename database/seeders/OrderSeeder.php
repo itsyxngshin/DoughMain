@@ -15,6 +15,7 @@ class OrderSeeder extends Seeder
      */
     public function run(): void
     {
+        /*
        // Manually create 5 orders
        $orders = [
         [
@@ -67,5 +68,6 @@ class OrderSeeder extends Seeder
         foreach ($orders as $order) {
             Order::create($order);
         }
+            */
     }
 }

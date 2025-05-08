@@ -11,6 +11,7 @@ class ShopLogoSeeder extends Seeder
 {
     public function run()
     {
+        /*
         DB::table('shop_logos')->insert([
             [
                 'id' => 1,
@@ -43,5 +44,6 @@ class ShopLogoSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
         ]);
+        */
     }
 }

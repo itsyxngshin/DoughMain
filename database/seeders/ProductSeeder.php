@@ -13,6 +13,7 @@ class ProductSeeder extends Seeder
    
     public function run(): void
 {
+    /*
     $now = Carbon::now();
 
     DB::table('products')->insert([
@@ -62,6 +63,7 @@ class ProductSeeder extends Seeder
             'updated_at' => $now,
         ],
     ]);
+    */
 }
 
 

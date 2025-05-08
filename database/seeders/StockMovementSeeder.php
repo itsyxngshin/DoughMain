@@ -13,7 +13,7 @@ class StockMovementSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {
+    {/*
         $stockMovements = [
             [
                 'product_id' => 1, // Refer to a valid product ID from your database
@@ -58,5 +58,6 @@ class StockMovementSeeder extends Seeder
         ];
 
         DB::table('stock_movements')->insert($stockMovements);
+        */
     }
 }
