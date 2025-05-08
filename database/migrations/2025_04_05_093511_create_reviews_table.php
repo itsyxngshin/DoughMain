@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id()->autoIncrement();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
-            $table->foreignId('order_id')->constrained('products')->onDelete('cascade');
-            $table->foreignId('shop_id')->constrained('products')->onDelete('cascade');
+            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
+            $table->foreignId('shop_id')->constrained('shops')->onDelete('cascade');
             $table->text('review_text');
             $table->string('review_image')->nullable(); #if upload of image is possible
-            $table->integer('rating')->default(0);
+            $table->integer('rating')->nullable();
             $table->timestamps();
         });
     }

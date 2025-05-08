@@ -12,21 +12,81 @@ class LocationSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {
-        DB::table('locations')->insert([
-            'user_id' => 0, // Replace with the appropriate user ID
-            'shop_id' => 0, // Replace with the appropriate shop ID
-            // Assuming you have a user and shop with ID 1 for testing
-            'latitude' => 13.1394,
-            'longitude' => 123.7438,
-            'region' => 'Bicol Region',
-            'city' => 'Legazpi City',
-            'province' => 'Albay',
-            'barangay' => 'Barangay 1', // Replace with the appropriate barangay
-            'street' => 'Main Street', // Replace with the appropriate street or null
-            'landmark' => 'Near City Hall', // Replace with the appropriate landmark or null
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+    {/*
+        $locations = [
+            [
+                'user_id' => 1,
+                'shop_id' => null,
+                'latitude' => 13.1391,
+                'longitude' => 123.7438,
+                'region' => 'Region V',
+                'city' => 'Legazpi City',
+                'province' => 'Albay',
+                'barangay' => 'Barangay 1',
+                'street' => 'Rizal Street',
+                'landmark' => 'Near Embarcadero',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'user_id' => 2,
+                'shop_id' => null,
+                'latitude' => 13.2866,
+                'longitude' => 123.6828,
+                'region' => 'Region V',
+                'city' => 'Tabaco City',
+                'province' => 'Albay',
+                'barangay' => 'Barangay 2',
+                'street' => 'Quezon Avenue',
+                'landmark' => 'Near Tabaco Port',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'user_id' => 3,
+                'shop_id' => null,
+                'latitude' => 13.1974,
+                'longitude' => 123.7104,
+                'region' => 'Region V',
+                'city' => 'Daraga',
+                'province' => 'Albay',
+                'barangay' => 'Barangay 3',
+                'street' => 'Daraga Market Road',
+                'landmark' => 'Near Cagsawa Ruins',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'user_id' => 4,
+                'shop_id' => null,
+                'latitude' => 13.1922,
+                'longitude' => 123.5240,
+                'region' => 'Region V',
+                'city' => 'Libon',
+                'province' => 'Albay',
+                'barangay' => 'Barangay 4',
+                'street' => 'San Jose St.',
+                'landmark' => 'Beside Municipal Hall',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'user_id' => 5,
+                'shop_id' => null,
+                'latitude' => 13.3487,
+                'longitude' => 123.6053,
+                'region' => 'Region V',
+                'city' => 'Tiwi',
+                'province' => 'Albay',
+                'barangay' => 'Barangay 5',
+                'street' => 'Hot Spring Road',
+                'landmark' => 'Near Tiwi Geothermal Plant',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ];
+
+        DB::table('locations')->insert($locations);
+        */
     }
 }

@@ -12,24 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('messages', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            $table->foreignId('sender_id')->index();
-            $table->foreignId('receiver_id')->index();
-            $table->foreignId('order_id')->index()->nullable();
+            $table->id();
+            $table->foreignId('chat_id');
+            $table->foreignId('sender_id');
             $table->text('message');
-            $table->enum('status', ['sent', 'delivered', 'read'])->default('sent');
-            # $table->enum('type', ['text', 'image', 'video'])->default('text');
-            $table->string('attachment')->nullable();
-            $table->string('attachment_type')->nullable();
-            $table->string('attachment_size')->nullable();
-            $table->string('attachment_name')->nullable();
-            $table->string('attachment_path')->nullable();
-            $table->dateTime('received_at')->nullable();
-            $table->dateTime('sent_at')->nullable();  
-            $table->dateTime('read_at')->nullable();
-            $table->dateTime('delivered_at')->nullable();
-            $table->dateTime('seen_at')->nullable();
-            $table->enum('is_deleted', ['yes', 'no'])->default('no');
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });
     }

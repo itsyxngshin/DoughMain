@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id()->autoIncrement();
             $table->foreignId('user_id');
             $table->foreignId('shop_id');
+            $table->string('transaction_id')->default('No Transaction ID'); 
             $table->decimal('total_amount', 10, 2);
-            $table->enum('status', ['Pending', 'Completed', 'Failed', 'Cancelled'])->default('Pending');
-            $table->enum('payment_method', ['On-Pickup', 'Online Banking']);
+            $table->enum('status', ['Pending', 'On Process', 'Out For Delivery', 'Completed', 'On Pick-Up', 'Cancelled'])->default('Pending');
             $table->string('delivery_address');
-            $table->date('date_arrangement');
-            $table->time('time_arrangement'); 
+            $table->date('date_arrangement')->nullable()->default(date('Y-m-d'));
+            $table->time('time_arrangement')->nullable()->default('00:00:00'); 
             $table->timestamps();
         });
     }

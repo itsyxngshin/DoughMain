@@ -1,3 +1,7 @@
+import Swal from 'sweetalert2';
+
+window.Swal = Swal;
+
 let lastScrollTop = 0;
 const nav = document.querySelector('.navigation');
 const secondNav = document.querySelector('.second-nav');

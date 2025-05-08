@@ -67,7 +67,7 @@
         </form>
 
         <!-- Seller Registration Form -->
-        <form id="sellerForm" class="space-y-4 hidden" method="POST" action="{{ route('register') }}">
+        <form id="sellerForm" class="space-y-4 hidden" method="POST" action="{{ route('shopRegister') }}">
             @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -78,6 +78,10 @@
                     <label class="block text-gray-700 font-medium mb-1">Last Name</label>
                     <input type="text" name="last_name" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your last name" required>
                 </div>
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium">Shop Name</label>
+                <input type="text" name="shop_name" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Choose a username" required>
             </div>
             <div>
                 <label class="block text-gray-700 font-medium">Username</label>
@@ -111,7 +115,7 @@
             </div>
             <div>
                 <label class="block text-gray-700 font-medium">Confirm Password</label>
-                <input type="password" name="confirm-password" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Confirm your password" required>
+                <input type="password" name="password_confirmation" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Confirm your password" required>
             </div>
             <button type="submit" class="w-full bg-gray-800 text-white py-2 rounded-md hover:bg-gray-700">Register as Seller</button>
         </form>

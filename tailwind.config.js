@@ -12,9 +12,12 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Poppins', ...defaultTheme.fontFamily.sans],
+                sans: ['Montserrat', 'Poppins', ...defaultTheme.fontFamily.sans],
             },
         },
     },
-    plugins: [],
+    plugins: [
+        require('tailwind-scrollbar-hide')
+      ]
+      
 };

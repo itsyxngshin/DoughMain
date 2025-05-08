@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\User;
 
 class Order extends Model
@@ -18,10 +16,11 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'shop_id',
+        'transaction_id', 
         'total_amount',
         'total_items',
         'delivery_address',
-        'order_status',
+        'status',
     ];
     public function user()
     {
@@ -43,5 +42,14 @@ class Order extends Model
     {
         return $this->hasMany(Order::class);
     }
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+    public function payment()
+    {
+        return $this->hasOne(Payment::class, 'order_id');
+    }
+    
 }
 

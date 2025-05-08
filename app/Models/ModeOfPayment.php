@@ -14,6 +14,11 @@ class ModeOfPayment extends Model
 
     public function payments()
     {
-        return $this->hasMany(Order::class, 'payment_method_id', 'id');
+        return $this->hasMany(ModeOfPayment::class, 'payment_method_id', 'id');
     }
+    public function shopPaymentDetails()
+{
+    return $this->hasMany(ShopPaymentDetail::class, 'mode_of_payment_id');
+}
+
 }
