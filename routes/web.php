@@ -28,6 +28,7 @@ use App\Livewire\PaymentChannel;
 use App\Livewire\User\Checkout;
 use App\Livewire\User\Orders; 
 use App\Livewire\ProfileForm;
+use App\Livewire\User\ChatSystem; 
 
 
 
@@ -116,6 +117,8 @@ Route::middleware(['auth', 'role:user'])->group(function () {
        Route::delete('/cart/remove/selected', [CartView::class, 'removeSelected'])->name('cart.remove.selected');
        //SEND TO CHECKOUT PAGE
        Route::get('/checkout', Checkout::class)->name('user.checkout');
+       Route::get('/messages', ChatSystem::class)->name('user.chat');
+       
        //RENDER PROFILE PAGE
         Route::get('/profile', action: ProfileForm::class)->name('profile'); // for viewing
     

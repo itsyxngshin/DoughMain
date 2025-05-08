@@ -10,11 +10,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\RedirectResponse;
 use App\Models\CartItem;
-
+use Livewire\Attributes\On;
 class CartView extends Component
 {
     public $cartItems = [];
-    
+    protected $listeners = ['refreshCart' => 'refreshCart'];
     //Shows the cart and items in the cart
     public function render()
     {
@@ -46,6 +46,10 @@ class CartView extends Component
         'groupedItems' => $groupedItems,
         'cartItems' => $cartItems
     ]);
+    }
+    public function refreshCart()
+    {
+        $this->render(); // or whatever your logic is
     }
     public function deleteItems($ids)
     {
@@ -79,6 +83,7 @@ class CartView extends Component
         $cartItem->save();
         }
     }
+
     public function proceedToCheckout($selectedIds): RedirectResponse
     {
         // Validate the selected items belong to the user

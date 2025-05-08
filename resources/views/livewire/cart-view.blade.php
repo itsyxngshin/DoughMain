@@ -20,6 +20,7 @@
                         <th class="px-4 py-2 text-left w-1/5">Unit Price</th>
                         <th class="px-4 py-2 text-left w-1/5">Quantity</th>
                         <th class="px-4 py-2 text-right w-1/4">Amount</th>
+                        <th class="px-4 py-2 text-right w-1/4"></th>
                     </tr>
                 </thead>
                 
@@ -70,7 +71,7 @@
                                 </div>
 
                                 <span class="text-gray-700">{{ $item->product->product_price }}</span>
-                                @livewire('user.modal.quantity-rev')
+                                @livewire('user.modal.quantity-rev', ['cartItemId' => $item->id], key($item->id))
 
                                 <span class="text-gray-700 font-semibold">{{ $item->sub_total }}</span>
 
