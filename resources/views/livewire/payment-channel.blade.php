@@ -63,6 +63,18 @@
             window.location.href = "{{ route('homepage') }}"; // Redirect after confirmation
         });
     });
+
+    Livewire.on('payment-failed', () => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Payment Failed',
+            text: 'Something went wrong with your payment. Please try again.',
+            confirmButtonColor: '#4A2E0F',
+            timer: 6000, // ⏱️ stays for 3 seconds
+            timerProgressBar: true,
+            showConfirmButton: false, // no need for user to click
+        });
+    });
 </script>
 @endpush
 @endsection

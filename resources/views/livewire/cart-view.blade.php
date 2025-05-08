@@ -20,6 +20,7 @@
                         <th class="px-4 py-2 text-left w-1/5">Unit Price</th>
                         <th class="px-4 py-2 text-left w-1/5">Quantity</th>
                         <th class="px-4 py-2 text-right w-1/4">Amount</th>
+                        <th class="px-4 py-2 text-right w-1/4"></th>
                     </tr>
                 </thead>
                 
@@ -61,16 +62,16 @@
                             <div class="flex items-center justify-between border-t pt-3" wire:key="cart-item-{{ $item->id }}">
 
                                 <div class="flex items-center space-x-3">
-                                <input type="checkbox" 
-                                        class="mr-2"
-                                        :checked="isSelected({{ $item->id }})"
-                                        @change="toggleItem({{ $item->id }})">
-                                    <img src="{{ asset('storage/' . $item->product->product_image) }}" class="w-12 h-12 rounded-lg object-cover" alt="{{ $item->product->product_name }}">
-                                    <span class="text-gray-700">{{ $item->product->product_name }}</span>
+                                    <input type="checkbox" 
+                                            class="mr-2"
+                                            :checked="isSelected({{ $item->id }})"
+                                            @change="toggleItem({{ $item->id }})">
+                                        <img src="{{ asset('storage/' . $item->product->product_image) }}" class="w-12 h-12 rounded-lg object-cover" alt="{{ $item->product->product_name }}">
+                                        <span class="text-gray-700">{{ $item->product->product_name }}</span>
                                 </div>
 
                                 <span class="text-gray-700">{{ $item->product->product_price }}</span>
-                                @livewire('user.modal.quantity-rev')
+                                @livewire('user.modal.quantity-rev', ['cartItemId' => $item->id], key($item->id))
 
                                 <span class="text-gray-700 font-semibold">{{ $item->sub_total }}</span>
 

@@ -12,16 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('chats', function (Blueprint $table) {
-            Schema::create('chats', function (Blueprint $table) {
-                $table->id();
-                $table->foreignId('user_one_id')->constrained('users')->onDelete('cascade');
-                $table->foreignId('user_two_id')->constrained('users')->onDelete('cascade');
-                $table->foreignId('last_message_id')->nullable()->constrained('messages')->nullOnDelete();
-                $table->boolean('is_group')->default(false); // For future group support
-                $table->timestamps();
-    
-                $table->unique(['user_one_id', 'user_two_id']);
-            });
+            $table->id()->autoIncrement();
+            $table->foreignId('user_one_id')->nullable();
+            $table->foreignId('user_two_id')->nullable();
+            $table->foreignId('last_message_id')->nullable();
+            $table->boolean('is_group')->default(false); // For future group support
+            $table->timestamps();
         });
     }
 

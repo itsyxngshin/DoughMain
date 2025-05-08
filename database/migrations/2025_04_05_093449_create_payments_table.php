@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('payment_method_id')->nullable();
             $table->string('provider_transc_id')->nullable();
             $table->string('provider_intend_id')->nullable();
-            $table->string('screenshot_path')->nullable();
+            $table->string('screenshot_path')->default('NONE'); 
             $table->enum('status', ['pending', 'completed', 'failed', 'refunded'])->default('pending');
             $table->decimal('amount', 10, 2)->nullable();
             $table->json('provider_response')->nullable();
