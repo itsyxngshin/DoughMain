@@ -19,7 +19,7 @@
         <!-- Reference Number -->
         <div>
             <label class="block text-gray-700 font-semibold mb-1">Reference Number</label>
-            <input wire:model.defer="reference" type="text" class="w-full border border-gray-300 rounded-md px-4 py-2">
+            <input wire:model.lazy="reference" type="text" class="w-full border border-gray-300 rounded-md px-4 py-2">
             @error('reference') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
         </div>
     

@@ -20,19 +20,27 @@ class ViewProductFromHomepage extends Component
     }
 
     public function addToCartFromHomepage($productId, $quantity)
-{
+    {
     $product = Product::findOrFail($productId);
     $price = $product->product_price;
-    $subTotal = $price * $quantity;
-
     $cartId = Auth::user()->cart->id ?? 1;
 
-    CartItem::create([
-        'cart_id' => $cartId,
-        'product_id' => $productId,
-        'quantity' => $quantity,
-        'sub_total' => $subTotal,
-    ]);
+    $existingItem = CartItem::where('cart_id', $cartId)
+        ->where('product_id', $productId)
+        ->first();
+
+    if ($existingItem) {
+        $existingItem->quantity += $quantity;
+        $existingItem->sub_total = $existingItem->quantity * $price;
+        $existingItem->save();
+    } else {
+        CartItem::create([
+            'cart_id' => $cartId,
+            'product_id' => $productId,
+            'quantity' => $quantity,
+            'sub_total' => $price * $quantity,
+        ]);
+    }
 
     $this->dispatch('cart-added-success');
 }

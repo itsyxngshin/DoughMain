@@ -369,11 +369,9 @@
             title: 'Added to cart!',
             text: 'Explore more on our variety of baked goods',
             confirmButtonColor: '#4A2E0F',
-            timer: 6000, // ⏱️ stays for 3 seconds
+            timer: 4000, // ⏱️ stays for 3 seconds
             timerProgressBar: true,
             showConfirmButton: false, // no need for user to click
-        }).then(() => {
-            window.location.href = "{{ route('homepage') }}"; // Redirect after confirmation
         });
     });
 </script>

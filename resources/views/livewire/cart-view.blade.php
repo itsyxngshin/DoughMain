@@ -62,12 +62,12 @@
                             <div class="flex items-center justify-between border-t pt-3" wire:key="cart-item-{{ $item->id }}">
 
                                 <div class="flex items-center space-x-3">
-                                <input type="checkbox" 
-                                        class="mr-2"
-                                        :checked="isSelected({{ $item->id }})"
-                                        @change="toggleItem({{ $item->id }})">
-                                    <img src="{{ asset('storage/' . $item->product->product_image) }}" class="w-12 h-12 rounded-lg object-cover" alt="{{ $item->product->product_name }}">
-                                    <span class="text-gray-700">{{ $item->product->product_name }}</span>
+                                    <input type="checkbox" 
+                                            class="mr-2"
+                                            :checked="isSelected({{ $item->id }})"
+                                            @change="toggleItem({{ $item->id }})">
+                                        <img src="{{ asset('storage/' . $item->product->product_image) }}" class="w-12 h-12 rounded-lg object-cover" alt="{{ $item->product->product_name }}">
+                                        <span class="text-gray-700">{{ $item->product->product_name }}</span>
                                 </div>
 
                                 <span class="text-gray-700">{{ $item->product->product_price }}</span>

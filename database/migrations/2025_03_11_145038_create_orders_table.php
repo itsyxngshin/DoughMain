@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id()->autoIncrement();
             $table->foreignId('user_id');
             $table->foreignId('shop_id');
+            $table->string('transaction_id')->default('No Transaction ID'); 
             $table->decimal('total_amount', 10, 2);
             $table->enum('status', ['Pending', 'On Process', 'Out For Delivery', 'Completed', 'On Pick-Up', 'Cancelled'])->default('Pending');
             $table->string('delivery_address');

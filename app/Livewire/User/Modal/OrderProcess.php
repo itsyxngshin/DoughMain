@@ -7,6 +7,7 @@ use App\Models\ModeOfPayment;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Payment;
@@ -26,73 +27,80 @@ class OrderProcess extends Component
     public $deliveryAddress;
     
     use WithFileUploads;
-    // ...
-
-
-    // In your Livewire component
     public function submitPayment()
-    {
-        $this->validate([
-            'selectedPaymentMethod' => 'required',
-            'reference' => 'required|string|max:255',
-            'screenshot' => 'nullable|image|max:2048',
-        ]);
+{
+    $this->validate([
+        'selectedPaymentMethod' => 'required',
+        'reference' => 'required|string|max:255',
+        'screenshot' => 'nullable|image|max:2048',
+    ]);
 
-        // Validate the screenshot
-        DB::beginTransaction();
 
-        try {
-            $screenshotPath = $this->screenshot 
+    DB::beginTransaction();
+
+    try {
+        $screenshotPath = $this->screenshot 
             ? $this->screenshot->store('screenshots', 'public') 
             : null;
 
-            $order = Order::create([
-                'user_id' => Auth::id(),
-                'shop_id' => $this->cartItems[0]->product->shop->id, // Access the shop ID of the first cart item
-                'total_amount' => $this->orderTotal,
-                'delivery_address' => $this->deliveryAddress,
-                'date_arrangement' => now()->toDateString(), // For date (Y-m-d format)
-                'time_arrangement' => now()->toTimeString(), // For time (H:i:s format)
-                'status' => 'Pending',
-            ]);
+        $this->createOrdersPerShop($screenshotPath);
 
-            foreach ($this->cartItems as $item) {
-                OrderItem::create([
-                    'order_id' => $order->id,
-                    'product_id' => $item->product_id, 
-                    'quantity' => $item->quantity,
-                    'price' => $item->product->product_price,
-                    'sub_total' => $item->product->product_price * $item->quantity,
-                ]);
-            }
+        $cart = Cart::where('user_id', Auth::id())->first();
+        $cart?->cart_items()->delete();
+        $cart?->delete();
+        Cart::create(['user_id' => Auth::id()]);
 
-            Payment::create([
-                'user_id' => Auth::id(),
-                'order_id' => $order->id,
-                'payment_method_id' => $this->selectedPaymentMethod,
-                'status' => 'completed',
-                'reference_number' => $this->reference,
-                'screenshot_path' => $screenshotPath,
-                'paid_at' => now(),
-            ]);
+        DB::commit();
 
-            $cart = Cart::where('user_id', Auth::id())->first();
-            $cart?->cart_items()->delete(); // Deletes all items
-            $cart?->delete(); // Deletes the cart itself
-            Cart::create(['user_id' => Auth::id()]); // Optional: regenerate a fresh one
-
-            DB::commit();
-
-            // Emit event to browser
-            $this->dispatch('payment-success');
-
-        } 
-        catch (\Exception $e) {
-            DB::rollBack();
-            dd('Order processing failed', ['error' => $e->getMessage()]);
-            $this->addError('general', 'Something went wrong. Please try again.');
-        }
+        $this->dispatch('payment-success');
+    } 
+    catch (\Exception $e) {
+        DB::rollBack();
+        $this->addError('general', 'Something went wrong. Please try again.');
+        $this->dispatch('payment-failed');
     }
+}
+    // Create orders for each shop
+    // and save payment details
+
+    private function createOrdersPerShop($screenshotPath)
+    {
+    $itemsGroupedByShop = collect($this->cartItems)->groupBy(fn($item) => $item->product->shop->id);
+    foreach ($itemsGroupedByShop as $shopId => $items) {
+        $totalAmount = $items->sum(fn($item) => $item->product->product_price * $item->quantity);
+        $transactionNumber = 'DMN' . now()->format('YmdHis') . '' . strtoupper(Str::random(4));
+        $order = Order::create([
+            'user_id' => Auth::id(),
+            'shop_id' => $shopId,
+            'total_amount' => $totalAmount,
+            'transaction_id' => $transactionNumber,
+            'delivery_address' => $this->deliveryAddress,
+            'date_arrangement' => now()->toDateString(),
+            'time_arrangement' => now()->toTimeString(),
+            'status' => 'Pending',
+        ]);
+
+        foreach ($items as $item) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+                'price' => $item->product->product_price,
+                'sub_total' => $item->product->product_price * $item->quantity,
+            ]);
+        }
+
+        Payment::create([
+            'user_id' => Auth::id(),
+            'order_id' => $order->id,
+            'payment_method_id' => $this->selectedPaymentMethod,
+            'status' => 'completed',
+            'provider_transc_id' => $this->reference,
+            'screenshot_path' => $screenshotPath,
+            'paid_at' => now(),
+        ]);
+    }
+}
 
     public function mount()
     {
