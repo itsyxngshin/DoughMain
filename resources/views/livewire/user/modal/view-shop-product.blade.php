@@ -7,7 +7,8 @@
             img: '', 
             desc: '', 
             price: '', 
-            quantity: 1 
+            quantity: 1,
+            stock: ''
         } 
     }"
     x-init="
@@ -29,15 +30,19 @@
         <div class="grid md:grid-cols-3 gap-6">
             @foreach($products as $product)
                 <div class="searchable-item bg-transparent hover:bg-gray-200 p-5 shadow-lg rounded-lg text-center transition-transform transform hover:scale-105 duration-300">
-                    <a href="#" @click.prevent="product = {
-                            id: {{ $product->id }},
-                            name: '{{ $product->product_name }}',
-                            img: '{{ asset('storage/' . $product->product_image) }}',
-                            desc: '{{ $product->product_description }}',
-                            price: '{{ $product->product_price }}',
-                            quantity: 1
-                        }; 
-                        open = true;">
+                <a href="#" @click.prevent="
+    product = {
+        id: {{ $product->id }},
+        name: '{{ $product->product_name }}',
+        img: '{{ asset('storage/' . $product->product_image) }}',
+        desc: '{{ $product->product_description }}',
+        price: '{{ $product->product_price }}',
+        quantity: 1,
+        stock: {{ $product->stock->quantity ?? 0 }}
+    }; 
+    open = true;
+">
+
                         <div class="mx-auto w-56 h-56 overflow-hidden">
                             <img src="{{ asset('storage/' . $product->product_image) }}" alt="{{ $product->product_name }}" class="mx-auto w-full h-full object-cover " >
                         </div>
@@ -46,6 +51,7 @@
                     <h4 class="font-semibold">{{ $product->product_name }}</h4>
                     <p class="text-gray-500">{{ $product->product_description }}</p>
                     <p class="text-gray-800 font-bold">{{ $product->product_price }}</p>
+                    
                 </div>
             @endforeach
         </div>
@@ -70,6 +76,8 @@
             <h2 class="text-xl font-bold text-center" x-text="product.name"></h2>
             <p class="text-gray-600 text-center" x-text="product.desc"></p>
             <p class="text-gray-800 font-bold text-center" x-text="product.price"></p>
+            <p class="text-sm text-gray-500 text-center" x-text="'Available Stock: ' + product.stock"></p>
+
 
             <!-- Quantity & Add to Cart -->
             <div class="flex items-center justify-between mt-4">

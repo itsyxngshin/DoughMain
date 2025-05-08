@@ -13,6 +13,8 @@ use App\Models\OrderItem;
 use App\Models\Payment;
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\StockMovement;
+use App\Models\ShopPaymentDetail;
 use Livewire\WithDispatchesBrowserEvents; 
 // Removed WithDispatchesBrowserEvents as it does not exist
 
@@ -25,23 +27,43 @@ class OrderProcess extends Component
     public $reference;
     public $screenshot;
     public $deliveryAddress;
+    public $shopPaymentDetail;
     
     use WithFileUploads;
+
+    public function updatedSelectedPaymentMethod($value)
+    {
+        // Check if a valid payment method is selected
+        if ($value) {
+            // Assuming $shopId is derived from your cart items or logic
+            $shopId = optional($this->cartItems->first())->product->shop_id; // Replace with actual logic
+    
+            // Fetch the shop payment details based on the selected method
+            $this->shopPaymentDetail = ShopPaymentDetail::where('shop_id', $shopId)
+                ->where('mode_of_payment_id', $value)
+                ->first();
+        } else {
+            // If no payment method is selected, clear the payment details
+            $this->shopPaymentDetail = null;
+        }
+    }
+
+    
     public function submitPayment()
 {
     $this->validate([
         'selectedPaymentMethod' => 'required',
-        'reference' => 'required|string|max:255',
-        'screenshot' => 'nullable|image|max:2048',
+        'reference' => $this->selectedPaymentMethod == 3 || $this->selectedPaymentMethod == 4 ? 'nullable|string|max:255' : 'required|string|max:255',  // Make reference optional for payment methods 3 and 4
+        'screenshot' => $this->isScreenshotRequired() ? 'nullable|image|max:2048' : 'nullable',
     ]);
-
-
+    
     DB::beginTransaction();
-
+    
     try {
-        $screenshotPath = $this->screenshot 
-            ? $this->screenshot->store('screenshots', 'public') 
-            : null;
+        // Handle screenshot based on payment method
+        $screenshotPath = $this->isScreenshotRequired()
+            ? ($this->screenshot ? $this->screenshot->store('screenshots', 'public') : null)
+            : 'screenshots/screenshotnotneeded.jpg';
 
         $this->createOrdersPerShop($screenshotPath);
 
@@ -53,13 +75,25 @@ class OrderProcess extends Component
         DB::commit();
 
         $this->dispatch('payment-success');
-    } 
-    catch (\Exception $e) {
+    } catch (\Exception $e) {
         DB::rollBack();
         $this->addError('general', 'Something went wrong. Please try again.');
         $this->dispatch('payment-failed');
     }
 }
+
+    
+    // Check if screenshot is required based on the payment method
+    // Check if screenshot is required based on the payment method ID
+private function isScreenshotRequired()
+{
+    // Payment method IDs for 'Cash on Delivery' and 'Cash on Pickup'
+    $noScreenshotRequiredMethods = [3, 4]; // Payment method IDs 3 and 4
+
+    return !in_array($this->selectedPaymentMethod, $noScreenshotRequiredMethods);
+}
+
+    
     // Create orders for each shop
     // and save payment details
 
@@ -87,6 +121,13 @@ class OrderProcess extends Component
                 'quantity' => $item->quantity,
                 'price' => $item->product->product_price,
                 'sub_total' => $item->product->product_price * $item->quantity,
+            ]);
+            // Create Stock Movement (OUT)
+            StockMovement::create([
+                'product_id' => $item->product_id,
+                'movement_type' => 'OUT',
+                'quantity' => $item->quantity,
+                'description' => 'Order placed by user ID ' . Auth::id(),
             ]);
         }
 
@@ -126,6 +167,10 @@ class OrderProcess extends Component
         // Load payment methods
         // Assuming you have a ModeOfPayment model
         $this->paymentMethods = ModeOfPayment::all();
+
+        if ($this->selectedPaymentMethod) {
+            $this->updatedSelectedPaymentMethod($this->selectedPaymentMethod);
+        }
     }
     public function render()
     {

@@ -21,7 +21,7 @@
 
             <!-- Dropdown for Categories -->
             <div class=" flex gap-2 items-center" >
-                <p class="text-sm text-gray-500 ">Schedule</p>
+                <p class="text-sm text-gray-500 "></p>
                 <select name="category" class="border border-[#51331b] px-2 py-1 rounded-md flex">
                     <option value="0" >All</option>
                     <option value="1" selected>Today</option>
@@ -37,8 +37,8 @@
                             <tr class="border-b ">
                                 <th class="p-2 font-semibold">Order ID</th>
                                 <th class="p-2 font-semibold">Customer Name</th>
-                                <th class="p-2 font-semibold">Scheduled Date</th>
-                                <th class="p-2 font-semibold">Scheduled Time</th>
+                                <th class="p-2 font-semibold">Date Ordered</th>
+                                <th class="p-2 font-semibold">Time Ordered</th>
                                 <th class="p-2 font-semibold">Total Amount</th>
                                 <th class="p-2 font-semibold">Payment Method</th>
                                 <th class="p-2 font-semibold">Order Status</th>
@@ -63,10 +63,10 @@
                                     || lastname.includes(search.toLowerCase())">
                                 <td class="p-2">{{ $order->id}}</td>
                                 <td class="p-2">{{$order->user->first_name ?? 'N/A'}} {{$order->user->last_name ?? 'N/A'}}</td>
-                                <td class="p-2">{{$order->date_arrangement}}</td>
-                                <td class="p-2">{{ \Carbon\Carbon::parse($order->time_arrangement)->timezone('Asia/Manila')->format('h:i A') }}</td>
+                                <td class="p-2">{{ $order->created_at->timezone('Asia/Manila')->format('M d, Y') }}</td>
+                                <td class="p-2">{{ $order->created_at->timezone('Asia/Manila')->format('h:i A') }}</td>
                                 <td class="p-2">{{$order->total_amount}}</td>
-                                <td class="p-2">{{$order->payment_method}}</td>
+                                <td class="p-2">{{ $order->payment->mode_of_payment->payment_method ?? 'N/A' }}</td>
                                 <td class="p-2 font-semibold
                                         @if(strtolower($order->status) == 'pending')
                                             text-yellow-500

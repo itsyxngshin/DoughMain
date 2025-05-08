@@ -17,7 +17,7 @@
             </div>
             
             <!-- Product Image -->
-            <div class="m-5 w-40 h-40 overflow-hidden">
+            <div class="w-full my-5 h-40 overflow-hidden">
                 <!-- You can dynamically change the product image using a variable -->
                 <img src="{{ asset('storage/profile.jpg')  }}" alt="{{$user->profile_photo}}" class="w-auto h-40 m-auto object-cover rounded">
             </div>

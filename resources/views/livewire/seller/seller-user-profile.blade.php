@@ -103,6 +103,23 @@
                 </div>
             </div>
 
+            <!-- Bakery Payment Method Details-->
+            <div class="mt-6">
+                <h3 class="text-lg font-semibold text-gray-700">Bakery Payment Method Details</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Gcash Account</label>
+                        <input type="text" name="gcash_account_name" placeholder="Gcash Account Name" value="{{ optional($shop->paymentDetails->where('mode_of_payment_id', 1)->first())->account_name }}" class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
+                        <input type="text" name="gcash_account_number" placeholder="GCash Account Number" value="{{ optional($shop->paymentDetails->where('mode_of_payment_id', 1)->first())->account_number }}" class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Maya Account</label>
+                        <input type="text" name="maya_account_name" placeholder="Maya Account Name" value="{{ optional($shop->paymentDetails->where('mode_of_payment_id', 2)->first())->account_name }}" class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
+                        <input type="text" name="maya_account_number" placeholder="Maya Account Number" value="{{ optional($shop->paymentDetails->where('mode_of_payment_id', 2)->first())->account_number }}" class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-400">
+                    </div>
+            </div>
+
             <!-- Address -->
             <div class="mt-6">
                 <h3 class="text-lg font-semibold text-gray-700">Bakery Address</h3>

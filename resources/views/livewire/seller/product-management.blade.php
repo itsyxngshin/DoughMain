@@ -44,9 +44,8 @@
                             <th class="p-2 font-semibold">Name</th>
                             <th class="p-2 font-semibold">Price</th>
                             <th class="p-2 font-semibold">Category</th>
-                            <th class="p-2 font-semibold">Stocks</th>
-                            <th class="p-2 font-semibold">Products Sold</th>
                             <th class="p-2 font-semibold">Remaining Stocks</th>
+                            <th class="p-2 font-semibold">Products Sold</th>
                             <th class="p-2 font-semibold">Status</th>
                             <th class="p-2 font-semibold"> </th>
                             <th class="p-2 font-semibold"> </th>
@@ -71,10 +70,7 @@
                             <td class="p-2">{{ $product->category->category_name ?? 'No Category' }}</td>
                             <td class="p-2">{{ $product->stock->quantity ?? 0 }}</td>
                             <td class="p-2">{{  $product->stockMovements->where('movement_type', 'out')->sum('quantity') }}</td>
-                            <td class="p-2">
-                                            {{ $product->stockMovements->where('movement_type', 'in')->sum('quantity') 
-                                                - $product->stockMovements->where('movement_type', 'out')->sum('quantity') }}
-                                        </td>
+                            
                             <td class="p-2 font-semibold italic 
                                 @if(strtolower($product->product_status) == 'available')
                                     text-green-500

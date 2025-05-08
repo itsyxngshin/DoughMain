@@ -16,7 +16,7 @@ class ViewOrder extends Component
         $this->selectedOrder = Order::with([
             'shop',
             'orderItems.product.category',
-            'payment',
+            'payment.mode_of_payment',
             
         ])->find($orderId);
 

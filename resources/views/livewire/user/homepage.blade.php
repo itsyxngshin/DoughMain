@@ -137,12 +137,13 @@
             overflow-x: auto;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
+            
         }
 
         .product-item {
             flex-shrink: 0;
             width: 16rem;
-            margin-right: 1rem;
+            margin-right: 2rem;
             scroll-snap-align: start;
         }
 
@@ -238,7 +239,7 @@
 
         <!-- Categories Section -->
 <h2 class="text-2xl font-bold text-[#51331B] text-center mt-0 mb-10">Categories</h2>
-<div class="flex space-x-8 pb-4 justify-center">
+<div class="flex overflow-x-auto space-x-8 pb-4 justify-center">
     @foreach ($categories as $category)
         <div class="w-56 mb-6 flex-none">
             <div class="relative bg-cover bg-center rounded-lg shadow-lg flex items-end pl-2 h-32 transition-transform transform hover:scale-105 duration-300"
@@ -278,7 +279,7 @@
         <!-- Testimonials Section -->
         <section class="mt-12 bg-[#f9f9f9] py-8">
             <h2 class="text-2xl font-bold text-[#51331B] text-center">What Our Customers Are Saying</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8 pb-4 px-4">
+            <div class="grid grid-cols-1 overflow-x-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8 pb-4 px-4">
                 @forelse ($testimonials as $review)
                     <div class="w-full mb-6 p-6 border rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
                         <p class="text-sm italic ">{{ $review->shop->shop_name ?? 'Secret Shop'}}</p>

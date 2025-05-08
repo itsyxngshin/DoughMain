@@ -68,7 +68,7 @@ class ViewShopProduct extends Component
         $this->dispatch('cart-added-success');
     }
     
-
+}
 
     public function render()
     {

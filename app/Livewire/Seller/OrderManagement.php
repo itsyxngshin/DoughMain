@@ -25,7 +25,7 @@ class OrderManagement extends Component
          $this->shop = Shop::where('manage_id', auth()->id())->firstOrFail();
 
          // Get all orders for this shop
-         $this->orders = Order::with('user', 'orderItems.product', 'shop')
+         $this->orders = Order::with('user', 'orderItems.product', 'shop', 'payment.mode_of_payment')
                               ->where('shop_id', $this->shop->id)
                               ->get();
     }

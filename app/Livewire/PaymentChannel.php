@@ -34,7 +34,9 @@ class PaymentChannel extends Component
     // In your Livewire component
     public function submitPayment()
     {
+        
         $this->validate([
+            
             'mode_of_payment_id' => 'required|exists:mode_of_payments,id',
             'reference' => 'required|string',
             'screenshot' => 'required|image|max:2048',

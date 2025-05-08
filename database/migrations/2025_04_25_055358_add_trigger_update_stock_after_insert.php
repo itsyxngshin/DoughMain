@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -11,19 +10,19 @@ return new class extends Migration
      */
     public function up()
     {
-        // Your table creation here, if any...
-
         DB::unprepared("
             CREATE TRIGGER trg_update_stock_after_insert
             AFTER INSERT ON stock_movements
             FOR EACH ROW
             BEGIN
-                IF NEW.movement_type = 'IN' THEN
+                IF NEW.movement_type = 'IN' OR NEW.movement_type = 'OUT' THEN
                     UPDATE stocks
                     SET quantity = (
-                        SELECT COALESCE(SUM(quantity), 0)
+                        SELECT 
+                            COALESCE(SUM(CASE WHEN movement_type = 'IN' THEN quantity ELSE 0 END), 0) -
+                            COALESCE(SUM(CASE WHEN movement_type = 'OUT' THEN quantity ELSE 0 END), 0)
                         FROM stock_movements
-                        WHERE product_id = NEW.product_id AND movement_type = 'IN'
+                        WHERE product_id = NEW.product_id
                     )
                     WHERE product_id = NEW.product_id;
                 END IF;
@@ -38,5 +37,4 @@ return new class extends Migration
     {
         DB::unprepared('DROP TRIGGER IF EXISTS trg_update_stock_after_insert');
     }
-
 };

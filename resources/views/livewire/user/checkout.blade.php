@@ -44,7 +44,7 @@
                 </div>
                 <div class="text-xs space-x-2">
                     <span class="bg-yellow-300 text-[#1E1E1E] px-2 py-0.5 rounded">Default</span>
-                    <a href="{{ route('profile.show')}}" class="text-blue-600">Change</a>
+                    <a href="{{ route('profile')}}" class="text-blue-600">Change</a>
                 </div>
             </div>
         </div>

@@ -23,14 +23,10 @@ class ModeOfPaymentSeeder extends Seeder
             ['payment_method' => 'Cash on Delivery', 
             'description' => 'You can now pay upon delivery through the web'],
 
-            ['payment_method' => 'Bank Transfer', 
-            'description' => 'Pay via bank transfer for your orders'],
+            ['payment_method' => 'Cash on Pick-Up', 
+            'description' => 'You can now pay upon pick-up through the web'],
 
-            ['payment_method' => 'Credit Card', 
-            'description' => 'Pay via credit card for your orders'],
-
-            ['payment_method' => 'Debit Card', 
-            'description' => 'Pay via debit card for your orders'],
+            
         ]);
     }
 }

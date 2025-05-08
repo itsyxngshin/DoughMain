@@ -126,13 +126,13 @@
                                 <label class="text-gray-700 font-semibold">Current Stock</label>
                                 <input 
                                     type="number" 
-                                    value="{{$product->stock->quantity}}"
+                                    value="{{$product->stock->quantity ?? 0}}"
                                     class="border border-gray-300 mt-2 my-3 px-2 py-1 w-full rounded bg-gray-100 text-gray-700" 
-                                    value="{{ $product->initial_stock }}" 
+                                   
                                     readonly>
                             </div>
 
-                            <!-- Add Stock -->
+                             <!-- Add Stock -->
                             <div class="w-full">
                                 <label for="add_stock" class="text-gray-700 font-semibold">Add Stock</label>
                                 <input 
@@ -141,9 +141,22 @@
                                     id="add_stock"
                                     class="border border-gray-300 mt-2 my-3 px-2 py-1 w-full rounded" 
                                     placeholder="e.g. 10" 
-                                    min="0" >
+                                    min="0">
                             </div>
+
+                            
                         </div>
+                        <!-- Reduce Stock -->
+                        <div class="w-[48%]">
+                                <label for="reduce_stock" class="text-gray-700 font-semibold">Reduce Stock</label>
+                                <input 
+                                    type="number" 
+                                    name="reduce_stock" 
+                                    id="reduce_stock"
+                                    class="border border-gray-300 mt-2 my-3 px-2 py-1 w-full rounded" 
+                                    placeholder="e.g. 5" 
+                                    min="0">
+                            </div>
                     </div>
                     
                 </div>

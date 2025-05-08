@@ -41,7 +41,7 @@
                            
                             <tr class="border-b ">
                                 <th class="p-2 font-semibold">Bakery ID</th>
-                                <th class="p-2 font-semibold">Profile Picture</th>
+                                <th class="p-2 font-semibold">Bakery Photo</th>
                                 <th class="p-2 font-semibold">Bakery Name</th>
                                 <th class="p-2 font-semibold">Started since</th>
                                 <th class="p-2 font-semibold"> </th>
@@ -55,7 +55,7 @@
                             @endphp
                             <tr class="border-b text-sm text-center" x-show="(search === '' || '{{ $shopName }}'.includes(search.toLowerCase()))">
                                 <td class="p-2">{{$shop->id}}</td>
-                                <td class="p-2 items-center"><img src="{{ asset('storage/shop_logos/' . $shop->shopLogo->logo_path) }}" alt="{{$shop->shopLogo->logo_path}}" class="w-20 h-20 rounded object-cover m-auto"></td>
+                                <td class="p-2 items-center"><img src="{{ asset('storage/' . $shop->shopLogo->logo_path) }}" alt="{{$shop->shopLogo->logo_path}}" class="w-10 h-10 rounded object-cover m-auto"></td>
                                 <td class="p-2">{{$shop->shop_name}}</td>
                                 <td class="p-2">{{$shop->created_at}}</td>
                                

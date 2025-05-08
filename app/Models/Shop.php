@@ -44,6 +44,10 @@ class Shop extends Model
     {
         return $this->belongsTo(User::class, 'manage_id'); // 'manage_id' references the 'id' in the 'users' table
     }
+    public function paymentDetails()
+{
+    return $this->hasMany(ShopPaymentDetail::class);
+}
     public function location()
 {
     return $this->belongsTo(Location::class, 'shop_address_id');  // Make sure it's using the correct foreign key

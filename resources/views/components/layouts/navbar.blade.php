@@ -89,6 +89,7 @@
 
     .burger {
       display: block;
+      
     }
   }
 
@@ -118,6 +119,15 @@
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
       border-radius: 0.75rem;
       transition: box-shadow 0.3s ease;
+    }
+
+    .cart-profile{
+      margin-right: 5px;
+      gap: 2px;
+    }
+    
+    .burger-position{
+      margin-left: 3px;
     }
 
     @keyframes fadeSlideIn {
@@ -177,7 +187,7 @@
 
     <!-- Navbar -->
     <nav id="navbar" class="bg-white shadow-md py-1 px-2 flex justify-between items-center fixed top-0 left-0 w-full z-50">
-        <div class="flex items-center gap-0 ml-8">
+        <div class="flex items-center burger-position gap-0 ml-8">
             <!-- Burger Button -->
             <button id="burger" class="p-2 focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -189,7 +199,7 @@
             <span class="text-xl text-[#51331B] font-bold">DoughMain</span>
         </div>
 
-        <div class="flex flex-row flex-nowrap items-center gap-4 mr-10">
+        <div class="cart-profile flex flex-row flex-nowrap items-center gap-4 mr-10">
             <!-- Cart Button -->
             <a href="{{ route('user.cart') }}">
             <button class="p-2 bg-transparent">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Shop;
 use App\Models\Location;
 use App\Models\ShopLogo;
+use App\Models\ShopPaymentDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -34,6 +35,11 @@ class SellerUserProfileController extends Controller
                 'street' => 'nullable|string', // street is nullable
                 'current_password' => 'nullable|string', // current_password is nullable
                 'new_password' => 'nullable|string|min:8|confirmed', // new_password is nullable
+                'gcash_account_name' => 'nullable|string|max:255',
+                'gcash_account_number' => 'nullable|string|max:255',
+                'maya_account_name' => 'nullable|string|max:255',
+                'maya_account_number' => 'nullable|string|max:255',
+
             ]);
             
 
@@ -81,12 +87,31 @@ class SellerUserProfileController extends Controller
             'shop_description' => $request->shop_description,
         ]);
 
+
         // ✅ Update Manager Info
         $user = $shop->user;
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->phone_number = $request->phone_number;
+
+        $gcash = ShopPaymentDetail::updateOrCreate(
+            ['shop_id' => $shop->id, 'mode_of_payment_id' => 1], // 1 = GCash (ensure this matches your DB)
+            [
+                'account_name' => $request->gcash_account_name,
+                'account_number' => $request->gcash_account_number,
+                'status' => 'active'
+            ]
+        );
+        
+        $maya = ShopPaymentDetail::updateOrCreate(
+            ['shop_id' => $shop->id, 'mode_of_payment_id' => 2], // 2 = Maya
+            [
+                'account_name' => $request->maya_account_name,
+                'account_number' => $request->maya_account_number,
+                'status' => 'active'
+            ]
+        );
 
         // ✅ Handle Password Change
         if ($request->filled('current_password') && $request->filled('new_password')) {

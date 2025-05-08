@@ -2,6 +2,16 @@
 
 @section('content')
 <div class="min-h-screen flex justify-center items-start pt-12 px-2">
+    <style>
+        @media screen and (max-width: 480px) {
+            .quantity-field{
+               :10px;
+            }
+            .text-price{
+                font-size: 9px;
+            }
+        }   
+    </style>
     <div class="w-full max-w-6xl mt-10 bg-white shadow-lg rounded-lg p-3">
         <!-- Title -->
         <h2 class="text-2xl font-bold text-brown-700 flex items-center">
@@ -70,8 +80,9 @@
                                         <span class="text-gray-700">{{ $item->product->product_name }}</span>
                                 </div>
 
-                                <span class="text-gray-700">{{ $item->product->product_price }}</span>
-                                @livewire('user.modal.quantity-rev', ['cartItemId' => $item->id], key($item->id))
+                                <span class="text-gray-700 text-price ">{{ $item->product->product_price }}</span>
+                                
+                                <div class="quantity-field">@livewire('user.modal.quantity-rev', ['cartItemId' => $item->id], key($item->id))</div>
 
                                 <span class="text-gray-700 font-semibold">{{ $item->sub_total }}</span>
 

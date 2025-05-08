@@ -17,7 +17,7 @@
                 </div>
                 <div class="flex border-b-1 border-gray-400 items-center p-6 py-2 gap-5 w-full">
                     <div class="w-full items-center flex gap-3">
-                        <img src="" alt="" class="rounded-full w-[30px] h-[30px]">
+                        <img src="{{ asset('storage/' . $selectedOrder->shop->shopLogo->logo_path) }}" alt="" class="rounded-full w-[30px] h-[30px]">
                         <p class="font-bold text-xl">{{$selectedOrder->shop->shop_name}}</p>
                     </div>
                     <div class="border rounded border-[#FBBC04] w-[40%] justify-end
@@ -97,10 +97,16 @@
                         </tr>
                         <tr>
                             <td class="text-left font-semibold">Payment Method:</td>
-                            <td class="pr-2 text-right">{{ $selectedOrder->payment_method }}</td>
+                            <td class="pr-2 text-right">{{ $selectedOrder->payment->mode_of_payment->payment_method ?? 'N/A' }}</td>
+    
                         </tr>
                         <tr>
-                            <td class="text-left font-semibold">Transaction Number:</td>
+                        <tr>
+                            <td class="text-left font-semibold">Transaction ID:</td>
+                            <td class="pr-2 text-right">{{ $selectedOrder->transaction_id ?? 'N/A' }}</td>
+    
+                        </tr>
+                            <td class="text-left font-semibold">Reference Number:</td>
                             <td class="pr-2 text-right">@if($selectedOrder && $selectedOrder->payment)
                                                         {{ $selectedOrder->payment->provider_transc_id }}
                                                     @else

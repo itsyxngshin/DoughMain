@@ -3,7 +3,7 @@
     x-data="{ 
         open: false, 
         product: {
-            id: '', name: '', img: '', desc: '', price: '', quantity: 1
+            id: '', name: '', img: '', desc: '', price: '', quantity: 1, stock: ''
         } 
     }"
     x-init="
@@ -24,6 +24,8 @@
     product.desc = '{{ $product->product_description }}';
     product.price = '{{ $product->product_price }}';
     product.quantity = 1;
+    product.stock = {{ $product->stock->quantity ?? 0 }};
+
 ">
 
         <div class="relative transition-transform transform hover:scale-105 duration-300 w-60 h-60 overflow-hidden">
@@ -59,6 +61,7 @@
             <h2 class="text-xl font-bold text-center" x-text="product.name"></h2>
             <p class="text-gray-600 text-center" x-text="product.desc"></p>
             <p class="text-gray-800 font-bold text-center" x-text="product.price"></p>
+            <p class="text-sm text-gray-500 text-center" x-text="'Available Stock: ' + product.stock"></p>
 
             <!-- Quantity & Add to Cart -->
             <div class="flex items-center justify-between mt-4">

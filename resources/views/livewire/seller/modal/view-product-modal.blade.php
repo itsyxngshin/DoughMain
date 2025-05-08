@@ -27,10 +27,9 @@
             
             <!-- Price & Quantity -->
             <p class="mt-2"><strong>Price:</strong> ₱{{ number_format($product->product_price ?? 0, 2) }}</p>
-            <p><strong>Quantity:</strong> {{ $product->stock->quantity ?? 0 }}</p>
+            <p><strong>Remaining Stocks:</strong> {{ $product->stock->quantity ?? 0 }}</p>
             <p><strong>Products Sold:</strong> {{ $product->stockMovements->where('movement_type', 'out')->sum('quantity') }}</p>
-            <p><strong>Remaining Stocks:</strong> {{ $product->stockMovements->where('movement_type', 'in')->sum('quantity') 
-                - $product->stockMovements->where('movement_type', 'out')->sum('quantity') }}</p>
+            
                 <p><strong>Status:</strong> <span class="font-semibold italic 
                                 @if(strtolower($product->product_status) == 'available')
                                     text-green-500

@@ -1,4 +1,4 @@
-<div class="pt-24 px-4 min-h-screen flex justify-center bg-gray-100">
+<div class="pt-14 px-4 min-h-screen flex justify-center bg-gray-100">
     <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl mb-10">
         <h2 class="text-3xl font-bold text-gray-800">Profile</h2>
         <p class="text-gray-600 mb-4">Manage your account</p>
